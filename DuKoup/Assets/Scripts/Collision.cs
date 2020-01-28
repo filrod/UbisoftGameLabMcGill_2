@@ -28,6 +28,11 @@ public class Collision : MonoBehaviour
     private float areaPositionMin;
     private float playerPos;
 
+    [SerializeField] private float alphaPlane;
+    [SerializeField] private float betaPlane;
+    private float currentPlane;
+
+
     void Update()
     {
 
@@ -45,12 +50,12 @@ public class Collision : MonoBehaviour
         if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax))
         {
 
-            instancePlayer.transform.position.z += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
+            instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
         }
 
         if ( currentPlane == betaPlane && (playerPos <= areaPositionMin || playerPos >= areaPositionMax))
         {
-            instancePlayer.transform.position.z += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
+            instancePlayer.transform.position += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
         }
     }
 }
