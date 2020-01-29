@@ -380,7 +380,7 @@ Transform:
   m_GameObject: {fileID: 417343193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.1, y: -2.9, z: 0}
-  m_LocalScale: {x: 12.956285, y: 3.579, z: 10.371969}
+  m_LocalScale: {x: 51.761658, y: 3.579, z: 10.371969}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -651,8 +651,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instancePlayer: {fileID: 640491664}
   otherPlayer: {fileID: 232094360}
-  diffPlane: 3
-  collisionRadius: 1.5
+  isMainPlayer: 1
+  collisionRadius: 1.4
   alphaPlane: 0
   betaPlane: 3
 --- !u!1 &963194225
@@ -732,7 +732,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.44, y: 1.73, z: -7.38}
+  m_LocalPosition: {x: 3.44, y: 2.75, z: -10.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -794,14 +794,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342438197}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c075a3495639a47f28c762eec59172ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   instancePlayer: {fileID: 232094360}
   otherPlayer: {fileID: 640491664}
-  diffPlane: 3
-  collisionRadius: 1
+  isMainPlayer: 0
+  collisionRadius: 1.4
   alphaPlane: 0
   betaPlane: 3
