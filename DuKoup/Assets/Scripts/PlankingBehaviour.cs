@@ -34,13 +34,16 @@ public class PlankingBehaviour : MonoBehaviour
     private void UnPlank()
     {
         transform.eulerAngles = new Vector3(0, 0, 0);
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
     private void Plank()
     {
-        transform.position = plankingSpace.transform.position;
+        transform.position = new Vector3(plankingSpace.transform.position.x, transform.position.y, transform.position.z);
         
         transform.eulerAngles = new Vector3(0, 0, 90);
+
+        transform.localScale = new Vector3(0.1f, 2f, 1f);
     }
 
     void OnTriggerEnter(Collider other)
