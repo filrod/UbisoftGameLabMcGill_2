@@ -654,7 +654,7 @@ MonoBehaviour:
   isMainPlayer: 1
   collisionRadius: 1.4
   alphaPlane: 0
-  betaPlane: 3
+  betaPlane: 2
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,4 +804,4 @@ MonoBehaviour:
   isMainPlayer: 0
   collisionRadius: 1.4
   alphaPlane: 0
-  betaPlane: 3
+  betaPlane: 2
