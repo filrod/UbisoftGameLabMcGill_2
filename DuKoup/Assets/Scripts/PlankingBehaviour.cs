@@ -2,11 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * UBISOFT GAMES LAB - McGill Team #2
+ * -----------------------------------
+ * 
+ * @author Rikke Aas
+ * @Date 2020/01/30
+ * 
+ * This class controls the planking behaviour
+*/
+
 public class PlankingBehaviour : MonoBehaviour
 {
 
-    private bool inPlankinggSpace = false;
-    private GameObject plankingSpace;
+    private bool inPlankinggSpace = false; // Variable to tell if a player is in a space where planking is available
+    private GameObject plankingSpace; // Reference to the planking space, if not in a planking space, this will be null
 
 
     void FixedUpdate()
@@ -20,7 +30,7 @@ public class PlankingBehaviour : MonoBehaviour
     private void Plank()
     {
         transform.position = plankingSpace.transform.position;
-        transform.eulerAngles = new Vector3(90, 0, 0);
+        transform.eulerAngles = new Vector3(0, 0, 90);
     }
 
     void OnTriggerEnter(Collider other)
@@ -38,6 +48,7 @@ public class PlankingBehaviour : MonoBehaviour
     {
         if (other.CompareTag("PlankingSpace"))
         {
+            Debug.Log("Leaving planking space");
             inPlankinggSpace = false;
             plankingSpace = null;
         }
