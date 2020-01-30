@@ -63,11 +63,10 @@ public class PlayersCollision : MonoBehaviour
         isAtEqualSpeed = instancePlayer.velocity.magnitude == otherPlayer.velocity.magnitude;
 
         if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster && !isSomeoneInBeta)
-        {   
-            isSomeoneInBeta = true;
-
+        { 
             // If they are at the same speed, Player 2 should move around Player 1
             if (! (isAtEqualSpeed && isMainPlayer)){
+                isSomeoneInBeta = true;
                 instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
             }
         }
