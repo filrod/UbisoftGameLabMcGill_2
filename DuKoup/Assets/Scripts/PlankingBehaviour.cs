@@ -25,6 +25,15 @@ public class PlankingBehaviour : MonoBehaviour
         {
             Plank();
         }
+        if (inPlankinggSpace && Input.GetKeyUp(KeyCode.P))
+        {
+            UnPlank();
+        }
+    }
+
+    private void UnPlank()
+    {
+        transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     private void Plank()
