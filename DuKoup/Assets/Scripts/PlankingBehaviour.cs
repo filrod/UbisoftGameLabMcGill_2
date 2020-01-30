@@ -30,6 +30,7 @@ public class PlankingBehaviour : MonoBehaviour
     private void Plank()
     {
         transform.position = plankingSpace.transform.position;
+        
         transform.eulerAngles = new Vector3(0, 0, 90);
     }
 
