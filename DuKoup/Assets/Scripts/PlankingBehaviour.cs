@@ -16,16 +16,18 @@ public class PlankingBehaviour : MonoBehaviour
 {
 
     private bool inPlankinggSpace = false; // Variable to tell if a player is in a space where planking is available
+    private bool isPlanking = false;
     private GameObject plankingSpace; // Reference to the planking space, if not in a planking space, this will be null
+    private Vector3 positionBeforePlank;
 
 
     void FixedUpdate()
     {
-        if (inPlankinggSpace && Input.GetKeyDown(KeyCode.P))
+        if (inPlankinggSpace && !isPlanking && Input.GetKeyDown(KeyCode.P))
         {
             Plank();
         }
-        if (inPlankinggSpace && Input.GetKeyUp(KeyCode.P))
+        if (inPlankinggSpace && isPlanking && Input.GetKeyUp(KeyCode.P))
         {
             UnPlank();
         }
@@ -33,16 +35,23 @@ public class PlankingBehaviour : MonoBehaviour
 
     private void UnPlank()
     {
+        isPlanking = false;
+        Debug.Log(positionBeforePlank);
+        transform.position = positionBeforePlank;
+        positionBeforePlank = Vector3.zero;
         transform.eulerAngles = new Vector3(0, 0, 0);
         transform.localScale = new Vector3(1, 1, 1);
     }
 
     private void Plank()
     {
-        // transform.position = plankingSpace.transform.GetChild(1).position;
+        isPlanking = true;
+        Debug.Log(transform.position);
+        positionBeforePlank = transform.position;
+        transform.position = new Vector3(plankingSpace.transform.position.x, 0, 0);
 
         transform.eulerAngles = new Vector3(0, 0, 90);
-        transform.localScale = new Vector3(0.1f, plankingSpace.transform.GetChild(2).position.x - plankingSpace.transform.GetChild(1).position.x, 1f);
+        transform.localScale = new Vector3(0.1f, 4f, 1f);
     }
 
     void OnTriggerEnter(Collider other)
