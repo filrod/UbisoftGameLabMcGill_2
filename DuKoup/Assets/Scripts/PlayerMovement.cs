@@ -15,6 +15,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Fields 
+    [SerializeField] private PlankingBehaviour plankingBehaviour;
 
     [SerializeField] private int playerId;
     [SerializeField] private Rigidbody player;
@@ -42,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     public void FixedUpdate()
     {
+        if (plankingBehaviour != null && plankingBehaviour.PlayerIsPlanking()) return;
+        
         horizontalMovement = Input.GetAxis(axis) * speed;
 
         // Move the character by finding the target velocity

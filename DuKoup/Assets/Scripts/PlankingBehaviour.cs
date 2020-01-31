@@ -89,5 +89,10 @@ public class PlankingBehaviour : MonoBehaviour
             Physics.IgnoreCollision(collisionInfo.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
+
+    public bool PlayerIsPlanking()
+    {
+        return isPlanking;
+    }
     
 }
