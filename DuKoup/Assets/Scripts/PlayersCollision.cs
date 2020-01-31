@@ -33,6 +33,9 @@ public class PlayersCollision : MonoBehaviour
     private float diffPlane;
     private float currentPlane;
 
+    //
+    private static bool isSomeoneInBeta;
+
     // Only the player with the greatest velocity should change plane
     private bool isFaster;
     private bool isAtEqualSpeed;
@@ -59,10 +62,11 @@ public class PlayersCollision : MonoBehaviour
         isFaster = instancePlayer.velocity.magnitude > otherPlayer.velocity.magnitude;
         isAtEqualSpeed = instancePlayer.velocity.magnitude == otherPlayer.velocity.magnitude;
 
-        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster)
-        {   
+        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster && !isSomeoneInBeta)
+        { 
             // If they are at the same speed, Player 2 should move around Player 1
             if (! (isAtEqualSpeed && isMainPlayer)){
+                isSomeoneInBeta = true;
                 instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
             }
         }
@@ -70,6 +74,7 @@ public class PlayersCollision : MonoBehaviour
         if ( currentPlane == betaPlane && (playerPos <= areaPositionMin || playerPos >= areaPositionMax))
         {
             instancePlayer.transform.position += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
+            isSomeoneInBeta = false;
         }
     }
 }
