@@ -10,7 +10,8 @@ public class TestConnect : MonoBehaviourPunCallbacks
     void Start()
     {
         print("Connecting to server");
-        PhotonNetwork.GameVersion = "0.0.1";
+        PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
+        PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -18,13 +19,14 @@ public class TestConnect : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         print("Connecting to master");
+        print(PhotonNetwork.LocalPlayer.NickName);
         
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-        print("Connecting to master");
+        print("Disconnect from master");
     }
 
 }
