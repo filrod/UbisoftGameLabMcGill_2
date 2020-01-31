@@ -39,11 +39,10 @@ public class PlankingBehaviour : MonoBehaviour
 
     private void Plank()
     {
-        transform.position = new Vector3(plankingSpace.transform.position.x, transform.position.y, transform.position.z);
-        
-        transform.eulerAngles = new Vector3(0, 0, 90);
+        // transform.position = plankingSpace.transform.GetChild(1).position;
 
-        transform.localScale = new Vector3(0.1f, 2f, 1f);
+        transform.eulerAngles = new Vector3(0, 0, 90);
+        transform.localScale = new Vector3(0.1f, plankingSpace.transform.GetChild(2).position.x - plankingSpace.transform.GetChild(1).position.x, 1f);
     }
 
     void OnTriggerEnter(Collider other)
@@ -64,6 +63,16 @@ public class PlankingBehaviour : MonoBehaviour
             Debug.Log("Leaving planking space");
             inPlankinggSpace = false;
             plankingSpace = null;
+        }
+    }
+
+    void OnCollisionEnter(Collision collisionInfo)
+    {
+        if (!inPlankinggSpace) return;
+
+        if (collisionInfo.gameObject.CompareTag("Player"))
+        {
+            Physics.IgnoreCollision(collisionInfo.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
     
