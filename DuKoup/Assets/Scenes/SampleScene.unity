@@ -248,7 +248,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f75c914dc9955472ea021ff32090e477, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -504,6 +504,7 @@ GameObject:
   - component: {fileID: 640491667}
   - component: {fileID: 640491666}
   - component: {fileID: 640491664}
+  - component: {fileID: 640491665}
   m_Layer: 0
   m_Name: dummy1
   m_TagString: Player
@@ -541,6 +542,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &640491665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640491662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32912bda7dcba4a099bc2abd99df1af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plankingBehaviour: {fileID: 232094359}
 --- !u!136 &640491666
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -739,6 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plankingBehaviour: {fileID: 0}
   playerId: 1
   player: {fileID: 640491664}
   speed: 10
@@ -755,6 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c075a3495639a47f28c762eec59172ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plankingBehaviour: {fileID: 232094359}
   instancePlayer: {fileID: 640491664}
   otherPlayer: {fileID: 232094360}
   isMainPlayer: 1
@@ -889,6 +905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plankingBehaviour: {fileID: 232094359}
   playerId: 2
   player: {fileID: 232094360}
   speed: 10
@@ -905,6 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c075a3495639a47f28c762eec59172ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plankingBehaviour: {fileID: 232094359}
   instancePlayer: {fileID: 232094360}
   otherPlayer: {fileID: 640491664}
   isMainPlayer: 0
@@ -1028,5 +1046,61 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3140844535845859841, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859841, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859841, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859841, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859854, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859854, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859854, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859854, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859854, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859854, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844535845859855, guid: 4e5737621ed4046baaf0264629db55c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3140844534933106935, guid: 4e5737621ed4046baaf0264629db55c9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4e5737621ed4046baaf0264629db55c9, type: 3}
