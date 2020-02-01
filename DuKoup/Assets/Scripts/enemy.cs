@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
+    [SerializeField] private Collider regionOfAttack;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +15,11 @@ public class enemy : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
     }
 
     bool attack()

@@ -526,6 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ef4f722914cf44381bd9910c7fda90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  regionOfAttack: {fileID: 0}
 --- !u!1 &640491662
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,8 +874,8 @@ MonoBehaviour:
   speed: 10
   m_MovementSmoothing: 0.05
   jumpVelocity: 7
-  gravityMultiplier: 4.5
-  lowJumpGravityMultiplier: 2
+  gravityMultiplier: 2
+  lowJumpGravityMultiplier: 5
 --- !u!114 &821038466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,8 +1246,8 @@ MonoBehaviour:
   speed: 10
   m_MovementSmoothing: 0.05
   jumpVelocity: 7
-  gravityMultiplier: 4.5
-  lowJumpGravityMultiplier: 2
+  gravityMultiplier: 2
+  lowJumpGravityMultiplier: 5
 --- !u!114 &1342438200
 MonoBehaviour:
   m_ObjectHideFlags: 0
