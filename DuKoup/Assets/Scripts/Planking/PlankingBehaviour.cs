@@ -27,6 +27,17 @@ public class PlankingBehaviour : PlankingSpaceDetection
         }
     }
 
+    /**
+    * Method Name: Plank()
+    * 
+    * Description:
+    * Method to make the player plank. It will also move the player into the center of the planking space and squash them
+    * to look like a "bridge". The specifics will change when we get animations etc.
+    * 
+    * Calls
+    * -----
+    * SetBridgeActivity(..)
+    */
     private void Plank()
     {
         isPlanking = true;
@@ -41,6 +52,16 @@ public class PlankingBehaviour : PlankingSpaceDetection
         transform.localScale = new Vector3(0.1f, 4f, 1f);
     }
 
+    /**
+    * Method Name: UnPlank()
+    * 
+    * Description:
+    * Method to take the player out of a plank, and move them back to their original position (position from where they started the plank)
+    *
+    * Calls
+    * -----
+    * SetBridgeActivity(..)
+    */
     private void UnPlank()
     {
         isPlanking = false;
@@ -52,16 +73,6 @@ public class PlankingBehaviour : PlankingSpaceDetection
         transform.localScale = new Vector3(1, 1, 1);
         
         positionBeforePlank = Vector3.zero; // Resetting the postion (shouldn't be necessaary, but just in case)
-    }
-
-    void OnCollisionEnter(Collision collisionInfo)
-    {
-        if (!isPlanking) return; // Only want to ignore collision when player is planking (can only happen in planking space)
-
-        if (collisionInfo.gameObject.CompareTag("Player")) // Only ignoring collisions between players
-        {
-            Physics.IgnoreCollision(collisionInfo.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
-        }
     }
 
     /**
@@ -103,6 +114,16 @@ public class PlankingBehaviour : PlankingSpaceDetection
     {
         // Child 0 of the planking space is the "bridge" (gameobject with only a collider attached)
         plankingSpace.transform.GetChild(0).gameObject.SetActive(activity);
+    }
+
+    void OnCollisionEnter(Collision collisionInfo)
+    {
+        if (!isPlanking) return; // Only want to ignore collision when player is planking (can only happen in planking space)
+
+        if (collisionInfo.gameObject.CompareTag("Player")) // Only ignoring collisions between players
+        {
+            Physics.IgnoreCollision(collisionInfo.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
     }
 
     public bool PlayerIsPlanking()

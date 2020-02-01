@@ -15,7 +15,6 @@ public abstract class PlankingSpaceDetection : MonoBehaviour
 {
     protected bool inPlankingSpace = false; // Variable to tell if a player is in a space where planking is available
     protected GameObject plankingSpace; // Reference to the planking space, if not in a planking space, this will be null
-    
 
     void OnTriggerEnter(Collider other)
     {
