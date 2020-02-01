@@ -7,7 +7,8 @@
  * @author Rikke Aas
  * @Date 2020/01/31
  * 
- * This class 
+ * This abstract class is inherited by both planking scripts (player with planking ability and player without)
+ * Methods in this class determine if players enter or exit a planking zone
 */
 
 public abstract class PlankingSpaceDetection : MonoBehaviour

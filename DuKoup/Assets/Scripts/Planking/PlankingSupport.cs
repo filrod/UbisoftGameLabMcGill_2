@@ -20,9 +20,8 @@ public class PlankingSupport : PlankingSpaceDetection
         // Can only "pull" player up if they are in the planking space, and the other player is currently planking
         if (inPlankingSpace && plankingBehaviour.PlayerIsPlanking() && Input.GetKeyDown(KeyCode.O))
         {
-            Vector3 moveToPos = transform.position;
-            int direction = (transform.position.x < plankingBehaviour.transform.position.x) ? 1 : -1;
-            moveToPos += new Vector3(direction, 0, 0); // Moving the planking player to a position just next to them
+            int direction = (transform.position.x < plankingBehaviour.transform.position.x) ? 1 : -1; // Descides wether to put planking player to left or right of them
+            Vector3 moveToPos = transform.position + new Vector3(direction, 0, 0); // Moving the planking player to a position just next to them
             plankingBehaviour.MovePlayerToPosition(moveToPos);
         }
     }

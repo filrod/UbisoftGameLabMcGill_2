@@ -12,10 +12,8 @@
 
 public class PlankingBehaviour : PlankingSpaceDetection
 {
-
     private bool isPlanking = false;
     private Vector3 positionBeforePlank;
-
 
     void FixedUpdate()
     {
@@ -32,7 +30,7 @@ public class PlankingBehaviour : PlankingSpaceDetection
     private void Plank()
     {
         isPlanking = true;
-        plankingSpace.GetComponent<PlankingSpace>().TurnOnBridge(); // Turns on bridge collider of planking space
+        SetBridgeActivity(true); // Turns on bridge collider of planking space
         
         positionBeforePlank = transform.position; // Storing the position of the player to be able to move it back after planking is done
 
@@ -46,7 +44,7 @@ public class PlankingBehaviour : PlankingSpaceDetection
     private void UnPlank()
     {
         isPlanking = false;
-        plankingSpace.GetComponent<PlankingSpace>().TurnOffBridge(); // Turning of bridge collider of the planking space
+        SetBridgeActivity(false); // Turning of bridge collider of the planking space
         
         // For the following three lines: see comments for similar lines in Plank()
         transform.position = positionBeforePlank;
@@ -66,16 +64,50 @@ public class PlankingBehaviour : PlankingSpaceDetection
         }
     }
 
-    public bool PlayerIsPlanking()
-    {
-        return isPlanking;
-    }
-
-    // Method other player will call to move planking player to other side after crossing planking bridge
+    /**
+    * Method Name: MovePlayerToPosition(..)
+    * 
+    * Description:
+    * Method other player will call to move planking player to other side after crossing planking bridge.
+    * It will also un-plank the player (since this makes sense), even though the planking player might still be holding down 
+    * the planking button.
+    * 
+    * Parameters
+    * ----------
+    * newPos : Vector3
+    *       This variable is the position the planking player will be moved to
+    *
+    * Calls
+    * -----
+    * UnPlank()
+    */
     public void MovePlayerToPosition(Vector3 newPos)
     {
         positionBeforePlank = newPos;
         UnPlank();
+    }
+
+    /**
+    * Method Name: SetBridgeActivity(..)
+    * 
+    * Description:
+    * Method used by planking player (PlankingBehaviour script) to turn on or off the "bridge" which
+    * is just a collider to give the illusion of one player using the other as a bridge.
+    * 
+    * Parameters
+    * ----------
+    * activity : bool
+    *       This variable tell the method wether the bridge should be actived (true) or deactivated (false)
+    */
+    public void SetBridgeActivity(bool activity)
+    {
+        // Child 0 of the planking space is the "bridge" (gameobject with only a collider attached)
+        plankingSpace.transform.GetChild(0).gameObject.SetActive(activity);
+    }
+
+    public bool PlayerIsPlanking()
+    {
+        return isPlanking;
     }
     
 }
