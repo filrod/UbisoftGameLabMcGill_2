@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:DuKoup/Assets/Scripts/enemy.cs.meta
-guid: 16ef4f722914cf44381bd9910c7fda90
+<<<<<<< HEAD:DuKoup/Assets/Scripts/jointRotation.cs.meta
+guid: cace2688112dff645bae13d88305d294
 =======
-guid: 312615e1438474c6a8210dbdc1118c90
->>>>>>> rikke:DuKoup/Assets/Scripts/Planking/PlankingBehaviour.cs.meta
+guid: 4b7f4fccbf44544cbb00ab28c8922515
+>>>>>>> rikke:DuKoup/Assets/Scripts/Planking/PlankingSpaceDetection.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

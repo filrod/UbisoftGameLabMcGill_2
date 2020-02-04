@@ -15,6 +15,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Fields 
+    [SerializeField] private PlankingBehaviour plankingBehaviour;
 
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] private int playerId;
@@ -92,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void FixedUpdate()
     {
+        if (plankingBehaviour != null && plankingBehaviour.PlayerIsPlanking()) return;
         movementXY.x = Input.GetAxis(horizontalAxis) * speed;
         movementXY.y = 0;
 
