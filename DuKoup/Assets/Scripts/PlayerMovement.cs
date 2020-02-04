@@ -15,7 +15,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Fields 
-    [SerializeField] private PlankingBehaviour plankingBehaviour;
 
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] private int playerId;
@@ -44,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("A constant that makes gravity more intense at the peak of one's small hop.")]
     [Range(0.0f, 6.0f)] [SerializeField] private float lowJumpGravityMultiplier = 5f;
 
+    [Tooltip("Planking cript behaiour reference")] [SerializeField] private PlankingBehaviour plankingBehaviour;
+
     /// <summary> 2D Vector for horizontal and vertical movement respectively </summary>
     private Vector2 movementXY;
     /// <summary> Horizontal axis string to store which player's horizontal axis to access. </summary>
@@ -52,6 +53,9 @@ public class PlayerMovement : MonoBehaviour
     private string jumpButton;
     /// <summary> Velocity used in smoothing </summary>
     private Vector3 m_Velocity = Vector3.zero;
+
+    private const float g = 9.81f;
+    private const float averageHumanJump = 2.5f; // Times your mass on earth
 
 
 
@@ -93,12 +97,13 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void FixedUpdate()
     {
-        if (plankingBehaviour != null && plankingBehaviour.PlayerIsPlanking()) return;
+        // Avoid movement for planking player
+        if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
+
         movementXY.x = Input.GetAxis(horizontalAxis) * speed;
         movementXY.y = 0;
 
         Jump();
-
         // Move the character by finding the target velocity
         Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
         // And then smoothing it out and applying it to the character
@@ -147,5 +152,4 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
-
 } 

@@ -46,6 +46,8 @@ public class PlayersCollision : MonoBehaviour
     void Update()
     {
         if (plankingBehaviour.PlayerIsPlanking()) return;
+        if (Mathf.RoundToInt(instancePlayer.transform.position.y) != Mathf.RoundToInt(otherPlayer.transform.position.y)) return;
+        
         // Create a collision area for otherPlayer
         // 2D area, with the radius of the size of the players, centered on otherPlayer.
         // Be sure that every players are in Alpha plane
