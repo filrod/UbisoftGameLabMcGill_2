@@ -15,6 +15,7 @@ using UnityEngine;
 public class PlayersCollision : MonoBehaviour
 {
     // Fields
+    [SerializeField] private PlankingBehaviour plankingBehaviour;
 
     // Two players, instancePlayer has the script attached
     [SerializeField] private Rigidbody instancePlayer;
@@ -33,9 +34,6 @@ public class PlayersCollision : MonoBehaviour
     private float diffPlane;
     private float currentPlane;
 
-    //
-    private static bool isSomeoneInBeta;
-
     // Only the player with the greatest velocity should change plane
     private bool isFaster;
     private bool isAtEqualSpeed;
@@ -47,7 +45,9 @@ public class PlayersCollision : MonoBehaviour
 
     void Update()
     {
-
+        if (plankingBehaviour.PlayerIsPlanking()) return;
+        if (Mathf.RoundToInt(instancePlayer.transform.position.y) != Mathf.RoundToInt(otherPlayer.transform.position.y)) return;
+        
         // Create a collision area for otherPlayer
         // 2D area, with the radius of the size of the players, centered on otherPlayer.
         // Be sure that every players are in Alpha plane
@@ -62,11 +62,10 @@ public class PlayersCollision : MonoBehaviour
         isFaster = instancePlayer.velocity.magnitude > otherPlayer.velocity.magnitude;
         isAtEqualSpeed = instancePlayer.velocity.magnitude == otherPlayer.velocity.magnitude;
 
-        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster && !isSomeoneInBeta)
-        { 
+        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster)
+        {   
             // If they are at the same speed, Player 2 should move around Player 1
             if (! (isAtEqualSpeed && isMainPlayer)){
-                isSomeoneInBeta = true;
                 instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
             }
         }
@@ -74,7 +73,6 @@ public class PlayersCollision : MonoBehaviour
         if ( currentPlane == betaPlane && (playerPos <= areaPositionMin || playerPos >= areaPositionMax))
         {
             instancePlayer.transform.position += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
-            isSomeoneInBeta = false;
         }
     }
 }
