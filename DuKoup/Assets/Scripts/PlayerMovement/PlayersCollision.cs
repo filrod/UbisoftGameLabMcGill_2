@@ -69,10 +69,12 @@ public class PlayersCollision : MonoBehaviour
                 instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
             }
         }
-
-        if ( currentPlane == betaPlane && (playerPos <= areaPositionMin || playerPos >= areaPositionMax))
+        else if ( currentPlane == betaPlane && (playerPos <= areaPositionMin || playerPos >= areaPositionMax))
         {
             instancePlayer.transform.position += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
+        }
+        else if ((playerPos <= areaPositionMin || playerPos >= areaPositionMax) && (currentPlane != alphaPlane)){
+            instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
         }
     }
 }
