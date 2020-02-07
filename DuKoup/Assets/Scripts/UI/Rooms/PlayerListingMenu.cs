@@ -129,16 +129,16 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            for (int i = 0; i < _listings.Count; i++)
-            {
-                if (_listings[i].Player != PhotonNetwork.LocalPlayer)
-                {
-                    if (!_listings[i].Ready)
-                    {
-                        return;
-                    }
-                }
-            }
+            //for (int i = 0; i < _listings.Count; i++)
+            //{
+            //    if (_listings[i].Player != PhotonNetwork.LocalPlayer)
+            //    {
+            //        if (!_listings[i].Ready)
+            //        {
+            //            return;
+            //        }
+            //    }
+            //}
 
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
