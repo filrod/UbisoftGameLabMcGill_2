@@ -29,6 +29,11 @@ public class RaiseEventExample : MonoBehaviourPun
         {
             ChangeColor();
         }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            _spriteRender.color = new Color(0, 0, 0);
+        }
     }
 
     private void OnEnable()

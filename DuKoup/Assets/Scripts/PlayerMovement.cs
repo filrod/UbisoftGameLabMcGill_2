@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ using UnityEngine;
  * This class controls player movement
 */
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
     // Fields 
 
@@ -99,15 +100,17 @@ public class PlayerMovement : MonoBehaviour
     {
         // Avoid movement for planking player
         if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
+        if (base.photonView.IsMine)
+        {
+            movementXY.x = Input.GetAxis(horizontalAxis) * speed;
+            movementXY.y = 0;
 
-        movementXY.x = Input.GetAxis(horizontalAxis) * speed;
-        movementXY.y = 0;
-
-        Jump();
-        // Move the character by finding the target velocity
-        Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
-        // And then smoothing it out and applying it to the character
-        player.velocity = Vector3.SmoothDamp(player.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+            Jump();
+            // Move the character by finding the target velocity
+            Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
+            // And then smoothing it out and applying it to the character
+            player.velocity = Vector3.SmoothDamp(player.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+        }
     }
 
     /// <summary>
