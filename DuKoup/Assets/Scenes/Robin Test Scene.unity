@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 232094356}
   - component: {fileID: 232094360}
   - component: {fileID: 232094359}
+  - component: {fileID: 232094361}
   m_Layer: 0
   m_Name: dummy2
   m_TagString: Player
@@ -339,6 +340,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &232094361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232094354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31cf03dbda5164ff1a93394406365332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 0
 --- !u!1 &289543733
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,6 +580,7 @@ MonoBehaviour:
   key2: 108
   area1: {fileID: 2121411155}
   area2: {fileID: 2035768783}
+  strengthlvl: 0
 --- !u!1 &338587467
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +771,7 @@ GameObject:
   - component: {fileID: 640491664}
   - component: {fileID: 640491665}
   - component: {fileID: 640491669}
+  - component: {fileID: 640491670}
   m_Layer: 0
   m_Name: dummy1
   m_TagString: Player
@@ -883,6 +899,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   otherPlayer: {fileID: 232094354}
   pushSpeed: 10
+--- !u!114 &640491670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640491662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31cf03dbda5164ff1a93394406365332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
