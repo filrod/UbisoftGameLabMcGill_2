@@ -8,6 +8,7 @@ public class AIfieldOfView : MonoBehaviour
     private Vector2 targetPos = Vector2.zero;
     private bool isWandering = true;
 
+    [SerializeField] private Camera camera;
     [SerializeField] private float minX;
     [SerializeField] private float maxX;
     [SerializeField] private float minY;
@@ -26,7 +27,7 @@ public class AIfieldOfView : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) PlayerSetPos();
 
         if (transform.position.Equals(targetPos)) targetPos = Vector2.zero;
-        if (targetPos.Equals(Vector2.zero))
+        if (!targetPos.Equals(Vector2.zero))
         {
             if (transform.position.Equals(wanderingTowards)) wanderingTowards = generateRandomWnaderingPos();
             if (isWandering)
@@ -40,15 +41,13 @@ public class AIfieldOfView : MonoBehaviour
         }
     }
 
-    private void Wandering()
-    {
 
-    }
 
     private void PlayerSetPos()
     {
         Debug.Log("mouse click");
-        targetPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        Vector2 pos = camera.ScreenToWorldPoint(Input.mousePosition);
+        targetPos = pos;
     }
 
     private Vector2 generateRandomWnaderingPos()
