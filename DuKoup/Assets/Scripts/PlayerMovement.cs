@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,8 @@ public class PlayerMovement : MonoBehaviourPun
     // Fields 
 
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
-    [SerializeField] private int playerId;
+    // [SerializeField] private int playerId;
+    // Used PhotonNetwork.LocalPlayer.ActorNumber instead
 
     /// <summary> A rigidbody component on the player to control physics (serialized) </summary>
     [Tooltip("A rigidbody component on the player to control physics")]
@@ -75,16 +77,8 @@ public class PlayerMovement : MonoBehaviourPun
     {
         movementXY = new Vector2(0, 0);
 
-        if (playerId == 1)
-        {
-            horizontalAxis = "Horizontal1";
-            jumpButton = "Vertical1";
-        }
-        else if (playerId == 2)
-        {
-            horizontalAxis = "Horizontal2";
-            jumpButton = "Vertical2";
-        }
+        horizontalAxis = "Horizontal1";
+        jumpButton = "Vertical1";
     }
 
     /// <summary>
@@ -99,9 +93,10 @@ public class PlayerMovement : MonoBehaviourPun
     public void FixedUpdate()
     {
         // Avoid movement for planking player
-        if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
+        // if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
         if (base.photonView.IsMine)
         {
+            Debug.Log("Move");
             movementXY.x = Input.GetAxis(horizontalAxis) * speed;
             movementXY.y = 0;
 
@@ -119,7 +114,7 @@ public class PlayerMovement : MonoBehaviourPun
     /// <returns> Returns an integer 1 or 2 depending on the player using this class </returns>
     public int GetPlayerId()
     {
-        return this.playerId;
+        return PhotonNetwork.LocalPlayer.ActorNumber;
     }
 
     /// <summary>

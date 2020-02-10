@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 1
   player: {fileID: 8085596993072315475}
   speed: 10
   m_MovementSmoothing: 0.05

@@ -22,6 +22,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     public void SetPlayerInfo(Player player)
     {
         Player = player;
+
         SetPlayerText(player);
         
     }
@@ -31,7 +32,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
         if (targetPlayer != null && targetPlayer == Player)
         {
-            if (changedProps.ContainsKey("RandomNumber"))
+            // if (changedProps.ContainsKey("ID"))
             {
                 SetPlayerText(targetPlayer);
             }
@@ -40,11 +41,11 @@ public class PlayerListing : MonoBehaviourPunCallbacks
 
     private void SetPlayerText(Player player)
     {
-        int result = -1;
-        if (player.CustomProperties.ContainsKey("RandomNumber"))
-        {
-            result = (int)player.CustomProperties["RandomNumber"];
-            _text.text = result.ToString() + ", " + player.NickName;
-        }
+        // int result = -1;
+        //if (player.CustomProperties.ContainsKey("ID"))
+        //{
+        //    result = (int)player.CustomProperties["ID"];
+            _text.text = "ID:" + player.ActorNumber + ", " + player.NickName;
+        //}
     }
 }

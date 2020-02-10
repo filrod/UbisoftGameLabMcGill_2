@@ -1751,6 +1751,16 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7505146853977472083, guid: 7fc261226eed20542b9a815a3909a390,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899121961760671919, guid: 7fc261226eed20542b9a815a3909a390,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8085596992917967169, guid: 7fc261226eed20542b9a815a3909a390,
         type: 3}
       propertyPath: plankingBehaviour

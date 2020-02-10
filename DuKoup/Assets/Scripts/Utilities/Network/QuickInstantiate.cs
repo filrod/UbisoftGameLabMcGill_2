@@ -11,7 +11,6 @@ public class QuickInstantiate : MonoBehaviour
     {
         Vector2 offset = Random.insideUnitCircle * 3f;
         Vector3 position = new Vector3(transform.position.x + offset.x, transform.position.y + offset.y, transform.position.z);
-
         MasterManager.NetworkInstantiate(_prefab, position, Quaternion.identity);
     }
 
