@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Scientist : MonoBehaviour
 {
+
+    [SerializeField] protected float maxX;
+    [SerializeField] protected float minX;
+    [SerializeField] protected float maxZ;
+    [SerializeField] protected float minZ;
+
     public StateMachine stateMachine => GetComponent<StateMachine>();
 
     private Vector3? targetPosition = null;
@@ -21,5 +27,17 @@ public class Scientist : MonoBehaviour
     {
         this.targetPosition = targetPosition;
     }
+
+    //public Vector3? IsTriggered()
+    //{
+
+    //}
+
+
+    public float GetMinX() { return minX; }
+    public float GetMaxX() { return maxX; }
+    public float GetMinZ() { return minZ; }
+    public float GetMaxZ() { return maxZ; }
+
 
 }

@@ -37,5 +37,7 @@ public class StateMachine : MonoBehaviour
             currentState = allStates[typeof(WanderState)];
         }
 
+        currentState.TransitionCheck();
+
     }
 }
