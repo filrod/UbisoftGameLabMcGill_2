@@ -12,15 +12,14 @@ public class WanderState : BaseState
 
 
     private float movementRange = 4.5f;
-    private float wanderSpeed = 3f;
-    private float rotationSpeed = 3f;
+    private float wanderSpeed = 2f;
+    private float rotationSpeed = 1f;
     private float distAtDestination = 1f;
 
     private Vector3 randMovement;
     private Quaternion desiredRotation;
 
     private Scientist scientist;
-    private Vector3? triggerDestination = null;
 
     public WanderState(Scientist scientist) : base(scientist.gameObject)
     {
@@ -32,14 +31,15 @@ public class WanderState : BaseState
     private Vector3 GetNewRandMovement()
     {
         Vector3 newMove = -transform.forward + new Vector3(UnityEngine.Random.Range(-movementRange, movementRange), 0, UnityEngine.Random.Range(-movementRange, movementRange));
-        desiredRotation = Quaternion.LookRotation(randMovement);
+        desiredRotation = Quaternion.LookRotation(newMove);
         return newMove.normalized;
     }
 
     public override Type TransitionCheck()
     {
 
-        Vector3? triggerPosition = TriggerSetOf();
+        // Checking if the scientist is triggered by something
+        Vector3? triggerPosition = scientist.IsTriggered();
         if (triggerPosition != null)
         {
             scientist.SetTargetPosition(triggerPosition);

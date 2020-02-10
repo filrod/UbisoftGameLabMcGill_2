@@ -37,7 +37,31 @@ public class StateMachine : MonoBehaviour
             currentState = allStates[typeof(WanderState)];
         }
 
-        currentState.TransitionCheck();
+        Type newStateType = currentState.TransitionCheck();
 
+        if (newStateType != null) // We are changing state
+        {
+            DoTransition(newStateType);
+        }
+
+    }
+
+
+    private void DoTransition(Type newStateType)
+    {
+        if (newStateType == typeof(WanderState))
+        {
+            Debug.Log("Back To Wandering");
+            currentState = allStates[newStateType];
+            return;
+        }
+
+        if (newStateType == typeof(InvestigateState))
+        {
+            Debug.Log("Investigating!");
+            currentState = allStates[newStateType];
+            return;
+        }
+        currentState = allStates[newStateType];
     }
 }
