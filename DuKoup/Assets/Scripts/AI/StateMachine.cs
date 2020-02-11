@@ -53,15 +53,14 @@ public class StateMachine : MonoBehaviour
         {
             Debug.Log("Back To Wandering");
             currentState = allStates[newStateType];
-            return;
         }
 
         if (newStateType == typeof(InvestigateState))
         {
             Debug.Log("Investigating!");
             currentState = allStates[newStateType];
-            return;
         }
         currentState = allStates[newStateType];
+        currentState.TransitionLogic();
     }
 }

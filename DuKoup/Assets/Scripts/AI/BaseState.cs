@@ -13,4 +13,8 @@ public abstract class BaseState
     }
 
     public abstract Type TransitionCheck();
+
+    public virtual void TransitionLogic()
+    {
+    }
 }

@@ -16,6 +16,7 @@ public class InvestigateState : BaseState
     private float rotationSpeed = 3f;
     private float atDestinationDist = 5f;
 
+    private Quaternion desiredRotation;
 
     private Scientist scientist;
 
@@ -30,22 +31,47 @@ public class InvestigateState : BaseState
         // Checking if we are in correct position with correct rotation
         if (Vector3.Distance(transform.position, scientist.GetTargetPosition().Value) < atDestinationDist)
         {
-            // Rotating towards destination
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, rotationSpeed * Time.deltaTime);
 
             if (transform.rotation.eulerAngles == Vector3.zero)
             {
                 return typeof(WanderState); // TODO return swipe state or something. Is in correct position, should look around
             }
+            else
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(0, 0, 1)), rotationSpeed * Time.deltaTime);
+            }
         }
 
-
-        // Checking if we will move out of bounds
-        Vector3 nextPos = transform.position - transform.forward * movementSpeed * Time.deltaTime;
-        transform.position = nextPos;
+        // Rotating towards destination
+        if (transform.rotation != desiredRotation)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+            transform.position += transform.forward * (movementSpeed/5) * Time.deltaTime;
+        }
+        else
+        {
+            transform.position += transform.forward * movementSpeed * Time.deltaTime;
+        }
+        
 
         return null;
    
+    }
+
+
+    public override void TransitionLogic()
+    {
+        SetDesiredRotationFromScientistTarget();
+    }
+
+
+    public void SetDesiredRotationFromScientistTarget()
+    {
+        Vector3? target = scientist.GetTargetPosition();
+
+        if (target.Value == null) return; // The scientists target position is a nullable vector 3 so we need to check that it has a value
+        Debug.Log("Finding rotation");
+        desiredRotation = Quaternion.LookRotation(-target.Value);
     }
 
 }
