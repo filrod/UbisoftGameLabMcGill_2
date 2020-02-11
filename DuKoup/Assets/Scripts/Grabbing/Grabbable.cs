@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/* <summary> 
-*   Abstract class that every objects that you can grab inherits
-*   To change the Grabbing and Ungrabbing mechanics,  override Grab() and UnGrab()
-*
-*   Change key1 to change the grabbing control of player1, key2 for player2
-*
-*   Note: We should change the UnGrab() transform position vector
-*   To add: Controling the object with mouse when it is grabbed
-</summary> */
+/// <summary> 
+///  Abstract class that every objects that you can grab inherits
+///   To change the Grabbing and Ungrabbing mechanics,  override Grab() and UnGrab()
+///
+///   Change key1 to change the grabbing control of player1, key2 for player2
+///
+///   Note: We should change the UnGrab() transform position vector
+///   To add: Controling the object with mouse when it is grabbed
+/// </summary> 
 
 public abstract class Grabbable : MonoBehaviour
 {
