@@ -32,7 +32,6 @@ public abstract class Grabbable : MonoBehaviour
    [SerializeField] private Collider2D area1;
    [SerializeField] private Collider2D area2;
 
-   [SerializeField] private int strengthlvl;
 
     private Vector3 screenPoint;
 	private Vector3 offset;
