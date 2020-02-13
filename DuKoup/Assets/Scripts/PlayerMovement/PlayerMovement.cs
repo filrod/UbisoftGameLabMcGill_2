@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement")]
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speed = 6.0f;
 
     /// <summary> Movement smoothing parameter for crossing between playable planes (serialized) </summary>
     [Tooltip("Movement smoothing parameter for crossing between playable planes")]
