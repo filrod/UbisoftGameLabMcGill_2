@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4514007, g: 0.50089306, b: 0.57231265, a: 1}
+  m_IndirectSpecularColor: {r: 0.45140058, g: 0.5008929, b: 0.57231224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -618,15 +618,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199664510}
     m_Modifications:
+    - target: {fileID: 769317845698868739, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: collider
       objectReference: {fileID: 0}
+    - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: shelf
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5753241113561607618, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
@@ -687,6 +702,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shelf_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94f5b8cf992defe4e8826c059b83ef98, type: 3}
@@ -1022,15 +1042,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199664510}
     m_Modifications:
+    - target: {fileID: 769317845698868739, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: collider
       objectReference: {fileID: 0}
+    - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: shelf
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5753241113561607618, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
@@ -1091,6 +1126,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shelf_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94f5b8cf992defe4e8826c059b83ef98, type: 3}
@@ -1373,7 +1413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0000011920929, y: 3.3541298, z: -10}
+  m_LocalPosition: {x: 0.0000002682209, y: 3.3541298, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1422,7 +1462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1199664510}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shelves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1528,15 +1568,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199664510}
     m_Modifications:
+    - target: {fileID: 769317845698868739, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: collider
       objectReference: {fileID: 0}
+    - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: shelf
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5753241113561607618, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
@@ -1602,6 +1657,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94f5b8cf992defe4e8826c059b83ef98, type: 3}
@@ -1702,15 +1762,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199664510}
     m_Modifications:
+    - target: {fileID: 769317845698868739, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: collider
       objectReference: {fileID: 0}
+    - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: shelf
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5753241113561607618, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
@@ -1771,6 +1846,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shelf_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94f5b8cf992defe4e8826c059b83ef98, type: 3}
@@ -1835,7 +1915,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891070085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0000011920929, y: 3.3541298, z: -10}
+  m_LocalPosition: {x: 0.0000002682209, y: 3.3541298, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 918772454}
@@ -1911,15 +1991,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199664510}
     m_Modifications:
+    - target: {fileID: 769317845698868739, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: collider
       objectReference: {fileID: 0}
+    - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: shelf
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5753241113561607618, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
@@ -1981,6 +2076,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: shelf_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94f5b8cf992defe4e8826c059b83ef98, type: 3}
 --- !u!4 &2094498143 stripped
@@ -2041,15 +2141,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199664510}
     m_Modifications:
+    - target: {fileID: 769317845698868739, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: collider
       objectReference: {fileID: 0}
+    - target: {fileID: 769317846449667284, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
       propertyPath: m_Name
       value: shelf
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057250899842865030, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5753241113561607618, guid: 94f5b8cf992defe4e8826c059b83ef98,
         type: 3}
@@ -2115,6 +2230,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94f5b8cf992defe4e8826c059b83ef98, type: 3}
@@ -2298,7 +2418,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3195611540364887781}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -1.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6514648622836406875}
