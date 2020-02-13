@@ -54,6 +54,11 @@ public class PlayerMovement : MonoBehaviour
     /// <summary> Velocity used in smoothing </summary>
     private Vector3 m_Velocity = Vector3.zero;
 
+    /// <summary>
+    /// Contains info on the raycast checking if the player 
+    /// </summary>
+    private RaycastHit distToGround;
+
     private const float g = 9.81f;
     private const float averageHumanJump = 2.5f; // Times your mass on earth
 
@@ -119,19 +124,24 @@ public class PlayerMovement : MonoBehaviour
         return this.playerId;
     }
 
-    /// <summary>
-    /// Method to jump. Contains modifier for both a short hop and a longer/higher jump.
-    /// Modifies gravity to make descent faster than ascent.
-    /// </summary>
-    /// <returns> Returns Void </returns>
-    private void Jump()
+    //public bool IsGrounded(){
+    //    Physics.Raycast(transform.position, -Vector3.up, distToGround);
+    //    return Mathf.Abs(distToGround.transform-transform.position)<0.1;
+    //}
+
+/// <summary>
+/// Method to jump. Contains modifier for both a short hop and a longer/higher jump.
+/// Modifies gravity to make descent faster than ascent.
+/// </summary>
+/// <returns> Returns Void </returns>
+private void Jump()
     {
         // Add check to see if player is touching the ground
-        if (Input.GetButtonDown(jumpButton) && player.velocity.y==0)
+        if (Input.GetButton(jumpButton) && player.velocity.y<=0.01 && player.velocity.y>=-0.01)
         {
 
             //player.AddForce(transform.up * player.mass * g * averageHumanJump*15f*Time.deltaTime, ForceMode.Impulse);
-            player.velocity += Vector3.up * jumpVelocity;
+            player.velocity += Vector3.up * jumpVelocity * Time.deltaTime;
 
         }
 
@@ -139,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
         // This next part makes jumps more videogame-like
 
         // If player is falling back down
-        if (player.velocity.y < 0)
+        if (player.velocity.y < -0.01)
         {
             player.velocity += Vector3.up * Physics.gravity.y * (gravityMultiplier - 1) * Time.deltaTime;
             Debug.Log("Falling");
