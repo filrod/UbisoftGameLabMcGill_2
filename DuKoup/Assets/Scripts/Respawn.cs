@@ -9,10 +9,10 @@ using UnityEngine;
  * @author Thomas Buffard
  * @Date 2020/02/14
  * 
- * This class resets the character to the beginning when they fall
+ * This class respawns the character when they fall
 */
 
-public class reset : MonoBehaviour
+public class Respawn : MonoBehaviour
 {
     // Fields
     /// <summary> Fall height </summary>
