@@ -2178,6 +2178,7 @@ GameObject:
   - component: {fileID: 821038464}
   - component: {fileID: 821038465}
   - component: {fileID: 821038466}
+  - component: {fileID: 821038467}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -2239,6 +2240,20 @@ MonoBehaviour:
   collisionRadius: 1.4
   alphaPlane: 0
   betaPlane: 2
+--- !u!114 &821038467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821038463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e584debefc1e4966bcbfe8384642bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallHeight: -14
+  player: {fileID: 640491664}
 --- !u!1 &896806464
 GameObject:
   m_ObjectHideFlags: 0
@@ -3581,6 +3596,7 @@ GameObject:
   - component: {fileID: 1342438198}
   - component: {fileID: 1342438199}
   - component: {fileID: 1342438200}
+  - component: {fileID: 1342438201}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -3642,6 +3658,20 @@ MonoBehaviour:
   collisionRadius: 1.4
   alphaPlane: 0
   betaPlane: 2
+--- !u!114 &1342438201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342438197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e584debefc1e4966bcbfe8384642bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallHeight: -14
+  player: {fileID: 232094360}
 --- !u!1001 &1367267754
 PrefabInstance:
   m_ObjectHideFlags: 0
