@@ -7,7 +7,7 @@ using UnityEngine;
  * -----------------------------------
  * 
  * @author Filipe Rodrigues, Robin Leman
- * @Date 2020/01/28
+ * @Date 2020/02/12
  * 
  * This class controls player movement
 */
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement")]
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speed = 8.0f;
 
     /// <summary> Movement smoothing parameter for crossing between playable planes (serialized) </summary>
     [Tooltip("Movement smoothing parameter for crossing between playable planes")]
@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> A constant that makes gravity more intense at the peak of one's jump (only for high jumps). </summary>
     [Tooltip("A constant that makes gravity more intense at the peak of one's jump (only for high jumps).")]
-    [Range(0.0f, 6.0f)] [SerializeField] private float gravityMultiplier = 2f;
+    [Range(0.0f, 6.0f)] [SerializeField] private float gravityMultiplier = 5f;
 
     /// <summary> A constant that makes gravity more intense at the peak of one's small hop. </summary>
     [Tooltip("A constant that makes gravity more intense at the peak of one's small hop.")]
@@ -61,7 +61,6 @@ public class PlayerMovement : MonoBehaviour
 
     private const float g = 9.81f;
     private const float averageHumanJump = 2.5f; // Times your mass on earth
-
 
 
     /// <summary>
@@ -100,15 +99,21 @@ public class PlayerMovement : MonoBehaviour
     /// Calls:
     /// jump()
     /// </summary>
-    public void FixedUpdate()
+    public void Update()
     {
         // Avoid movement for planking player
-        if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
+        //if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
 
         movementXY.x = Input.GetAxis(horizontalAxis) * speed;
         movementXY.y = 0;
 
-        Jump();
+        // Add check to see if player is touching the ground
+        if (Input.GetButtonDown(jumpButton) && player.velocity.y==0)
+        {
+            Jump();
+        }
+
+        
         // Move the character by finding the target velocity
         Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
         // And then smoothing it out and applying it to the character
@@ -136,18 +141,10 @@ public class PlayerMovement : MonoBehaviour
 /// <returns> Returns Void </returns>
 private void Jump()
     {
-        // Add check to see if player is touching the ground
-        if (Input.GetButton(jumpButton) && player.velocity.y<=0.01 && player.velocity.y>=-0.01)
-        {
-
-            //player.AddForce(transform.up * player.mass * g * averageHumanJump*15f*Time.deltaTime, ForceMode.Impulse);
-            player.velocity += Vector3.up * jumpVelocity * Time.deltaTime;
-
-        }
-
+        //player.AddForce(transform.up * player.mass * g * averageHumanJump*15f*Time.deltaTime, ForceMode.Impulse);
+        player.velocity += Vector3.up * jumpVelocity;
 
         // This next part makes jumps more videogame-like
-
         // If player is falling back down
         if (player.velocity.y < -0.01)
         {

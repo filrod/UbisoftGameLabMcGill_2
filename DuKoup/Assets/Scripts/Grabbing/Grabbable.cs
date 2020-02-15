@@ -25,12 +25,13 @@ public abstract class Grabbable : MonoBehaviour
 
    [SerializeField] private float radius = 0.1f; 
 
-   [SerializeField] private KeyCode key1 = KeyCode.E;
-   [SerializeField] private KeyCode key2 = KeyCode.L;
+   [SerializeField] private KeyCode key1 = KeyCode.L;
+   [SerializeField] private KeyCode key2 = KeyCode.E;
 
    
    [SerializeField] private Collider2D area1;
    [SerializeField] private Collider2D area2;
+
 
     private Vector3 screenPoint;
 	private Vector3 offset;
@@ -96,7 +97,18 @@ public abstract class Grabbable : MonoBehaviour
         isGrabbed = false;
    }
 
-    // If the object is grabbed, we want to drag it.
+       // Method to check if the player has hit the correct input and is at the correct location to grab the object.
+   public bool CanInteract(KeyCode key, Transform player)
+   {
+       float distance = Vector3.Distance(player.position, obj.transform.position);
+       return Input.GetKeyDown(key) && (distance <= radius);
+   }
+
+    /////// UNCOMMENT TO HAVE DRAGGING
+    /*
+
+
+     // If the object is grabbed, we want to drag it.
     public void FixedUpdate(){
         if (isGrabbed){
             Vector3 cursorPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
@@ -104,13 +116,6 @@ public abstract class Grabbable : MonoBehaviour
 		    transform.position = cursorPosition;
         }
     }
-
-    // Method to check if the player has hit the correct input and is at the correct location to grab the object.
-   public bool CanInteract(KeyCode key, Transform player)
-   {
-       float distance = Vector3.Distance(player.position, obj.transform.position);
-       return Input.GetKeyDown(key) && (distance <= radius);
-   }
 
     // Restrict grabbed object in area
 
@@ -134,6 +139,8 @@ public abstract class Grabbable : MonoBehaviour
         // apply the clamped position
         transform.position = clampedPosition;
     }
+
+    */
 
     // Draw interaction radius in the inspector. For developpers. 
     void OnDrawGizmosSelected()
