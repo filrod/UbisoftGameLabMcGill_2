@@ -13,7 +13,7 @@ public class WanderState : BaseState
 
     private float movementRange = 10f;
     private float wanderSpeed = 2f;
-    private float rotationSpeed = 3f;
+    private float rotationSpeed = 1f;
     private float distAtDestination = 1f;
 
     private Vector3 destination;

@@ -35,9 +35,9 @@ public class Scientist : MonoBehaviour
 
     public Vector3? IsTriggered()
     {
-        if (Random.Range(0f, 100f) < 0)
+        if (Random.Range(0f, 100f) < 0.5f)
         {
-            return new Vector3(0, transform.position.y, 10);
+            return new Vector3(0, transform.position.y, 8);
         }
 
         return null;

@@ -52,6 +52,7 @@ public class StateMachine : MonoBehaviour
         if (newStateType == typeof(WanderState))
         {
             Debug.Log("Back To Wandering");
+            
             currentState = allStates[newStateType];
         }
 
