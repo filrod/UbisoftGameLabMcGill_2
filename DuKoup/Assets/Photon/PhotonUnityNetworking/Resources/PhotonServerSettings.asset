@@ -28,9 +28,6 @@ MonoBehaviour:
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
-  RpcList:
-  - ClickRpc
-  - DestroyRpc
-  - RPC_ChangeReadyState
+  RpcList: []
   DisableAutoOpenWizard: 1
   ShowSettings: 0
