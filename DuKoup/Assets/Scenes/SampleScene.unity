@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.45140028, g: 0.50089264, b: 0.5723122, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -471,6 +471,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: grad_cylinder_02
       objectReference: {fileID: 0}
+    - target: {fileID: 7096195392956289872, guid: 09021b6026c4b42a58a2d3d5f2516df9,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlankingSpace
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09021b6026c4b42a58a2d3d5f2516df9, type: 3}
 --- !u!4 &98972695 stripped
@@ -594,13 +599,13 @@ Transform:
   - {fileID: 1199664510}
   - {fileID: 717545977}
   - {fileID: 8509471804525391585}
+  - {fileID: 463667468}
   - {fileID: 129490968}
   - {fileID: 5006512735570184785}
   - {fileID: 424605230}
   - {fileID: 6514648622836406875}
   - {fileID: 1478130710}
   - {fileID: 4739045790056243200}
-  - {fileID: 463667468}
   - {fileID: 1924777520}
   - {fileID: 255128150}
   - {fileID: 8308941592494444217}
@@ -1502,7 +1507,7 @@ Transform:
   m_LocalScale: {x: 3.0119522, y: 1.0272337, z: 3.8222978}
   m_Children: []
   m_Father: {fileID: 128347523}
-  m_RootOrder: 10
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &463667469
 BoxCollider:
@@ -2372,13 +2377,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
+  canHighJump: 0
   player: {fileID: 640491664}
-  speed: 8
+  speed: 640
   m_MovementSmoothing: 0.05
-  jumpVelocity: 6.5
-  gravityMultiplier: 5
+  jumpVelocity: 7
+  gravityMultiplier: 6
   lowJumpGravityMultiplier: 5
   plankingBehaviour: {fileID: 0}
+  playerHeightWaistDown: 1.26
 --- !u!114 &821038466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3609,13 +3616,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 2
+  canHighJump: 0
   player: {fileID: 232094360}
-  speed: 8
+  speed: 640
   m_MovementSmoothing: 0.05
   jumpVelocity: 7
   gravityMultiplier: 6
   lowJumpGravityMultiplier: 5
   plankingBehaviour: {fileID: 232094359}
+  playerHeightWaistDown: 1.26
 --- !u!114 &1342438200
 MonoBehaviour:
   m_ObjectHideFlags: 0

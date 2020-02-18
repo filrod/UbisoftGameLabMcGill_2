@@ -19,13 +19,25 @@ public class PlayerMovement : MonoBehaviour
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] private int playerId;
 
+    /// <summary>
+    /// Ability to high jump
+    /// </summary>
+    [SerializeField] private bool canHighJump = false;
+
     /// <summary> A rigidbody component on the player to control physics (serialized) </summary>
     [Tooltip("A rigidbody component on the player to control physics")]
     [SerializeField] private Rigidbody player;
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement")]
-    [SerializeField] private float speed = 8.0f;
+    [SerializeField] private float speed = 800.0f;
+
+    private bool grounded = true;
+    private float jumpForce = 300f;
+    private int nbJumps = 0;
+    private int maxJumps = 2;
+    private bool jump = false;
+
 
     /// <summary> Movement smoothing parameter for crossing between playable planes (serialized) </summary>
     [Tooltip("Movement smoothing parameter for crossing between playable planes")]
@@ -59,6 +71,18 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private RaycastHit distToGround;
 
+    /// <summary>
+    /// The collider height from halfway down. This is what helps 
+    /// check if the player is grunded since the rays to check get 
+    /// cast from the midle of the game object downward.
+    /// </summary>
+    [SerializeField]
+    [Tooltip("The collider height from halfway down. " +
+        "This is what helps check if the player is grunded since the rays " +
+        "to check get cast from the midle of the game object downward."
+        )]
+    private float playerHeightWaistDown = 1.26f;
+
     private const float g = 9.81f;
     private const float averageHumanJump = 2.5f; // Times your mass on earth
 
@@ -90,6 +114,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        CheckIfGrounded();
+        // Set boolean to true if jump is pressed
+        this.jump = Input.GetButtonDown(jumpButton);
+    }
+
+    public bool CheckIfGrounded()
+    {
+        // Check if grounded 
+        RaycastHit groundCollisionInfo;
+        Physics.Raycast(player.transform.position, -Vector3.up, out groundCollisionInfo, 20f);
+        float distToGround = player.transform.position.y - groundCollisionInfo.point.y;
+        //Debug.Log("Dist to ground" + distToGround);
+        //this.distToGround = groundCollisionInfo;
+
+        this.grounded = (distToGround <= playerHeightWaistDown);
+        return this.grounded;
+    }
+
     /// <summary>
     /// FixedUpdate() gets called twice per frame(around 50 
     /// times per second) and is best used to compute values
@@ -99,20 +143,19 @@ public class PlayerMovement : MonoBehaviour
     /// Calls:
     /// jump()
     /// </summary>
-    public void Update()
+    public void FixedUpdate()
     {
         // Avoid movement for planking player
         //if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
 
-        movementXY.x = Input.GetAxis(horizontalAxis) * speed;
+        movementXY.x = Input.GetAxis(horizontalAxis) * speed * Time.deltaTime;
         movementXY.y = 0;
 
-        // Add check to see if player is touching the ground
-        if (Input.GetButtonDown(jumpButton) && player.velocity.y==0)
+
+        if (jump)
         {
             Jump();
         }
-
         
         // Move the character by finding the target velocity
         Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
@@ -137,26 +180,26 @@ public class PlayerMovement : MonoBehaviour
 /// <summary>
 /// Method to jump. Contains modifier for both a short hop and a longer/higher jump.
 /// Modifies gravity to make descent faster than ascent.
+/// 
+/// 
+/// Need to fix for time.deltatime
 /// </summary>
 /// <returns> Returns Void </returns>
 private void Jump()
     {
-        //player.AddForce(transform.up * player.mass * g * averageHumanJump*15f*Time.deltaTime, ForceMode.Impulse);
-        player.velocity += Vector3.up * jumpVelocity;
-
-        // This next part makes jumps more videogame-like
-        // If player is falling back down
-        if (player.velocity.y < -0.01)
+        Debug.Log("isGrounded" + this.grounded);
+        if (this.grounded)
         {
-            player.velocity += Vector3.up * Physics.gravity.y * (gravityMultiplier - 1) * Time.deltaTime;
-            Debug.Log("Falling");
+            nbJumps = 0;
         }
-        // If player is going up in the jump and not still holding jump button down
-        else if (player.velocity.y > 0 && !Input.GetButton(jumpButton))
+        if (this.grounded || (nbJumps < maxJumps) && this.canHighJump)
         {
-            player.velocity += Vector3.up * Physics.gravity.y * (lowJumpGravityMultiplier - 1) * Time.deltaTime;
-            Debug.Log("Low jump");
+            player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
+            player.AddForce(new Vector3(0, jumpForce, 0));
+            nbJumps += 1;
+            grounded = false;
         }
+        this.jump = false;
         
     }
 } 
