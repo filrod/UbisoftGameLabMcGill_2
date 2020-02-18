@@ -2655,12 +2655,12 @@ MonoBehaviour:
   playerId: 1
   canHighJump: 0
   player: {fileID: 640491664}
-  speed: 640
+  speed: 15
+  speedInJump: 7.5
+  jumpForce: 300
+  buttForce: 5
   m_MovementSmoothing: 0.05
-  jumpVelocity: 7
   gravityMultiplier: 6
-  lowJumpGravityMultiplier: 5
-  plankingBehaviour: {fileID: 0}
   playerHeightWaistDown: 1.51
 --- !u!114 &821038466
 MonoBehaviour:
@@ -4199,12 +4199,12 @@ MonoBehaviour:
   playerId: 2
   canHighJump: 0
   player: {fileID: 232094360}
-  speed: 640
+  speed: 15
+  speedInJump: 7.5
+  jumpForce: 300
+  buttForce: 5
   m_MovementSmoothing: 0.05
-  jumpVelocity: 5.25
   gravityMultiplier: 6
-  lowJumpGravityMultiplier: 5
-  plankingBehaviour: {fileID: 232094359}
   playerHeightWaistDown: 1.51
 --- !u!114 &1342438200
 MonoBehaviour:
