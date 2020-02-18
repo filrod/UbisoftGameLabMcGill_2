@@ -580,7 +580,6 @@ MonoBehaviour:
   key2: 108
   area1: {fileID: 2121411155}
   area2: {fileID: 2035768783}
-  strengthlvl: 0
 --- !u!1 &338587467
 GameObject:
   m_ObjectHideFlags: 0
