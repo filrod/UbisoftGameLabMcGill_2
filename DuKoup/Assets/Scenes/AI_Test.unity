@@ -136,7 +136,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 642511650bf4a46289cdba2a90e22e48,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.31
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 642511650bf4a46289cdba2a90e22e48,
         type: 3}
@@ -381,6 +381,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &870916525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 870916526}
+  m_Layer: 0
+  m_Name: Eye
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &870916526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870916525}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.47, y: 2, z: 9.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1952252487}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1056438766
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,11 +505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc4baae497784ac7bcf21ac17e73a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
-  range: 5
-  originalPos: {x: 0, y: 0, z: 0}
-  moveTo: {x: 0, y: 0, z: 0}
-  movingFromCenter: 1
 --- !u!1 &1519026529
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +637,21 @@ MonoBehaviour:
   minX: -10
   maxZ: 20
   minZ: 8
+--- !u!114 &1688287807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688287803}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f9786a8997a0a41aa36226ce7ce2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angle: 210
+  viewDistance: 20
+  eye: {fileID: 870916525}
 --- !u!1 &1952252486
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +681,7 @@ Transform:
   m_Children:
   - {fileID: 1688287804}
   - {fileID: 1056438767}
+  - {fileID: 870916526}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

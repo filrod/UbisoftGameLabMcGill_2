@@ -60,6 +60,14 @@ public class StateMachine : MonoBehaviour
         {
             Debug.Log("Investigating!");
             currentState = allStates[newStateType];
+            ((InvestigateState)currentState).SetTriggerPositionFromScientist();
+        }
+
+        if(newStateType == typeof(SwipeState))
+        {
+            Debug.Log("Swiping");
+            //transform.GetChild(0).gameObject.GetComponent<FieldOfView>().enabled = true;
+            currentState = allStates[newStateType];
         }
         currentState = allStates[newStateType];
         currentState.TransitionLogic();

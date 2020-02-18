@@ -10,17 +10,21 @@ public class Scientist : MonoBehaviour
     [SerializeField] protected float maxZ;
     [SerializeField] protected float minZ;
 
+    [SerializeField] private Transform triggerPos;
+
+    public FieldOfView fieldOfView => GetComponent<FieldOfView>();
     public StateMachine stateMachine => GetComponent<StateMachine>();
 
     private Vector3? targetPosition = null;
 
     private void Awake()
     {
-        //stateMachine = GetComponent<StateMachine>();
         stateMachine.AddState(typeof(WanderState), new WanderState(this));
         stateMachine.AddState(typeof(InvestigateState), new InvestigateState(this));
+        stateMachine.AddState(typeof(SwipeState), new SwipeState(this));
         stateMachine.AddState(typeof(AttackState), new AttackState(this));
     }
+
 
 
     public void SetTargetPosition(Vector3? targetPosition)
@@ -37,7 +41,8 @@ public class Scientist : MonoBehaviour
     {
         if (Random.Range(0f, 100f) < 0.5f)
         {
-            return new Vector3(0, transform.position.y, 8);
+            //return new Vector3(0, transform.localPosition.y, 5);
+            return triggerPos.position;
         }
 
         return null;

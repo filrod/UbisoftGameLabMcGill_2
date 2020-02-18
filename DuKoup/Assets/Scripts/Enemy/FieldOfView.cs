@@ -17,6 +17,7 @@ public class FieldOfView : MonoBehaviour
     /// </summary>
     [SerializeField]
     [Tooltip("How far the vision section extends to")] private float viewDistance = 20f;
+    private float defaultViewDistance = 20f;
     /// <summary>
     /// Origin of the field of view, set as default to be the 
     /// position of the game object "eye" we have attached to 
@@ -26,6 +27,13 @@ public class FieldOfView : MonoBehaviour
     private Vector3 origin;
     private Vector3 rotationOrientation = Vector3.zero;
     private float angleIncrease;
+
+    /// <summary>
+    /// When true the mesh gets drawn. Set in activate and turned off in
+    /// deactivate
+    /// </summary>
+    [SerializeField]
+    private bool isActive = true;
     
 
     [SerializeField]
@@ -45,14 +53,17 @@ public class FieldOfView : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the FOV point of origin (position) and draws the FOV mesh
+    /// Updates the FOV point of origin (position) and draws the FOV mesh only
+    /// is the is active tag is true
     /// </summary>
     private void Update()
     {
+        if (!this.isActive) { Deactivate(); }
+        else { Activate(); }
         SetPosition(eye.GetComponent<Transform>().position);
         SetViewDirection(eye.GetComponent<Transform>().rotation.eulerAngles);
         DrawFOV(origin);
-     }
+    }
 
     /// <summary>
     /// Makes a Vector3 from an angle in degrees by only setting x and y and 
@@ -87,6 +98,29 @@ public class FieldOfView : MonoBehaviour
     public void SetViewDirection(Vector3 viewDirection)
     {
         angle = eye.transform.rotation.eulerAngles.z - fov/2f;
+    }
+
+    /// <summary>
+    /// Activates the FOV mesh with a default view distance 
+    /// </summary>
+    public void Activate()
+    {
+        this.isActive = true;
+        this.viewDistance = this.defaultViewDistance;
+    }
+
+    /// <summary>
+    /// Deactivates mesh 
+    /// </summary>
+    public void Deactivate()
+    {
+        this.isActive = false;
+        this.viewDistance = 0;
+
+        // Draw the mesh to a point
+        SetPosition(eye.GetComponent<Transform>().position);
+        SetViewDirection(eye.GetComponent<Transform>().rotation.eulerAngles);
+        DrawFOV(origin);
     }
 
     /// <summary>

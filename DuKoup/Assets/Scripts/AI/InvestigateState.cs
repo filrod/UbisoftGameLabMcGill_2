@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class InvestigateState : BaseState
 {
@@ -14,69 +15,53 @@ public class InvestigateState : BaseState
 
     private float movementSpeed = 5f;
     private float rotationSpeed = 1f;
-    private float atDestinationDist = 1f;
+    private float atDestinationDist = 0.1f;
 
     private Vector3 desiredRotation;
+    private Vector3 targetPosition;
 
     private Scientist scientist;
+    private NavMeshAgent agent;
 
     public InvestigateState(Scientist scientist) : base(scientist.gameObject)
     {
         this.scientist = scientist;
+        this.agent = scientist.gameObject.GetComponent<NavMeshAgent>();
     }
 
     public override Type TransitionCheck()
     {
-        // Rotating towards destination
-        if (Math.Round(transform.forward.x - desiredRotation.x, 1) != 0.0 || Math.Round(transform.forward.z - desiredRotation.z, 1) != 0.0)
+        Debug.Log("In investigation loop");
+        Debug.Log(agent.destination);
+        if (scientist.transform.position.x - targetPosition.x <= atDestinationDist && scientist.transform.position.z - targetPosition.z <= atDestinationDist)
         {
+            Debug.Log("We are at destination");
+            scientist.transform.localRotation = Quaternion.Euler(0, 180, 0);
 
-            // Rotate the forward vector towards the target direction by one step
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, desiredRotation, rotationSpeed * Time.deltaTime, 0.0f);
-
-            // Calculate a rotation a step closer to the target and applies rotation to this object
-            transform.rotation = Quaternion.LookRotation(newDirection);
-            return null;
-        }
-        else
-        {
-            Debug.Log("now rotation is good");
-            transform.position += transform.forward * movementSpeed * Time.deltaTime;
-            return null;
+            return typeof(SwipeState);
         }
 
-        // Checking if we are in correct position with correct rotation
-        if (Vector3.Distance(transform.position, scientist.GetTargetPosition().Value) < atDestinationDist)
+        if (agent.destination == null)
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            SetTriggerPositionFromScientist();
         }
-        else
-        {
-            int x = 0;
-            while (x++ < 1000000000) ;
-
-            return typeof(WanderState); // TODO return swipe state or something. Is in correct position, should look around
-        }
-                
-        
 
         return null;
-   
     }
 
-    public override void TransitionLogic()
-    {
-        SetDesiredRotationFromScientistTarget();
-    }
-
-
-    public void SetDesiredRotationFromScientistTarget()
+    public void SetTriggerPositionFromScientist()
     {
         Vector3? target = scientist.GetTargetPosition();
 
-        if (target.Value == null) return; // The scientists target position is a nullable vector 3 so we need to check that it has a value
-        Debug.Log("Finding rotation");
-        desiredRotation = (target.Value - transform.position).normalized;
+        if (target.Value == null)
+        {
+            Debug.Log("Scientist doesn't have trigger target");
+            return; // The scientists target position is a nullable vector 3 so we need to check that it has a value
+        }
+        targetPosition = target.Value;
+        agent.SetDestination(targetPosition);
+        Debug.Log(agent.destination);
+        Debug.Log(targetPosition);
     }
 
 }
