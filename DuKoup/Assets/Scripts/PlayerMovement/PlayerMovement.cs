@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         movementXY.y = 0;
 
         // Add check to see if player is touching the ground
-        if (Input.GetButtonDown(jumpButton) && player.velocity.y==0)
+        if (Input.GetButtonDown(jumpButton) && player.velocity.y <=0.1 && player.velocity.y >= -0.1)
         {
             Jump();
         }
@@ -136,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
 
         // This next part makes jumps more videogame-like
         // If player is falling back down
-        if (player.velocity.y < 0)
+        if (player.velocity.y < 0.1)
         {
             player.velocity += Vector3.up * Physics.gravity.y * (gravityMultiplier - 1) * Time.deltaTime;
             Debug.Log("Falling");
