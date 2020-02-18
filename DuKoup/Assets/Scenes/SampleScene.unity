@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4499904, g: 0.5000486, b: 0.5755179, a: 1}
+  m_IndirectSpecularColor: {r: 0.44999003, g: 0.5000482, b: 0.5755175, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2661,7 +2661,7 @@ MonoBehaviour:
   gravityMultiplier: 6
   lowJumpGravityMultiplier: 5
   plankingBehaviour: {fileID: 0}
-  playerHeightWaistDown: 1.26
+  playerHeightWaistDown: 1.51
 --- !u!114 &821038466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4202,10 +4202,10 @@ MonoBehaviour:
   speed: 640
   m_MovementSmoothing: 0.05
   jumpVelocity: 5.25
-  gravityMultiplier: 1
-  lowJumpGravityMultiplier: 1
+  gravityMultiplier: 6
+  lowJumpGravityMultiplier: 5
   plankingBehaviour: {fileID: 232094359}
-  playerHeightWaistDown: 1.26
+  playerHeightWaistDown: 1.51
 --- !u!114 &1342438200
 MonoBehaviour:
   m_ObjectHideFlags: 0
