@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/**
- * UBISOFT GAMES LAB - McGill Team #2
- * -----------------------------------
- * 
- * @author Filipe Rodrigues, Robin Leman
- * @Date 2020/02/12
- * 
- * This class controls player movement
-*/
+/// <summary>
+/// UBISOFT GAMES LAB - McGill Team #2
+/// -----------------------------------
+/// @author Filipe Rodrigues, Robin Leman
+/// @Date 2020/02/12
+///
+/// This class controls player movement
+/// </summary>
 
 public class PlayerMovement : MonoBehaviour
 {

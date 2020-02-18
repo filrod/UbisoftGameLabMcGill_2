@@ -71,10 +71,12 @@ public class PlayersCollision : MonoBehaviour
         isFaster = instancePlayer.velocity.magnitude > otherPlayer.velocity.magnitude;
         isAtEqualSpeed = instancePlayer.velocity.magnitude == otherPlayer.velocity.magnitude;
 
-        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster)
+        // If is in alpha plane, goes faster than other player and in radius: move to beta plane 
+        // Be careful that the other player z is not the betaplane !
+        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster && otherPlayer.transform.position.z != betaPlane )
         {   
             // If they are at the same speed, Player 2 should move around Player 1
-            if (! (isAtEqualSpeed && isMainPlayer)){
+            if (! (isAtEqualSpeed && isMainPlayer) ){
                 instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
             }
         }
@@ -91,5 +93,12 @@ public class PlayersCollision : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, collisionRadius);
+    }
+
+    bool isSomethingInBeta(){
+        RaycastHit hit;
+        Vector3 origin = new Vector3 (playerPos, 10f, betaPlane);
+        Debug.DrawRay(origin, Vector3.down * 1000, Color.white);
+        return (Physics.Raycast(origin, Vector3.down, out hit, 1000f, LayerMask.GetMask("Ignore Raycast")) );
     }
 }
