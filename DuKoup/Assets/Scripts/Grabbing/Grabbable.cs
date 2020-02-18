@@ -15,22 +15,22 @@ using UnityEngine;
 public abstract class Grabbable : MonoBehaviour
 {
   
-   [SerializeField] private GameObject obj;
+   [SerializeField] [Tooltip("Object you want the player to grab. Drag the object in the hierarchy in this spot.")] private GameObject obj;
 
-   [SerializeField] private Transform player1;
-   [SerializeField] private Transform defaultTrans1;
+   [SerializeField] [Tooltip("Drag dummy1 in this spot")] private Transform player1;
+   [SerializeField] [Tooltip("It is an empty Game Object, child of player 1, that defines the position of the object once grabbed by Player1.")] private Transform defaultTrans1;
 
-   [SerializeField] private Transform player2;
-   [SerializeField] private Transform defaultTrans2;
+   [SerializeField] [Tooltip("Drag dummy2 in this spot")] private Transform player2;
+   [SerializeField] [Tooltip("It is an empty Game Object, child of player 2, that defines the position of the object once grabbed by Player2.")] private Transform defaultTrans2;
 
-   [SerializeField] private float radius = 0.1f; 
+   [SerializeField] [Tooltip("Sphere around the object where the player can interact with the object.")] private float radiusOfInteraction = 2f; 
 
-   [SerializeField] private KeyCode key1 = KeyCode.L;
-   [SerializeField] private KeyCode key2 = KeyCode.E;
+   [SerializeField] [Tooltip("Control button for player 1 to grab the object")] private KeyCode grabbingInputPlayer1 = KeyCode.L;
+   [SerializeField] [Tooltip("Control button for player 2 to grab the object")] private KeyCode grabbingInputPlayer2 = KeyCode.E;
 
    
-   [SerializeField] private Collider2D area1;
-   [SerializeField] private Collider2D area2;
+   //[SerializeField] private Collider2D area1;
+   //[SerializeField] private Collider2D area2;
 
 
     private Vector3 screenPoint;
@@ -48,27 +48,46 @@ public abstract class Grabbable : MonoBehaviour
     }
 
     // At each image, we want to check if the player wants to grab or ungrab the object.
+
+    /// <summary>
+    /// UBISOFT GAMES LAB - McGill Team #2
+    /// -----------------------------------
+    /// @author Robin Leman
+    /// @Date 2020/02/17
+    ///
+    /// At each image, we want to check if the player wants to grab or ungrab the object. We then call the method Grab() or UnGrab().
+    ///
+    /// </summary>
     public void Update()
     {
         // Grab: for each player that wants and can grab it.
-       if (CanInteract(key1, player1) && !isGrabbed){
+       if (CanInteract(grabbingInputPlayer1, player1) && !isGrabbed){
             Grab(player1, defaultTrans1);
             grabbedBy1 = true;
        }
-       else if (CanInteract(key2, player2) && !isGrabbed){
+       else if (CanInteract(grabbingInputPlayer2, player2) && !isGrabbed){
             Grab(player2, defaultTrans2);
             grabbedBy2 = true;
        }
 
        // Ungrab
-       else if (Input.GetKeyDown(key1)&& isGrabbed){
+       else if (Input.GetKeyDown(grabbingInputPlayer1)&& isGrabbed){
            UnGrab(player1, defaultTrans1);
        }
-       else if (Input.GetKeyDown(key2) && isGrabbed){
+       else if (Input.GetKeyDown(grabbingInputPlayer2) && isGrabbed){
            UnGrab(player2, defaultTrans2);
        }
    }
 
+    /// <summary>
+    /// UBISOFT GAMES LAB - McGill Team #2
+    /// -----------------------------------
+    /// @author Robin Leman
+    /// @Date 2020/02/17
+    ///
+    /// Meant to be overwritten. Set the object as a child of the player, change its position to the default transform position and remove gravity on it.
+    ///
+    /// </summary>
    public virtual void Grab(Transform player, Transform defaultTrans)
    {
         // Move object to the leaves
@@ -76,8 +95,8 @@ public abstract class Grabbable : MonoBehaviour
        obj.transform.SetParent(player);
 
         // Keep track of the object position to drag it 
-       screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-	   offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+       //screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+	   //offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
 
         // Make it kinematic so that it doesn't mess everything up.
         rb.isKinematic = true;
@@ -85,6 +104,15 @@ public abstract class Grabbable : MonoBehaviour
         isGrabbed = true;
    }
 
+    /// <summary>
+    /// UBISOFT GAMES LAB - McGill Team #2
+    /// -----------------------------------
+    /// @author Robin Leman
+    /// @Date 2020/02/17
+    ///
+    /// Meant to be overwritten. Unchild the object to the player, ejects the object above the player and reset gravity on it.
+    ///
+    /// </summary>
    public virtual void UnGrab(Transform player, Transform defaultTrans){
 
        // We eject it
@@ -97,11 +125,11 @@ public abstract class Grabbable : MonoBehaviour
         isGrabbed = false;
    }
 
-       // Method to check if the player has hit the correct input and is at the correct location to grab the object.
+    // Method to check if the player has hit the correct input and is at the correct location to grab the object.
    public bool CanInteract(KeyCode key, Transform player)
    {
        float distance = Vector3.Distance(player.position, obj.transform.position);
-       return Input.GetKeyDown(key) && (distance <= radius);
+       return Input.GetKeyDown(key) && (distance <= radiusOfInteraction);
    }
 
     /////// UNCOMMENT TO HAVE DRAGGING
@@ -142,10 +170,10 @@ public abstract class Grabbable : MonoBehaviour
 
     */
 
-    // Draw interaction radius in the inspector. For developpers. 
+    // Draw interaction  in the inspector. For developpers. 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(obj.transform.position, radius);
+        Gizmos.DrawWireSphere(obj.transform.position, radiusOfInteraction);
     }
 }
