@@ -69,19 +69,19 @@ public class PlayerMovement : MonoBehaviour
     /// 
     /// 
     /// <returns> Returns void </returns>
-    public void Start()
+    public void Awake()
     {
         movementXY = new Vector2(0, 0);
 
         if (playerId == 1)
         {
             horizontalAxis = "Horizontal1";
-            jumpButton = "Vertical1";
+            jumpButton = "Jump1";
         }
         else if (playerId == 2)
         {
             horizontalAxis = "Horizontal2";
-            jumpButton = "Vertical2";
+            jumpButton = "Jump2";
         }
     }
 
