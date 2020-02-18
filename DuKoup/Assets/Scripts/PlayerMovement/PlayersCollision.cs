@@ -22,7 +22,7 @@ public class PlayersCollision : MonoBehaviour
     [SerializeField] private bool isMainPlayer;     // This should be Player 1, it is in case of a tie.
 
     // Collision area attribute
-    [SerializeField] private float collisionRadius = 1.4f;    // Should be the width of the player
+    [SerializeField] private float collisionRadius = 2f;    // Should be the width of the player
 
     private float areaPositionMax;
     private float areaPositionMin;
