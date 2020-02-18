@@ -94,9 +94,9 @@ public class PlayerMovement : MonoBehaviourPun
     {
         // Avoid movement for planking player
         // if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
-        if (base.photonView.IsMine)
+        // if (base.photonView.IsMine)
         {
-            Debug.Log("Move");
+            // Debug.Log("Move");
             movementXY.x = Input.GetAxis(horizontalAxis) * speed;
             movementXY.y = 0;
 
