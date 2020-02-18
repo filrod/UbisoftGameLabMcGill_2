@@ -32,11 +32,11 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement")]
-    [SerializeField] [Range(0f, 25f)] private float speed = 15f;
+    [SerializeField] [Range(0f, 25f)] private float horizontalSpeed = 15f;
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement while in the air. Should be slower than while not airborne")]
-    [SerializeField] [Range(0f, 20f)] private float speedInJump = 7.5f;
+    [SerializeField] [Range(0f, 20f)] private float horizontalSpeedInJump = 7.5f;
 
     /// <summary>
     /// A boolean to check if the player is grounded.
@@ -183,12 +183,12 @@ public class PlayerMovement : MonoBehaviour
                 SkewJumpParabola();
             }
 
-            movementXY.x = Input.GetAxis(horizontalAxis) * speedInJump;
+            movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeedInJump;
             movementXY.y = 0;
         }
         else
         {
-            movementXY.x = Input.GetAxis(horizontalAxis) * speed;
+            movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeed;
             movementXY.y = 0;
         }
 
