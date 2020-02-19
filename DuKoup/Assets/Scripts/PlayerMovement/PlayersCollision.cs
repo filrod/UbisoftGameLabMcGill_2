@@ -41,6 +41,7 @@ public class PlayersCollision : MonoBehaviour
 
     void Start()
     {
+        otherPlayer = GetComponent<PlayerManager>().OtherPlayer.GetComponentInChildren<Rigidbody>();
         diffPlane = betaPlane - alphaPlane;
     }
 

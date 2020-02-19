@@ -169,13 +169,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canHighJump: 0
   player: {fileID: 7910679131846525686}
-  speed: 10
+  horizontalSpeed: 15
+  horizontalSpeedInJump: 7.5
+  jumpForce: 300
+  buttForce: 5
   m_MovementSmoothing: 0.05
-  jumpVelocity: 7
-  gravityMultiplier: 2
-  lowJumpGravityMultiplier: 5
-  plankingBehaviour: {fileID: 7910679131846525689}
+  playerHeightWaistDown: 1.26
 --- !u!114 &7910679133361292118
 MonoBehaviour:
   m_ObjectHideFlags: 0

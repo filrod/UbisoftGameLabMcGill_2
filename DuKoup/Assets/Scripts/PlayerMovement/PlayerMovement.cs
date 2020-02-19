@@ -17,11 +17,7 @@ public class PlayerMovement : MonoBehaviourPun
 {
     // Fields 
 
-    /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
-    // [SerializeField] private int playerId;
-    // Used PhotonNetwork.LocalPlayer.ActorNumber instead
-    [SerializeField] [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
-    private int playerId;
+    private PlayerManager playerManager;
 
     /// <summary>
     /// Ability to high jump
@@ -80,9 +76,7 @@ public class PlayerMovement : MonoBehaviourPun
     [Tooltip("Movement smoothing parameter for crossing between playable planes")]
     [Range(0.0f, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;
 
-    /// <summary> A constant that makes gravity more intense at the peak of one's jump (only for high jumps). </summary>
-    [Tooltip("A constant that makes gravity more intense at the peak of one's jump (only for high jumps).")]
-    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 4f;
+
 
     /// <summary> 2D Vector for horizontal and vertical movement respectively </summary>
     private Vector2 movementXY;
@@ -124,6 +118,8 @@ public class PlayerMovement : MonoBehaviourPun
     /// <returns> Returns void </returns>
     public void Awake()
     {
+        playerManager = GetComponentInParent<PlayerManager>();
+
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
 
@@ -163,7 +159,7 @@ public class PlayerMovement : MonoBehaviourPun
     public void FixedUpdate()
     {
         // Avoid movement for planking player
-        //if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
+        // if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
 
 
 
@@ -247,7 +243,7 @@ public class PlayerMovement : MonoBehaviourPun
         if (this.player.velocity.y < 0)
         {
             Debug.Log("SkewJump");
-            player.AddForce( Vector3.up * Physics.gravity.y * this.gravityMultiplier );
+            player.AddForce( Vector3.up * Physics.gravity.y * this.playerManager.GravityMultiplier );
         }
     }
 
