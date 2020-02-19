@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44999003, g: 0.5000482, b: 0.5755175, a: 1}
+  m_IndirectSpecularColor: {r: 0.4499904, g: 0.5000486, b: 0.5755179, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -961,7 +961,7 @@ PrefabInstance:
     - target: {fileID: 5110472844556488261, guid: 594b3781bbbaa44e1849813f8f66bea3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 55.73
+      value: 56.15
       objectReference: {fileID: 0}
     - target: {fileID: 5110472844556488261, guid: 594b3781bbbaa44e1849813f8f66bea3,
         type: 3}
@@ -2791,6 +2791,7 @@ GameObject:
   - component: {fileID: 821038464}
   - component: {fileID: 821038465}
   - component: {fileID: 821038467}
+  - component: {fileID: 821038466}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -2828,8 +2829,8 @@ MonoBehaviour:
   playerId: 1
   canHighJump: 0
   player: {fileID: 640491664}
-  speed: 15
-  speedInJump: 7.5
+  horizontalSpeed: 15
+  horizontalSpeedInJump: 7.5
   jumpForce: 300
   buttForce: 5
   m_MovementSmoothing: 0.05
@@ -2848,6 +2849,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plankingBehaviour: {fileID: 232094359}
+  instancePlayer: {fileID: 0}
+  otherPlayer: {fileID: 0}
+  isMainPlayer: 0
+  collisionRadius: 2
+  alphaPlane: 0
+  betaPlane: 2
 --- !u!114 &821038467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4420,6 +4427,7 @@ GameObject:
   - component: {fileID: 1342438198}
   - component: {fileID: 1342438199}
   - component: {fileID: 1342438201}
+  - component: {fileID: 1342438200}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -4457,9 +4465,9 @@ MonoBehaviour:
   playerId: 2
   canHighJump: 0
   player: {fileID: 232094360}
-  speed: 15
-  speedInJump: 7.5
-  jumpForce: 300
+  horizontalSpeed: 10
+  horizontalSpeedInJump: 8
+  jumpForce: 250
   buttForce: 5
   m_MovementSmoothing: 0.05
   gravityMultiplier: 6
@@ -4480,7 +4488,7 @@ MonoBehaviour:
   instancePlayer: {fileID: 232094360}
   otherPlayer: {fileID: 640491664}
   isMainPlayer: 0
-  collisionRadius: 1.4
+  collisionRadius: 2
   alphaPlane: 0
   betaPlane: 2
 --- !u!114 &1342438201
@@ -6804,7 +6812,7 @@ PrefabInstance:
     - target: {fileID: 8326496393998245916, guid: 263f8e75019f849e9a1c6dc0c2b94a2a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.98
+      value: 50.66
       objectReference: {fileID: 0}
     - target: {fileID: 8326496393998245916, guid: 263f8e75019f849e9a1c6dc0c2b94a2a,
         type: 3}
