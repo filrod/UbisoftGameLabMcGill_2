@@ -5,19 +5,20 @@ public class FieldOfView : MonoBehaviour
 
     private Mesh mesh;
     //private Vector3 origin;
-    private float fov; 
+    private float fov;
     private int rayCount = 50;
     /// <summary>
     /// The starting angle for the looking direction
     /// </summary>
     [SerializeField]
-    private float angle = 210f;
+    private float startAngle = 210f;
+
+    private float angle;
     /// <summary>
     /// The view distance for the mesh and raycasting 
     /// </summary>
     [SerializeField]
     [Tooltip("How far the vision section extends to")] private float viewDistance = 20f;
-    private float defaultViewDistance = 20f;
     /// <summary>
     /// Origin of the field of view, set as default to be the 
     /// position of the game object "eye" we have attached to 
@@ -28,15 +29,6 @@ public class FieldOfView : MonoBehaviour
     private Vector3 rotationOrientation = Vector3.zero;
     private float angleIncrease;
 
-    /// <summary>
-    /// When true the mesh gets drawn. Set in activate and turned off in
-    /// deactivate
-    /// </summary>
-    [SerializeField]
-    private bool isActive = true;
-
-    private bool hittingPlayer = false;
-    
 
     [SerializeField]
     private GameObject eye;
@@ -48,6 +40,7 @@ public class FieldOfView : MonoBehaviour
     private void Start()
     {
         SetFOV(60f);
+        angle = startAngle;
         SetPosition(eye.GetComponent<Transform>().position);
         angleIncrease = fov / rayCount;
         mesh = new Mesh();
@@ -55,14 +48,10 @@ public class FieldOfView : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the FOV point of origin (position) and draws the FOV mesh only
-    /// is the is active tag is true
+    /// Updates the FOV point of origin (position) and draws the FOV mesh
     /// </summary>
     private void Update()
     {
-        hittingPlayer = false;
-        if (!this.isActive) { Deactivate(); }
-        else { Activate(); }
         SetPosition(eye.GetComponent<Transform>().position);
         SetViewDirection(eye.GetComponent<Transform>().rotation.eulerAngles);
         DrawFOV(origin);
@@ -74,7 +63,8 @@ public class FieldOfView : MonoBehaviour
     /// </summary>
     /// <param name="angle"></param>
     /// <returns> </returns>
-    public static Vector3 AngleToVec3(float angle) {
+    public static Vector3 AngleToVec3(float angle)
+    {
         float angleRad = angle * Mathf.Deg2Rad;
         return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
     }
@@ -100,30 +90,7 @@ public class FieldOfView : MonoBehaviour
 
     public void SetViewDirection(Vector3 viewDirection)
     {
-        angle = eye.transform.rotation.eulerAngles.z - fov/2f;
-    }
-
-    /// <summary>
-    /// Activates the FOV mesh with a default view distance 
-    /// </summary>
-    public void Activate()
-    {
-        this.isActive = true;
-        this.viewDistance = this.defaultViewDistance;
-    }
-
-    /// <summary>
-    /// Deactivates mesh 
-    /// </summary>
-    public void Deactivate()
-    {
-        this.isActive = false;
-        this.viewDistance = 0;
-
-        // Draw the mesh to a point
-        SetPosition(eye.GetComponent<Transform>().position);
-        SetViewDirection(eye.GetComponent<Transform>().rotation.eulerAngles);
-        DrawFOV(origin);
+        angle = eye.transform.rotation.eulerAngles.z - fov / 2f;
     }
 
     /// <summary>
@@ -160,7 +127,6 @@ public class FieldOfView : MonoBehaviour
             if (intersected)
             {
                 // Hit
-                CheckForPlayerHit(raycastHit.collider.gameObject);
                 vertex = raycastHit.point;
             }
             else
@@ -188,20 +154,7 @@ public class FieldOfView : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
-        angle = 210f;
-    }
-
-    private void CheckForPlayerHit(GameObject maybePlayer)
-    {
-        if (maybePlayer.CompareTag("Player"))
-        {
-            hittingPlayer = true;
-        }
-    }
-
-    public bool HittingPlayer()
-    {
-        return hittingPlayer;
+        angle = startAngle;
     }
 
 }
