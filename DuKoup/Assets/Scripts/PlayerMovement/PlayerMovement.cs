@@ -101,10 +101,7 @@ public class PlayerMovement : MonoBehaviour
     /// cast from the midle of the game object downward.
     /// </summary>
     [SerializeField][HideInInspector]
-    [Tooltip("The collider height from halfway down. " +
-        "This is what helps check if the player is grunded since the rays " +
-        "to check get cast from the midle of the game object downward."
-        )]
+    [Tooltip("The collider height from halfway down. " +"This is what helps check if the player is grunded since the rays " + "to check get cast from the midle of the game object downward.")]
     private float playerHeightWaistDown = 1.26f;
 
 

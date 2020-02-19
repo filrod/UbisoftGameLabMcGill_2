@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Robin is the best
+
 /// <summary> 
 ///  Abstract class that every objects that you can grab inherits
 ///   To change the Grabbing and Ungrabbing mechanics,  override Grab() and UnGrab()
@@ -25,8 +27,8 @@ public abstract class Grabbable : MonoBehaviour
 
    [SerializeField] [Tooltip("Sphere around the object where the player can interact with the object.")] private float radiusOfInteraction = 2f; 
 
-   [SerializeField] [Tooltip("Control button for player 1 to grab the object")] private KeyCode grabbingInputPlayer1 = ;
-   [SerializeField] [Tooltip("Control button for player 2 to grab the object")] private KeyCode grabbingInputPlayer2 = KeyCode.E;
+//    [SerializeField] [Tooltip("Control button for player 1 to grab the object")] private KeyCode grabbingInputPlayer1 = ;
+//    [SerializeField] [Tooltip("Control button for player 2 to grab the object")] private KeyCode grabbingInputPlayer2 = KeyCode.E;
 
    
    //[SerializeField] private Collider2D area1;
@@ -45,12 +47,6 @@ public abstract class Grabbable : MonoBehaviour
     public void Start()
     {
        rb = GetComponent<Rigidbody>();
-        if (player.name == dummy1){
-           key = "Grab1";
-       }
-       else if (player.name == dummy2){
-           key = "Grab2";
-       }
     }
 
     // At each image, we want to check if the player wants to grab or ungrab the object.
@@ -77,10 +73,10 @@ public abstract class Grabbable : MonoBehaviour
        }
 
        // Ungrab
-       else if (Input.GetButtonDown(gkey)&& isGrabbed){
+       else if (Input.GetButtonDown("Jump1")&& isGrabbed){
            UnGrab(player1, defaultTrans1);
        }
-       else if (Input.GetButtonDown(key) && isGrabbed){
+       else if (Input.GetButtonDown("Jump2") && isGrabbed){
            UnGrab(player2, defaultTrans2);
        }
    }
@@ -134,6 +130,14 @@ public abstract class Grabbable : MonoBehaviour
     // Method to check if the player has hit the correct input and is at the correct location to grab the object.
    public bool CanInteract(Transform player)
    {
+       string key;
+
+        if (player.name == "dummy1"){
+           key = "Grab1";
+       }
+       else{
+           key = "Grab2";
+       }
        float distance = Vector3.Distance(player.position, obj.transform.position);
        return Input.GetButtonDown(key) && (distance <= radiusOfInteraction);
    }
