@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/**
- * UBISOFT GAMES LAB - McGill Team #2
- * -----------------------------------
- * 
- * @author Robin Leman
- * @Date 2020/01/28
- * 
- * This class controls players collision and plane changes
-*/
+/// <summary>
+/// UBISOFT GAMES LAB - McGill Team #2
+/// -----------------------------------
+/// @author Robin Leman
+/// @Date 2020/01/28
+///
+/// This class controls players collision and plane changes
+/// </summary>
 
 public class PlayersCollision : MonoBehaviour
 {
@@ -23,14 +22,16 @@ public class PlayersCollision : MonoBehaviour
     [SerializeField] private bool isMainPlayer;     // This should be Player 1, it is in case of a tie.
 
     // Collision area attribute
-    [SerializeField] private float collisionRadius;    // Should be the width of the player
+    [SerializeField] private float collisionRadius = 2f;    // Should be the width of the player
+
     private float areaPositionMax;
     private float areaPositionMin;
     private float playerPos;
     
     // Separate the level into 2 planes, with a distance diffPlane between the two planes. The initial plane should be the main one, alpha.
-    [SerializeField] private float alphaPlane;
-    [SerializeField] private float betaPlane;
+    [SerializeField] private float alphaPlane = 0;
+    [SerializeField] private float betaPlane = 2;
+
     private float diffPlane;
     private float currentPlane;
 
@@ -43,6 +44,14 @@ public class PlayersCollision : MonoBehaviour
         diffPlane = betaPlane - alphaPlane;
     }
 
+    /// <summary>
+    /// UBISOFT GAMES LAB - McGill Team #2
+    /// -----------------------------------
+    /// @author Robin Leman
+    /// @Date 2020/01/28
+    ///
+    /// This methods computes the distance between the players to prevent them from colliding.
+    /// </summary>
     void Update()
     {
         if (plankingBehaviour.PlayerIsPlanking()) return;
@@ -62,10 +71,12 @@ public class PlayersCollision : MonoBehaviour
         isFaster = instancePlayer.velocity.magnitude > otherPlayer.velocity.magnitude;
         isAtEqualSpeed = instancePlayer.velocity.magnitude == otherPlayer.velocity.magnitude;
 
-        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster)
+        // If is in alpha plane, goes faster than other player and in radius: move to beta plane 
+        // Be careful that the other player z is not the betaplane !
+        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster && otherPlayer.transform.position.z != betaPlane )
         {   
             // If they are at the same speed, Player 2 should move around Player 1
-            if (! (isAtEqualSpeed && isMainPlayer)){
+            if (! (isAtEqualSpeed && isMainPlayer) ){
                 instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
             }
         }
@@ -76,5 +87,18 @@ public class PlayersCollision : MonoBehaviour
         else if ((playerPos <= areaPositionMin || playerPos >= areaPositionMax) && (currentPlane != alphaPlane)){
             instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, collisionRadius);
+    }
+
+    bool isSomethingInBeta(){
+        RaycastHit hit;
+        Vector3 origin = new Vector3 (playerPos, 10f, betaPlane);
+        Debug.DrawRay(origin, Vector3.down * 1000, Color.white);
+        return (Physics.Raycast(origin, Vector3.down, out hit, 1000f, LayerMask.GetMask("Ignore Raycast")) );
     }
 }
