@@ -20,7 +20,8 @@ public class AttackState : BaseState
 
     public override Type TransitionCheck()
     {
-
-        return null;
+        Debug.Log("Player is killed");
+        return typeof(WanderState);
+        
     }
 }

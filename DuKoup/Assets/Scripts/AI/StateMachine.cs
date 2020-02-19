@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class StateMachine : MonoBehaviour
 {
@@ -10,11 +11,14 @@ public class StateMachine : MonoBehaviour
     // Sjekk om state opdateres, i så fall gjør en transition
     // Kanskje legg til en fjerde state (gå til)?
 
+    [SerializeField] private FieldOfView fieldOfView;
+    [SerializeField] private GameObject scientistBody;
 
     private Dictionary<Type, BaseState> allStates = new Dictionary<Type, BaseState>();
 
     public BaseState currentState;
     public event Action<BaseState> OnStateTransition;
+
 
     public void AddState(Type type, BaseState state)
     {
@@ -49,6 +53,10 @@ public class StateMachine : MonoBehaviour
 
     private void DoTransition(Type newStateType)
     {
+        gameObject.GetComponent<NavMeshAgent>().enabled = true;
+        scientistBody.transform.rotation = Quaternion.Euler(0, 0, 0);
+        fieldOfView.Deactivate();
+
         if (newStateType == typeof(WanderState))
         {
             Debug.Log("Back To Wandering");
@@ -56,17 +64,21 @@ public class StateMachine : MonoBehaviour
             currentState = allStates[newStateType];
         }
 
-        if (newStateType == typeof(InvestigateState))
+        if (newStateType == typeof(AlertState))
         {
-            Debug.Log("Investigating!");
+            Debug.Log("Alert!");
             currentState = allStates[newStateType];
-            ((InvestigateState)currentState).SetTriggerPositionFromScientist();
+            ((AlertState)currentState).SetTriggerPositionFromScientist();
         }
 
-        if(newStateType == typeof(SwipeState))
+        if(newStateType == typeof(InvestigateState))
         {
-            Debug.Log("Swiping");
-            //transform.GetChild(0).gameObject.GetComponent<FieldOfView>().enabled = true;
+            Debug.Log("Investigating");
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            scientistBody.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            transform.rotation = Quaternion.identity;
+            //gameObject.GetComponent<Scientist>().Trigger(null, null);
+            fieldOfView.Activate();
             currentState = allStates[newStateType];
         }
         currentState = allStates[newStateType];

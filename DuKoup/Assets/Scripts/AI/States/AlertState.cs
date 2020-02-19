@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class InvestigateState : BaseState
+public class AlertState : BaseState
 {
     // TODO
     // Gå til target
@@ -13,17 +12,14 @@ public class InvestigateState : BaseState
     // Om man finner spiller, transition til attack
     // Om man har sveipet frem og tilbake et par ganger, transition til wander (slett target i scientist)
 
-    private float movementSpeed = 5f;
-    private float rotationSpeed = 1f;
     private float atDestinationDist = 0.1f;
 
-    private Vector3 desiredRotation;
     private Vector3 targetPosition;
 
     private Scientist scientist;
     private NavMeshAgent agent;
 
-    public InvestigateState(Scientist scientist) : base(scientist.gameObject)
+    public AlertState(Scientist scientist) : base(scientist.gameObject)
     {
         this.scientist = scientist;
         this.agent = scientist.gameObject.GetComponent<NavMeshAgent>();
@@ -31,37 +27,47 @@ public class InvestigateState : BaseState
 
     public override Type TransitionCheck()
     {
-        Debug.Log("In investigation loop");
-        Debug.Log(agent.destination);
-        if (scientist.transform.position.x - targetPosition.x <= atDestinationDist && scientist.transform.position.z - targetPosition.z <= atDestinationDist)
-        {
-            Debug.Log("We are at destination");
-            scientist.transform.localRotation = Quaternion.Euler(0, 180, 0);
-
-            return typeof(SwipeState);
-        }
+        Debug.Log("In alert state");
+        if (scientist.TargetIsUpdated()) return typeof(AlertState); // 'Restarting' the alert state with a new position
 
         if (agent.destination == null)
         {
             SetTriggerPositionFromScientist();
+            return null;
+        }
+
+        if (scientist.transform.position.x - targetPosition.x <= atDestinationDist && scientist.transform.position.z - targetPosition.z <= atDestinationDist)
+        {
+
+            return typeof(InvestigateState);
         }
 
         return null;
     }
 
+    //private bool TriggerPositionHasChanged(Vector3 currentTriggerPos)
+    //{
+    //    Vector3? target = scientist.IsTriggered();
+    //    if (target.Value != null)
+    //    {
+    //        return !target.Value.Equals(targetPosition);
+    //    }
+
+    //    return true;
+    //}
+
     public void SetTriggerPositionFromScientist()
     {
-        Vector3? target = scientist.GetTargetPosition();
+        Vector3? target = scientist.IsTriggered();
 
-        if (target.Value == null)
+        if (!target.HasValue)
         {
+            
             Debug.Log("Scientist doesn't have trigger target");
             return; // The scientists target position is a nullable vector 3 so we need to check that it has a value
         }
         targetPosition = target.Value;
         agent.SetDestination(targetPosition);
-        Debug.Log(agent.destination);
-        Debug.Log(targetPosition);
     }
 
 }

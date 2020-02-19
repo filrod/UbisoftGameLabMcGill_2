@@ -6,7 +6,8 @@ public class WanderState : BaseState
 {
 
     private float distAtDestination = 1f;
-    private float wanderTimeOut = 3f;
+    private float wanderTimeOut = 4f;
+    private float randomTargetRadius = 15;
 
     private float timer;
     private Vector3 destination;
@@ -18,7 +19,7 @@ public class WanderState : BaseState
     {
         this.scientist = scientist;
         agent = scientist.GetComponent<NavMeshAgent>();
-        destination = RandomNavSphere(scientist.transform.position, 10, -1);
+        destination = RandomNavSphere(scientist.transform.position, randomTargetRadius, -1);
         timer = wanderTimeOut;  
     }
 
@@ -40,11 +41,9 @@ public class WanderState : BaseState
 
     public override Type TransitionCheck()
     {
-        Vector3? triggerPosition = scientist.IsTriggered();
-        if (triggerPosition != null)
+        if (scientist.TargetIsUpdated())
         {
-            scientist.SetTargetPosition(triggerPosition);
-            return typeof(InvestigateState);
+            return typeof(AlertState);
         }
 
         timer += Time.deltaTime;
@@ -53,7 +52,7 @@ public class WanderState : BaseState
         if (timer >= wanderTimeOut || agent.remainingDistance <= distAtDestination)
         {
             //Debug.Log("At destination, new destination generated");
-            destination = RandomNavSphere(scientist.transform.position, 10, -1);
+            destination = RandomNavSphere(scientist.transform.position, randomTargetRadius, -1);
             agent.SetDestination(destination);
             timer = 0;
         }

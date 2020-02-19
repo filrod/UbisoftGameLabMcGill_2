@@ -34,6 +34,8 @@ public class FieldOfView : MonoBehaviour
     /// </summary>
     [SerializeField]
     private bool isActive = true;
+
+    private bool hittingPlayer = false;
     
 
     [SerializeField]
@@ -58,6 +60,7 @@ public class FieldOfView : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        hittingPlayer = false;
         if (!this.isActive) { Deactivate(); }
         else { Activate(); }
         SetPosition(eye.GetComponent<Transform>().position);
@@ -157,6 +160,7 @@ public class FieldOfView : MonoBehaviour
             if (intersected)
             {
                 // Hit
+                CheckForPlayerHit(raycastHit.collider.gameObject);
                 vertex = raycastHit.point;
             }
             else
@@ -185,6 +189,19 @@ public class FieldOfView : MonoBehaviour
         mesh.uv = uv;
         mesh.triangles = triangles;
         angle = 210f;
+    }
+
+    private void CheckForPlayerHit(GameObject maybePlayer)
+    {
+        if (maybePlayer.CompareTag("Player"))
+        {
+            hittingPlayer = true;
+        }
+    }
+
+    public bool HittingPlayer()
+    {
+        return hittingPlayer;
     }
 
 }
