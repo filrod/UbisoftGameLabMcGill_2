@@ -31,7 +31,7 @@ public class WanderState : BaseState
 
         NavMeshHit navHit;
 
-        if (NavMesh.SamplePosition(randomDirection, out navHit, distance, layermask))
+        if (NavMesh.SamplePosition(randomDirection, out navHit, distance, 1 << NavMesh.GetAreaFromName("Walkable")))
         {
             return navHit.position;
         }

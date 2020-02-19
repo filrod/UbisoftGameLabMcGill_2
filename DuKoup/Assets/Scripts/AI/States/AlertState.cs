@@ -12,7 +12,7 @@ public class AlertState : BaseState
     // Om man finner spiller, transition til attack
     // Om man har sveipet frem og tilbake et par ganger, transition til wander (slett target i scientist)
 
-    private float atDestinationDist = 0.1f;
+    private float atDestinationDist = 0.05f;
 
     private Vector3 targetPosition;
 

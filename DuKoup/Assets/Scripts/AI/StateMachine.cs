@@ -54,13 +54,12 @@ public class StateMachine : MonoBehaviour
     private void DoTransition(Type newStateType)
     {
         gameObject.GetComponent<NavMeshAgent>().enabled = true;
-        scientistBody.transform.rotation = Quaternion.Euler(0, 0, 0);
+        scientistBody.transform.localRotation = Quaternion.Euler(0, 180, 0);
         fieldOfView.Deactivate();
 
         if (newStateType == typeof(WanderState))
         {
             Debug.Log("Back To Wandering");
-            
             currentState = allStates[newStateType];
         }
 
@@ -75,7 +74,7 @@ public class StateMachine : MonoBehaviour
         {
             Debug.Log("Investigating");
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            scientistBody.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            //scientistBody.transform.localRotation = Quaternion.Euler(0, 180, 0);
             transform.rotation = Quaternion.identity;
             //gameObject.GetComponent<Scientist>().Trigger(null, null);
             fieldOfView.Activate();

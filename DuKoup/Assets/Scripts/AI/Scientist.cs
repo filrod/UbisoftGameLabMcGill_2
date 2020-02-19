@@ -25,11 +25,11 @@ public class Scientist : MonoBehaviour
     {
         if (IsTriggered().HasValue)
         {
-            transform.GetChild(0).GetComponent<Renderer>().material.color = Color.red;
+            transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.color = Color.red;
         }
         else
         {
-            transform.GetChild(0).GetComponent<Renderer>().material.color = Color.black;
+            transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.color = Color.black;
         }
     }
 
