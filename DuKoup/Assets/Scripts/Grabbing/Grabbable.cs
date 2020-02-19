@@ -25,7 +25,7 @@ public abstract class Grabbable : MonoBehaviour
 
    [SerializeField] [Tooltip("Sphere around the object where the player can interact with the object.")] private float radiusOfInteraction = 2f; 
 
-   [SerializeField] [Tooltip("Control button for player 1 to grab the object")] private KeyCode grabbingInputPlayer1 = KeyCode.L;
+   [SerializeField] [Tooltip("Control button for player 1 to grab the object")] private KeyCode grabbingInputPlayer1 = ;
    [SerializeField] [Tooltip("Control button for player 2 to grab the object")] private KeyCode grabbingInputPlayer2 = KeyCode.E;
 
    
@@ -45,6 +45,12 @@ public abstract class Grabbable : MonoBehaviour
     public void Start()
     {
        rb = GetComponent<Rigidbody>();
+        if (player.name == dummy1){
+           key = "Grab1";
+       }
+       else if (player.name == dummy2){
+           key = "Grab2";
+       }
     }
 
     // At each image, we want to check if the player wants to grab or ungrab the object.
@@ -61,20 +67,20 @@ public abstract class Grabbable : MonoBehaviour
     public void Update()
     {
         // Grab: for each player that wants and can grab it.
-       if (CanInteract(grabbingInputPlayer1, player1) && !isGrabbed){
+       if (CanInteract(player1) && !isGrabbed){
             Grab(player1, defaultTrans1);
             grabbedBy1 = true;
        }
-       else if (CanInteract(grabbingInputPlayer2, player2) && !isGrabbed){
+       else if (CanInteract(player2) && !isGrabbed){
             Grab(player2, defaultTrans2);
             grabbedBy2 = true;
        }
 
        // Ungrab
-       else if (Input.GetKeyDown(grabbingInputPlayer1)&& isGrabbed){
+       else if (Input.GetButtonDown(gkey)&& isGrabbed){
            UnGrab(player1, defaultTrans1);
        }
-       else if (Input.GetKeyDown(grabbingInputPlayer2) && isGrabbed){
+       else if (Input.GetButtonDown(key) && isGrabbed){
            UnGrab(player2, defaultTrans2);
        }
    }
@@ -126,10 +132,10 @@ public abstract class Grabbable : MonoBehaviour
    }
 
     // Method to check if the player has hit the correct input and is at the correct location to grab the object.
-   public bool CanInteract(KeyCode key, Transform player)
+   public bool CanInteract(Transform player)
    {
        float distance = Vector3.Distance(player.position, obj.transform.position);
-       return Input.GetKeyDown(key) && (distance <= radiusOfInteraction);
+       return Input.GetButtonDown(key) && (distance <= radiusOfInteraction);
    }
 
     /////// UNCOMMENT TO HAVE DRAGGING
