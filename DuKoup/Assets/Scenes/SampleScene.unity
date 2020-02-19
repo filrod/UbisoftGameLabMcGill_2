@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44999003, g: 0.5000482, b: 0.5755175, a: 1}
+  m_IndirectSpecularColor: {r: 0.44999015, g: 0.5000482, b: 0.5755175, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1084,6 +1084,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 128347523}
     m_Modifications:
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5110472844556488261, guid: 594b3781bbbaa44e1849813f8f66bea3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1158,11 +1163,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: trash_bin (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 594b3781bbbaa44e1849813f8f66bea3, type: 3}
@@ -2791,6 +2791,7 @@ GameObject:
   - component: {fileID: 821038464}
   - component: {fileID: 821038465}
   - component: {fileID: 821038467}
+  - component: {fileID: 821038466}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -2828,8 +2829,8 @@ MonoBehaviour:
   playerId: 1
   canHighJump: 0
   player: {fileID: 640491664}
-  speed: 15
-  speedInJump: 7.5
+  horizontalSpeed: 15
+  horizontalSpeedInJump: 7.5
   jumpForce: 300
   buttForce: 5
   m_MovementSmoothing: 0.05
@@ -2848,6 +2849,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plankingBehaviour: {fileID: 232094359}
+  instancePlayer: {fileID: 0}
+  otherPlayer: {fileID: 0}
+  isMainPlayer: 0
+  collisionRadius: 2
+  alphaPlane: 0
+  betaPlane: 2
 --- !u!114 &821038467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3352,7 +3359,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00000047683716, y: 0.085139886, z: -10}
+  m_LocalPosition: {x: 0.0000004172325, y: 0.085139886, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4420,6 +4427,7 @@ GameObject:
   - component: {fileID: 1342438198}
   - component: {fileID: 1342438199}
   - component: {fileID: 1342438201}
+  - component: {fileID: 1342438200}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -4457,8 +4465,8 @@ MonoBehaviour:
   playerId: 2
   canHighJump: 0
   player: {fileID: 232094360}
-  speed: 15
-  speedInJump: 7.5
+  horizontalSpeed: 15
+  horizontalSpeedInJump: 7.5
   jumpForce: 300
   buttForce: 5
   m_MovementSmoothing: 0.05
@@ -5950,7 +5958,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891070085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00000047683716, y: 0.085139886, z: -10}
+  m_LocalPosition: {x: 0.0000004172325, y: 0.085139886, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 918772454}
