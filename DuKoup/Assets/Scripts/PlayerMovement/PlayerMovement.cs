@@ -138,6 +138,11 @@ public class PlayerMovement : MonoBehaviour
         CheckIfGrounded();
         // Set boolean to true if jump is pressed
         this.jump = Input.GetButtonDown(jumpButton);
+
+        if (jump)
+        {
+            Jump();
+        }
     }
 
     public bool CheckIfGrounded()
@@ -167,8 +172,6 @@ public class PlayerMovement : MonoBehaviour
         // Avoid movement for planking player
         //if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
 
-
-
         if (!this.grounded)
         {
             if (Input.GetKeyDown(KeyCode.B))
@@ -189,11 +192,6 @@ public class PlayerMovement : MonoBehaviour
             movementXY.y = 0;
         }
 
-        if (jump)
-        {
-            Jump();
-        }
-        
         // Move the character by finding the target velocity
         Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
         // And then smoothing it out and applying it to the character
@@ -235,9 +233,6 @@ public class PlayerMovement : MonoBehaviour
         }
         
         this.jump = false;
-
-        
-        
     }
 
     /// <summary>
@@ -269,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="colliderAttachedToPlayer"></param>
     private void SetPlayerHeightFromCollider(Collider colliderAttachedToPlayer)
     {
-        float epsillon = 0.005f;
+        float epsillon = 0.05f;
         this.playerHeightWaistDown = colliderAttachedToPlayer.bounds.extents.y + epsillon;
         //debug.Log("Player height: " + this.playerHeightWaistDown);
     }
