@@ -1059,8 +1059,6 @@ MonoBehaviour:
   player2: {fileID: 232094355}
   defaultTrans2: {fileID: 1032323430}
   radiusOfInteraction: 3
-  grabbingInputPlayer1: 108
-  grabbingInputPlayer2: 101
 --- !u!54 &273584869
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1084,11 +1082,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 128347523}
     m_Modifications:
-    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5110472844556488261, guid: 594b3781bbbaa44e1849813f8f66bea3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1163,6 +1156,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: trash_bin (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 594b3781bbbaa44e1849813f8f66bea3, type: 3}
@@ -2034,7 +2032,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640491662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1339884855}
@@ -2540,7 +2538,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.82e-43, y: 0, z: 0, w: 1.58e-43}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2807,7 +2805,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821038463}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 640491663}
@@ -2830,11 +2828,11 @@ MonoBehaviour:
   canHighJump: 0
   player: {fileID: 640491664}
   horizontalSpeed: 15
-  horizontalSpeedInJump: 7.5
+  horizontalSpeedInJump: 13
   jumpForce: 300
   buttForce: 5
   m_MovementSmoothing: 0.05
-  gravityMultiplier: 6
+  gravityMultiplier: 2
   playerHeightWaistDown: 1.51
 --- !u!114 &821038466
 MonoBehaviour:
@@ -3279,8 +3277,6 @@ MonoBehaviour:
   player2: {fileID: 232094355}
   defaultTrans2: {fileID: 960479709}
   radiusOfInteraction: 2
-  grabbingInputPlayer1: 108
-  grabbingInputPlayer2: 101
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3359,7 +3355,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0000004172325, y: 0.085139886, z: -10}
+  m_LocalPosition: {x: 5.0000005, y: 0.085139886, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4443,7 +4439,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342438197}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 232094355}
@@ -4466,11 +4462,11 @@ MonoBehaviour:
   canHighJump: 0
   player: {fileID: 232094360}
   horizontalSpeed: 15
-  horizontalSpeedInJump: 7.5
+  horizontalSpeedInJump: 13
   jumpForce: 300
   buttForce: 5
   m_MovementSmoothing: 0.05
-  gravityMultiplier: 6
+  gravityMultiplier: 2
   playerHeightWaistDown: 1.51
 --- !u!114 &1342438200
 MonoBehaviour:
@@ -5958,7 +5954,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891070085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0000004172325, y: 0.085139886, z: -10}
+  m_LocalPosition: {x: 5.0000005, y: 0.085139886, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 918772454}
@@ -6705,8 +6701,6 @@ MonoBehaviour:
   player2: {fileID: 232094355}
   defaultTrans2: {fileID: 1032323430}
   radiusOfInteraction: 2
-  grabbingInputPlayer1: 108
-  grabbingInputPlayer2: 101
 --- !u!65 &2145054099
 BoxCollider:
   m_ObjectHideFlags: 0
