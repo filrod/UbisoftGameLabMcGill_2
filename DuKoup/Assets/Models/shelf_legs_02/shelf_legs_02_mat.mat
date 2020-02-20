@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: shelf_03_long_mat
+  m_Name: shelf_legs_02_mat
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _PARALLAXMAP
   m_LightmapFlags: 4
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 508d9e8d86d554c99aaefa42e6136436, type: 3}
+        m_Texture: {fileID: 2800000, guid: 77dcf9a0925a14860bc1edabdbe6990a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -40,19 +40,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9423f351893644cb9a8a8095fa732aa2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 206f7efacdc0946c69ab65f011629c2c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: bd73379026dd149eaaea867a250674d0, type: 3}
+        m_Texture: {fileID: 2800000, guid: fb3cd8c6f231f495cbacaea397f0ce33, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: d7f1181621278469bb028312c6d2d3bc, type: 3}
+        m_Texture: {fileID: 2800000, guid: f819467860640465b820f5f1a61b538d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 2800000, guid: b015123f5b25f46dfb4d73419591af30, type: 3}
+        m_Texture: {fileID: 2800000, guid: c8a89002b5dfb45c7abde2fa19e54079, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -60,7 +60,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _GlossMapScale: 0.5
+    - _GlossMapScale: 0
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
@@ -70,8 +70,8 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _UVSec: 1
+    - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.65837497, g: 0.913099, b: 0.7454045, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
