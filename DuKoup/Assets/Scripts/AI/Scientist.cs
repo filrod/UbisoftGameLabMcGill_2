@@ -6,7 +6,9 @@ public class Scientist : MonoBehaviour
 {
     [SerializeField]
     [Tooltip ("The z value of where the scientist should stop when he is investigating")] private float scientistZAtTable;
-    //[SerializeField] private Transform triggerPos;
+    [SerializeField]
+    [Tooltip("The z value of the back of the navmesh")] private float navmeshBackZ;
+
 
     [SerializeField]
     [Tooltip ("Script attached to the field of view game object")] private FieldOfView fieldOfView;
