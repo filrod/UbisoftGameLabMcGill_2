@@ -197,7 +197,25 @@ public class PlayerMovement : MonoBehaviour
         // Move the character by finding the target velocity
         Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
         // And then smoothing it out and applying it to the character
-        player.velocity = Vector3.SmoothDamp(player.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+        targetVelocity = Vector3.SmoothDamp(player.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+
+        float distance = new Vector3(targetVelocity.x, targetVelocity.y, 0).magnitude * Time.fixedDeltaTime; // Distance from player to where player will be next frame
+        movementXY.Normalize(); // Normalize movementXY since it should be used to indicate direction
+        RaycastHit hit;
+
+        // Check if the player is not on the ground and that the current velocity will result in a collision
+        if (grounded && player.SweepTest(movementXY, out hit, distance))
+        {
+            // Stopping the horizontal movement of the player
+            player.velocity = new Vector3(0, player.velocity.y, 0);
+        }
+        else
+        {
+            // If not jumping or no collision proceed as normal
+            player.velocity = targetVelocity;
+        }
+
+
     }
 
     /// <summary>
