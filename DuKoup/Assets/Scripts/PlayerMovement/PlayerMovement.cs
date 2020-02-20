@@ -204,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
 
         // Check if the player is not on the ground and that the current velocity will result in a collision
-        if (grounded && player.SweepTest(movementXY, out hit, distance))
+        if (!grounded && player.SweepTest(movementXY, out hit, distance))
         {
             // Stopping the horizontal movement of the player
             player.velocity = new Vector3(0, player.velocity.y, 0);
