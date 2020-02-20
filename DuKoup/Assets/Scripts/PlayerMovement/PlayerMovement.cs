@@ -31,11 +31,11 @@ public class PlayerMovement : MonoBehaviourPun
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement")]
-    [SerializeField] [Range(0f, 25f)] private float horizontalSpeed = 15f;
+    [SerializeField] [Range(0f, 25f)] private float horizontalSpeed = 10f;
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement while in the air. Should be slower than while not airborne")]
-    [SerializeField] [Range(0f, 20f)] private float horizontalSpeedInJump = 7.5f;
+    [SerializeField] [Range(0f, 20f)] private float horizontalSpeedInJump = 9f;
 
     /// <summary>
     /// A boolean to check if the player is grounded.
@@ -48,8 +48,8 @@ public class PlayerMovement : MonoBehaviourPun
     /// <summary>
     /// Sets the Jumping force
     /// </summary>
-    [SerializeField] [Range(0f, 500f)] [Tooltip("Sets the Jumping Force")]
-    private float jumpForce = 300f;
+    [SerializeField] [Range(0f, 10f)] [Tooltip("Sets the Jumping Force")]
+    private float jumpForce = 6;
     /// <summary>
     /// Number of current jumps done before hitting the ground (which sets this to zero again)
     /// </summary>
@@ -76,6 +76,9 @@ public class PlayerMovement : MonoBehaviourPun
     [Tooltip("Movement smoothing parameter for crossing between playable planes")]
     [Range(0.0f, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;
 
+    /// <summary> A constant that makes gravity more intense at the peak of one's jump (only for high jumps). </summary>
+    [Tooltip("A constant that makes gravity more intense at the peak of one's jump (only for high jumps).")]
+    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 1.3f;
 
 
     /// <summary> 2D Vector for horizontal and vertical movement respectively </summary>
@@ -140,7 +143,7 @@ public class PlayerMovement : MonoBehaviourPun
         RaycastHit groundCollisionInfo;
         Physics.Raycast(player.transform.position, -Vector3.up, out groundCollisionInfo, 20f);
         float distToGround = player.transform.position.y - groundCollisionInfo.point.y;
-        Debug.Log("Dist to ground" + distToGround);
+        //.Log("Dist to ground" + distToGround);
         //this.distToGround = groundCollisionInfo;
 
         this.grounded = (distToGround <= playerHeightWaistDown);
@@ -214,8 +217,8 @@ public class PlayerMovement : MonoBehaviourPun
     private void Jump()
     {
 
-        Debug.Log("isGrounded" + this.grounded);
-        Debug.Log("Player height: " + this.playerHeightWaistDown);
+        //Debug.Log("isGrounded" + this.grounded);
+        //Debug.Log("Player height: " + this.playerHeightWaistDown);
         if (this.grounded)
         {
             nbJumps = 0;
@@ -223,7 +226,7 @@ public class PlayerMovement : MonoBehaviourPun
         if (this.grounded || (nbJumps < maxJumps) && this.canHighJump)
         {
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
-            player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Force);
+            player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             nbJumps += 1;
             grounded = false;
         }
@@ -242,8 +245,8 @@ public class PlayerMovement : MonoBehaviourPun
         // Check if player has passed peak of jump
         if (this.player.velocity.y < 0)
         {
-            Debug.Log("SkewJump");
-            player.AddForce( Vector3.up * Physics.gravity.y * this.playerManager.GravityMultiplier );
+            //Debug.Log("SkewJump");
+            player.AddForce( Vector3.up * Physics.gravity.y * this.gravityMultiplier );
         }
     }
 
@@ -252,7 +255,7 @@ public class PlayerMovement : MonoBehaviourPun
         // Check if player has passed peak of jump
         if (Input.GetKeyDown(KeyCode.B) && !this.grounded)
         {
-            Debug.Log("Butt slam!!!");
+            //Debug.Log("Butt slam!!!");
             player.AddForce(Vector3.up * Physics.gravity.y * Mathf.Pow(this.buttForce, 2));
         }
     }
@@ -265,7 +268,7 @@ public class PlayerMovement : MonoBehaviourPun
     {
         float epsillon = 0.005f;
         this.playerHeightWaistDown = colliderAttachedToPlayer.bounds.extents.y + epsillon;
-        Debug.Log("Player height: " + this.playerHeightWaistDown);
+        //debug.Log("Player height: " + this.playerHeightWaistDown);
     }
 } 
 
