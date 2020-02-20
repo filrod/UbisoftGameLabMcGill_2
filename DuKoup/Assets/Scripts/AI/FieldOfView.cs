@@ -19,6 +19,7 @@ public class FieldOfView : MonoBehaviour
     /// </summary>
     [SerializeField]
     [Tooltip("How far the vision section extends to")] private float viewDistance = 20f;
+    private float defaultViewDistance = 20f;
     /// <summary>
     /// Origin of the field of view, set as default to be the 
     /// position of the game object "eye" we have attached to 
@@ -28,6 +29,15 @@ public class FieldOfView : MonoBehaviour
     private Vector3 origin;
     private Vector3 rotationOrientation = Vector3.zero;
     private float angleIncrease;
+
+    /// <summary>
+    /// When true the mesh gets drawn. Set in activate and turned off in
+    /// deactivate
+    /// </summary>
+    [SerializeField]
+    private bool isActive = true;
+
+    private bool hittingPlayer = false;
 
 
     [SerializeField]
@@ -52,6 +62,9 @@ public class FieldOfView : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        hittingPlayer = false;
+        if (!this.isActive) { Deactivate(); }
+        else { Activate(); }
         SetPosition(eye.GetComponent<Transform>().position);
         SetViewDirection(eye.GetComponent<Transform>().rotation.eulerAngles);
         DrawFOV(origin);
@@ -94,6 +107,27 @@ public class FieldOfView : MonoBehaviour
     }
 
     /// <summary>
+    /// Activates the FOV mesh with a default view distance 
+    /// </summary>
+    public void Activate()
+    {
+        this.isActive = true;
+        this.viewDistance = this.defaultViewDistance;
+    }
+    /// <summary>
+    /// Deactivates mesh 
+    /// </summary>
+    public void Deactivate()
+    {
+        this.isActive = false;
+        this.viewDistance = 0;
+        // Draw the mesh to a point
+        SetPosition(eye.GetComponent<Transform>().position);
+        SetViewDirection(eye.GetComponent<Transform>().rotation.eulerAngles);
+        DrawFOV(origin);
+    }
+
+    /// <summary>
     /// Draws a mesh for the field of view of the AI enemy by first creating 
     /// vertices aranged as a slice of a circle specified by an angle. Each 
     /// triangle in the mesh is only drawn until the intersection with a 
@@ -127,6 +161,7 @@ public class FieldOfView : MonoBehaviour
             if (intersected)
             {
                 // Hit
+                CheckForPlayerHit(raycastHit.collider.gameObject);
                 vertex = raycastHit.point;
             }
             else
@@ -155,6 +190,20 @@ public class FieldOfView : MonoBehaviour
         mesh.uv = uv;
         mesh.triangles = triangles;
         angle = startAngle;
+    }
+
+
+    private void CheckForPlayerHit(GameObject maybePlayer)
+    {
+        if (maybePlayer.CompareTag("Player"))
+        {
+            hittingPlayer = true;
+        }
+    }
+
+    public bool HittingPlayer()
+    {
+        return hittingPlayer;
     }
 
 }

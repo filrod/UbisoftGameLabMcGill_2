@@ -60,12 +60,4 @@ public class WanderState : BaseState
         return null;
     }
 
-
-    public Vector3? TriggerSetOf()
-    {
-
-        return null;
-    }
-
-
 }

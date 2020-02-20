@@ -4,13 +4,6 @@ using UnityEngine.AI;
 
 public class AlertState : BaseState
 {
-    // TODO
-    // Gå til target
-    // Start blikket på target
-    // Sveip høyre og venstre
-    // Sjekk for spillere
-    // Om man finner spiller, transition til attack
-    // Om man har sveipet frem og tilbake et par ganger, transition til wander (slett target i scientist)
 
     private float atDestinationDist = 0.05f;
 
@@ -27,7 +20,6 @@ public class AlertState : BaseState
 
     public override Type TransitionCheck()
     {
-        Debug.Log("In alert state");
         if (scientist.TargetIsUpdated()) return typeof(AlertState); // 'Restarting' the alert state with a new position
 
         if (agent.destination == null)
@@ -44,17 +36,6 @@ public class AlertState : BaseState
 
         return null;
     }
-
-    //private bool TriggerPositionHasChanged(Vector3 currentTriggerPos)
-    //{
-    //    Vector3? target = scientist.IsTriggered();
-    //    if (target.Value != null)
-    //    {
-    //        return !target.Value.Equals(targetPosition);
-    //    }
-
-    //    return true;
-    //}
 
     public void SetTriggerPositionFromScientist()
     {
