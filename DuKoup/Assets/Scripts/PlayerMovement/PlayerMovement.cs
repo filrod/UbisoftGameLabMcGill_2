@@ -32,11 +32,11 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement")]
-    [SerializeField] [Range(0f, 25f)] private float horizontalSpeed = 15f;
+    [SerializeField] [Range(0f, 25f)] private float horizontalSpeed = 10f;
 
     /// <summary> Speed parameter for horizontal movement (serialized) </summary>
     [Tooltip("Speed parameter for horizontal movement while in the air. Should be slower than while not airborne")]
-    [SerializeField] [Range(0f, 20f)] private float horizontalSpeedInJump = 7.5f;
+    [SerializeField] [Range(0f, 20f)] private float horizontalSpeedInJump = 9f;
 
     /// <summary>
     /// A boolean to check if the player is grounded.
@@ -49,8 +49,8 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Sets the Jumping force
     /// </summary>
-    [SerializeField] [Range(0f, 500f)] [Tooltip("Sets the Jumping Force")]
-    private float jumpForce = 300f;
+    [SerializeField] [Range(0f, 10f)] [Tooltip("Sets the Jumping Force")]
+    private float jumpForce = 6;
     /// <summary>
     /// Number of current jumps done before hitting the ground (which sets this to zero again)
     /// </summary>
@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> A constant that makes gravity more intense at the peak of one's jump (only for high jumps). </summary>
     [Tooltip("A constant that makes gravity more intense at the peak of one's jump (only for high jumps).")]
-    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 4f;
+    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 1.3f;
 
     /// <summary> 2D Vector for horizontal and vertical movement respectively </summary>
     private Vector2 movementXY;
@@ -229,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
         if (this.grounded || (nbJumps < maxJumps) && this.canHighJump)
         {
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
-            player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Force);
+            player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             nbJumps += 1;
             grounded = false;
         }
