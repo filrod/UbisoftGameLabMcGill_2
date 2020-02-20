@@ -149,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit groundCollisionInfo;
         Physics.Raycast(player.transform.position, -Vector3.up, out groundCollisionInfo, 20f);
         float distToGround = player.transform.position.y - groundCollisionInfo.point.y;
-        Debug.Log("Dist to ground" + distToGround);
+        //.Log("Dist to ground" + distToGround);
         //this.distToGround = groundCollisionInfo;
 
         this.grounded = (distToGround <= playerHeightWaistDown);
@@ -223,8 +223,8 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
 
-        Debug.Log("isGrounded" + this.grounded);
-        Debug.Log("Player height: " + this.playerHeightWaistDown);
+        //Debug.Log("isGrounded" + this.grounded);
+        //Debug.Log("Player height: " + this.playerHeightWaistDown);
         if (this.grounded)
         {
             nbJumps = 0;
@@ -251,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
         // Check if player has passed peak of jump
         if (this.player.velocity.y < 0)
         {
-            Debug.Log("SkewJump");
+            //Debug.Log("SkewJump");
             player.AddForce( Vector3.up * Physics.gravity.y * this.gravityMultiplier );
         }
     }
@@ -261,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
         // Check if player has passed peak of jump
         if (Input.GetKeyDown(KeyCode.B) && !this.grounded)
         {
-            Debug.Log("Butt slam!!!");
+            //Debug.Log("Butt slam!!!");
             player.AddForce(Vector3.up * Physics.gravity.y * Mathf.Pow(this.buttForce, 2));
         }
     }
@@ -274,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float epsillon = 0.005f;
         this.playerHeightWaistDown = colliderAttachedToPlayer.bounds.extents.y + epsillon;
-        Debug.Log("Player height: " + this.playerHeightWaistDown);
+        //debug.Log("Player height: " + this.playerHeightWaistDown);
     }
 } 
 
