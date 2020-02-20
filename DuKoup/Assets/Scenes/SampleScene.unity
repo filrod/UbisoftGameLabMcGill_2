@@ -1084,6 +1084,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 128347523}
     m_Modifications:
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5110472844556488261, guid: 594b3781bbbaa44e1849813f8f66bea3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1158,11 +1163,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: trash_bin (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 594b3781bbbaa44e1849813f8f66bea3, type: 3}
@@ -2829,12 +2829,12 @@ MonoBehaviour:
   playerId: 1
   canHighJump: 0
   player: {fileID: 640491664}
-  horizontalSpeed: 15
-  horizontalSpeedInJump: 7.5
+  horizontalSpeed: 10
+  horizontalSpeedInJump: 8
   jumpForce: 300
   buttForce: 5
   m_MovementSmoothing: 0.05
-  gravityMultiplier: 6
+  gravityMultiplier: 2
   playerHeightWaistDown: 1.51
 --- !u!114 &821038466
 MonoBehaviour:
@@ -2849,8 +2849,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plankingBehaviour: {fileID: 232094359}
-  instancePlayer: {fileID: 0}
-  otherPlayer: {fileID: 0}
+  instancePlayer: {fileID: 640491664}
+  otherPlayer: {fileID: 232094360}
   isMainPlayer: 0
   collisionRadius: 2
   alphaPlane: 0
@@ -4467,10 +4467,10 @@ MonoBehaviour:
   player: {fileID: 232094360}
   horizontalSpeed: 10
   horizontalSpeedInJump: 8
-  jumpForce: 250
+  jumpForce: 300
   buttForce: 5
   m_MovementSmoothing: 0.05
-  gravityMultiplier: 6
+  gravityMultiplier: 2
   playerHeightWaistDown: 1.51
 --- !u!114 &1342438200
 MonoBehaviour:
