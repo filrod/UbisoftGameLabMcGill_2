@@ -73,10 +73,10 @@ public abstract class Grabbable : MonoBehaviour
        }
 
        // Ungrab
-       else if (Input.GetButtonDown("Jump1")&& isGrabbed){
+       else if (Input.GetButtonDown("Grab1")&& isGrabbed){
            UnGrab(player1, defaultTrans1);
        }
-       else if (Input.GetButtonDown("Jump2") && isGrabbed){
+       else if (Input.GetButtonDown("Grab2") && isGrabbed){
            UnGrab(player2, defaultTrans2);
        }
    }
