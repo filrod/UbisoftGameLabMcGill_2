@@ -104,6 +104,9 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The collider height from halfway down. " +"This is what helps check if the player is grunded since the rays " + "to check get cast from the midle of the game object downward.")]
     private float playerHeightWaistDown = 1.26f;
 
+    // Keep track on where the player is facing
+    private bool m_FacingRight = true;
+
 
     /// <summary>
     /// This method distinguishes which objet is using this 
@@ -191,6 +194,21 @@ public class PlayerMovement : MonoBehaviour
             movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeed;
             movementXY.y = 0;
         }
+
+            // Flip the player
+
+                 // If the input is moving the player right and the player is facing left...
+                if (movementXY.x > 0 && !m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+                // Otherwise if the input is moving the player left and the player is facing right...
+                else if (movementXY.x < 0 && m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
 
         // Move the character by finding the target velocity
         Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
@@ -285,6 +303,22 @@ public class PlayerMovement : MonoBehaviour
         float epsillon = 0.05f;
         this.playerHeightWaistDown = colliderAttachedToPlayer.bounds.extents.y + epsillon;
         //debug.Log("Player height: " + this.playerHeightWaistDown);
+    }
+
+
+    /// <summary>
+    /// @Robin
+    /// Flip the player when changing directions.
+    /// </summary>
+        private void Flip()
+    {
+            // Switch the way the player is labelled as facing.
+            m_FacingRight = !m_FacingRight;
+
+            // Multiply the player's x local scale by -1.
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1f;
+            transform.localScale = theScale;
     }
 } 
 

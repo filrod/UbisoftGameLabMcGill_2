@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.46091926, g: 0.615603, b: 0.7133929, a: 1}
+  m_IndirectSpecularColor: {r: 0.46091884, g: 0.6156026, b: 0.7133921, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1172,6 +1172,8 @@ GameObject:
   - component: {fileID: 232094360}
   - component: {fileID: 232094359}
   - component: {fileID: 232094361}
+  - component: {fileID: 232094363}
+  - component: {fileID: 232094362}
   m_Layer: 0
   m_Name: dummy2
   m_TagString: Player
@@ -1287,6 +1289,47 @@ Rigidbody:
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &232094361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232094354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c075a3495639a47f28c762eec59172ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plankingBehaviour: {fileID: 232094359}
+  instancePlayer: {fileID: 232094360}
+  otherPlayer: {fileID: 640491664}
+  isMainPlayer: 0
+  collisionRadius: 2
+  alphaPlane: 0
+  betaPlane: 2
+--- !u!114 &232094362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232094354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 2
+  canHighJump: 0
+  player: {fileID: 232094360}
+  horizontalSpeed: 8
+  horizontalSpeedInJump: 7
+  jumpForce: 6
+  buttForce: 5
+  m_MovementSmoothing: 0.05
+  gravityMultiplier: 1.3
+  playerHeightWaistDown: 1.26
+--- !u!114 &232094363
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3335,6 +3378,8 @@ GameObject:
   - component: {fileID: 640491665}
   - component: {fileID: 640491669}
   - component: {fileID: 640491670}
+  - component: {fileID: 640491671}
+  - component: {fileID: 640491672}
   m_Layer: 0
   m_Name: dummy1
   m_TagString: Player
@@ -3478,6 +3523,47 @@ MonoBehaviour:
   instancePlayer: {fileID: 640491664}
   otherPlayer: {fileID: 232094360}
   isMainPlayer: 1
+  collisionRadius: 2
+  alphaPlane: 0
+  betaPlane: 2
+--- !u!114 &640491671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640491662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 1
+  canHighJump: 0
+  player: {fileID: 640491664}
+  horizontalSpeed: 8
+  horizontalSpeedInJump: 7
+  jumpForce: 6
+  buttForce: 5
+  m_MovementSmoothing: 0.05
+  gravityMultiplier: 1.3
+  playerHeightWaistDown: 1.26
+--- !u!114 &640491672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640491662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c075a3495639a47f28c762eec59172ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plankingBehaviour: {fileID: 232094359}
+  instancePlayer: {fileID: 640491664}
+  otherPlayer: {fileID: 232094360}
+  isMainPlayer: 0
   collisionRadius: 2
   alphaPlane: 0
   betaPlane: 2
@@ -4202,9 +4288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 821038464}
-  - component: {fileID: 821038465}
   - component: {fileID: 821038467}
-  - component: {fileID: 821038466}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -4227,47 +4311,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &821038465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821038463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerId: 1
-  canHighJump: 0
-  player: {fileID: 640491664}
-  horizontalSpeed: 8
-  horizontalSpeedInJump: 7
-  jumpForce: 6
-  buttForce: 5
-  m_MovementSmoothing: 0.05
-  gravityMultiplier: 1.3
-  playerHeightWaistDown: 1.26
---- !u!114 &821038466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821038463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c075a3495639a47f28c762eec59172ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plankingBehaviour: {fileID: 232094359}
-  instancePlayer: {fileID: 640491664}
-  otherPlayer: {fileID: 232094360}
-  isMainPlayer: 0
-  collisionRadius: 2
-  alphaPlane: 0
-  betaPlane: 2
 --- !u!114 &821038467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6628,15 +6671,15 @@ Transform:
   - {fileID: 3653092037457549196}
   - {fileID: 1489232229112630079}
   - {fileID: 430073531}
-  - {fileID: 1909290421}
-  - {fileID: 392984208}
   - {fileID: 551096081}
+  - {fileID: 1909290421}
   - {fileID: 1061327254}
   - {fileID: 4673739969941437270}
   - {fileID: 1029537748}
   - {fileID: 538862101}
   - {fileID: 764433673}
   - {fileID: 1976436034}
+  - {fileID: 392984208}
   - {fileID: 885928282}
   - {fileID: 1703229709}
   - {fileID: 1439167545}
@@ -7263,9 +7306,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1342438198}
-  - component: {fileID: 1342438199}
   - component: {fileID: 1342438201}
-  - component: {fileID: 1342438200}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -7288,47 +7329,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1342438199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342438197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerId: 2
-  canHighJump: 0
-  player: {fileID: 232094360}
-  horizontalSpeed: 8
-  horizontalSpeedInJump: 7
-  jumpForce: 6
-  buttForce: 5
-  m_MovementSmoothing: 0.05
-  gravityMultiplier: 1.3
-  playerHeightWaistDown: 1.26
---- !u!114 &1342438200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342438197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c075a3495639a47f28c762eec59172ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plankingBehaviour: {fileID: 232094359}
-  instancePlayer: {fileID: 232094360}
-  otherPlayer: {fileID: 640491664}
-  isMainPlayer: 0
-  collisionRadius: 2
-  alphaPlane: 0
-  betaPlane: 2
 --- !u!114 &1342438201
 MonoBehaviour:
   m_ObjectHideFlags: 0
