@@ -15,6 +15,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Fields 
+    private PlayerManager playerManager;
 
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
@@ -25,6 +26,18 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField][Tooltip("Player has ability to high jump. In inspector for testing purposes only.")]
     private bool canHighJump = false;
+
+    public bool CanHighJump
+    {
+        get
+        {
+            return canHighJump;
+        }
+        set
+        {
+            canHighJump = value;
+        }
+    }
 
     /// <summary> A rigidbody component on the player to control physics (serialized) </summary>
     [Tooltip("A rigidbody component on the player to control physics")]
@@ -79,7 +92,20 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> A constant that makes gravity more intense at the peak of one's jump (only for high jumps). </summary>
     [Tooltip("A constant that makes gravity more intense at the peak of one's jump (only for high jumps).")]
-    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 1.3f;
+    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 4f;
+
+    public float GravityMultiplier
+    {
+        get
+        {
+            return gravityMultiplier;
+        }
+        set
+        {
+            gravityMultiplier = value;
+        }
+    }
+
 
     /// <summary> 2D Vector for horizontal and vertical movement respectively </summary>
     private Vector2 movementXY;
@@ -121,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
     /// <returns> Returns void </returns>
     public void Awake()
     {
+        playerManager = GetComponent<PlayerManager>();
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
 
@@ -275,6 +302,15 @@ public class PlayerMovement : MonoBehaviour
         float epsillon = 0.5f;
         this.playerHeightWaistDown = colliderAttachedToPlayer.bounds.extents.y + epsillon;
         //debug.Log("Player height: " + this.playerHeightWaistDown);
+    }
+
+    /// <summary>
+    /// Reset all the parameter to default
+    /// </summary>
+    public void reset()
+    {
+        canHighJump = false;
+        gravityMultiplier = 1.3f;
     }
 } 
 
