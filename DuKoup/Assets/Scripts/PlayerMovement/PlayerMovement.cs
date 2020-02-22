@@ -107,6 +107,8 @@ public class PlayerMovement : MonoBehaviour
     // Keep track on where the player is facing
     private bool m_FacingRight = true;
 
+    [SerializeField] private Collider2D confinedArea;
+
 
     /// <summary>
     /// This method distinguishes which objet is using this 
@@ -146,6 +148,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
         }
+
+        restrictObject(confinedArea);
     }
 
     public bool CheckIfGrounded()
@@ -220,16 +224,16 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
 
         // Check if the player is not on the ground and that the current velocity will result in a collision
-        if (!grounded && player.SweepTest(movementXY, out hit, distance))
-        {
-            // Stopping the horizontal movement of the player
-            player.velocity = new Vector3(0, player.velocity.y, 0);
-        }
-        else
-        {
+        // if (!grounded && player.SweepTest(movementXY, out hit, distance))
+        // {
+        //     // Stopping the horizontal movement of the player
+        //     player.velocity = new Vector3(0, player.velocity.y, 0);
+        // }
+        // else
+        // {
             // If not jumping or no collision proceed as normal
             player.velocity = targetVelocity;
-        }
+        // }
 
 
     }
@@ -319,6 +323,18 @@ public class PlayerMovement : MonoBehaviour
             Vector3 theScale = transform.localScale;
             theScale.x *= -1f;
             transform.localScale = theScale;
+    }
+
+    private void restrictObject(Collider2D area)
+    {                 
+        // get the current position
+        Vector3 clampedPosition = transform.position;
+        // limit the x and y positions to be between the area's min and max x and y.
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, area.bounds.min.x, area.bounds.max.x);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, area.bounds.min.y, area.bounds.max.y);
+        // z remains unchanged
+        // apply the clamped position
+        transform.position = clampedPosition;
     }
 } 
 
