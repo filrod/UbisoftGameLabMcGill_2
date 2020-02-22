@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlankingSpace
   - Bridge
+  - Coin
   layers:
   - Default
   - TransparentFX
