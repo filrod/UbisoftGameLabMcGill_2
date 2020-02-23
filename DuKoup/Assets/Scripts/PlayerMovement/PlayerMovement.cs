@@ -166,12 +166,12 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
 
-        if (playerId == 1)
+        if (playerManager.playerId == 1)
         {
             horizontalAxis = "Horizontal1";
             jumpButton = "Jump1";
         }
-        else if (playerId == 2)
+        else if (playerManager.playerId == 2)
         {
             horizontalAxis = "Horizontal2";
             jumpButton = "Jump2";
@@ -289,7 +289,7 @@ public class PlayerMovement : MonoBehaviour
     /// <returns> Returns an integer 1 or 2 depending on the player using this class </returns>
     public int GetPlayerId()
     {
-        return this.playerId;
+        return playerManager.playerId;
     }
 
     /// <summary>

@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     // Used PhotonNetwork.LocalPlayer.ActorNumber instead
     [SerializeField]
     [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
-    private int playerId;
+    public int playerId;
 
     /// <summary>
     /// A player holds a reference of another player
@@ -32,15 +32,15 @@ public class PlayerManager : MonoBehaviour
     }
 
     [SerializeField]
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
     [SerializeField]
-    private PlankingSupport plankingSupport;
+    public PlankingSupport plankingSupport;
     [SerializeField]
-    private Pushing pushing;
+    public Pushing pushing;
     [SerializeField]
-    private PlayersCollision playerCollision;
+    public PlayersCollision playerCollision;
     [SerializeField]
-    private PlankingBehaviour plankingBahaviour;
+    public PlankingBehaviour plankingBahaviour;
 
     private void Awake()
     {
@@ -57,6 +57,7 @@ public class PlayerManager : MonoBehaviour
         pushing = GetComponentInChildren<Pushing>();
         playerMovement = GetComponentInChildren<PlayerMovement>();
         plankingBahaviour = GetComponentInChildren<PlankingBehaviour>();
+        playerCollision = GetComponentInChildren<PlayersCollision>();
         
     }
 }

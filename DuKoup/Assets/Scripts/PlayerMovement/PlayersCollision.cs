@@ -53,7 +53,10 @@ public class PlayersCollision : MonoBehaviour
         {
             otherPlayer = playerManager.OtherPlayer.GetComponentInChildren<Rigidbody>();
         }
-
+        if (playerManager.playerId == 1)
+        {
+            isMainPlayer = true;
+        }
         diffPlane = betaPlane - alphaPlane;
     }
 

@@ -47,6 +47,18 @@ public abstract class Grabbable : MonoBehaviour
     public void Start()
     {
        rb = GetComponent<Rigidbody>();
+        foreach (PlayerManager m in FindObjectsOfType<PlayerManager>())
+        {
+            if (m.playerId == 1)
+            {
+                player1 = m.transform;
+            }
+            else if (m.playerId == 2)
+            {
+                player2 = m.transform;
+            }
+        }
+        
     }
 
     // At each image, we want to check if the player wants to grab or ungrab the object.
