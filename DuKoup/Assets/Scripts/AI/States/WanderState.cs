@@ -7,7 +7,7 @@ public class WanderState : BaseState
 
     private float distAtDestination = 1f;
     private float wanderTimeOut = 4f;
-    private float randomTargetRadius = 15;
+    private float randomTargetRadius = 30;
 
     private float timer;
     private Vector3 destination;

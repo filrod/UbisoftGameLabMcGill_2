@@ -52,6 +52,7 @@ public class FieldOfView : MonoBehaviour
         SetFOV(60f);
         angle = startAngle;
         SetPosition(eye.GetComponent<Transform>().position);
+        Debug.Log(eye.GetComponent<Transform>().position);
         angleIncrease = fov / rayCount;
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;

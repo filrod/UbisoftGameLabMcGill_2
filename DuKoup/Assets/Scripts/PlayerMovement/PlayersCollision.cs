@@ -54,7 +54,7 @@ public class PlayersCollision : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (plankingBehaviour.PlayerIsPlanking()) return;
+        //if (plankingBehaviour.PlayerIsPlanking()) return;
         if (Mathf.RoundToInt(instancePlayer.transform.position.y) != Mathf.RoundToInt(otherPlayer.transform.position.y)) return;
         
         // Create a collision area for otherPlayer
