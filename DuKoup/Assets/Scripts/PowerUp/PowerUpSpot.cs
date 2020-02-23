@@ -58,6 +58,9 @@ public class PowerUpSpot : MonoBehaviour
                     case POWER_TYPE.Grabable:
                         powerUp.GainGrabable();
                         break;
+                    case POWER_TYPE.High_Jump:
+                        powerUp.GainHighJump();
+                        break;
                     default:
                         break;
                 }

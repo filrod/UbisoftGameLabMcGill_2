@@ -37,6 +37,10 @@ public class PlayerManager : MonoBehaviour
     private PlankingSupport plankingSupport;
     [SerializeField]
     private Pushing pushing;
+    [SerializeField]
+    private PlayersCollision playerCollision;
+    [SerializeField]
+    private PlankingBehaviour plankingBahaviour;
 
     private void Awake()
     {
@@ -48,5 +52,11 @@ public class PlayerManager : MonoBehaviour
             }
             OtherPlayer = manager.gameObject;
         }
+
+        plankingSupport = GetComponentInChildren<PlankingSupport>();
+        pushing = GetComponentInChildren<Pushing>();
+        playerMovement = GetComponentInChildren<PlayerMovement>();
+        plankingBahaviour = GetComponentInChildren<PlankingBehaviour>();
+        
     }
 }
