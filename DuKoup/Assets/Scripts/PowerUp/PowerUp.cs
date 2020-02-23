@@ -27,7 +27,7 @@ public class PowerUp : MonoBehaviour
         Debug.Log("GainLowGravity");
         if (playerMovement == null)
         {
-            playerMovement = GetComponentInParent<PlayerMovement>();
+            playerMovement = GetComponent<PlayerMovement>();
         }
         playerMovement.GravityMultiplier *= 0.8f;
     }
@@ -35,14 +35,25 @@ public class PowerUp : MonoBehaviour
     /// <summary>
     /// The player will get the ability to jump high
     /// </summary>
+    public void GainDoubleJump()
+    {
+        Debug.Log("GainDoubleJump");
+        if (playerMovement == null)
+        {
+            playerMovement = GetComponent<PlayerMovement>();
+        }
+        playerMovement.CanDoubleJump = true;
+    }
+
     public void GainHighJump()
     {
         Debug.Log("GainHighJump");
         if (playerMovement == null)
         {
-            playerMovement = GetComponentInParent<PlayerMovement>();
+            playerMovement = GetComponent<PlayerMovement>();
         }
-        playerMovement.CanHighJump = true;
+        playerMovement.JumpForce *= 1.2f;
+
     }
 
 
@@ -59,7 +70,7 @@ public class PowerUp : MonoBehaviour
         Debug.Log("Reset");
         if (playerMovement == null)
         {
-            playerMovement = GetComponentInParent<PlayerMovement>();
+            playerMovement = GetComponent<PlayerMovement>();
         }
         playerMovement.reset();
     }

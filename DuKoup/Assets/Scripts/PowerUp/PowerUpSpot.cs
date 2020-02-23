@@ -16,6 +16,7 @@ public class PowerUpSpot : MonoBehaviour
         Fast_Speed,
         Grabable,
         High_Jump,
+        Double_Jump,
         Default
     }
 
@@ -44,20 +45,25 @@ public class PowerUpSpot : MonoBehaviour
 
             // player power up
             PowerUp powerUp = enteredPlayer.GetComponent<PowerUp>();
-
-            switch (currentPowerType)
+            if (powerUp != null)
             {
-                case POWER_TYPE.Default:
-                    powerUp.Reset();
-                    break;
-                case POWER_TYPE.High_Jump:
-                    powerUp.GainHighJump();
-                    break;
-                case POWER_TYPE.Grabable:
-                    powerUp.GainGrabable();
-                    break;
-                default:
-                    break;
+                switch (currentPowerType)
+                {
+                    case POWER_TYPE.Default:
+                        powerUp.Reset();
+                        break;
+                    case POWER_TYPE.Double_Jump:
+                        powerUp.GainDoubleJump();
+                        break;
+                    case POWER_TYPE.Grabable:
+                        powerUp.GainGrabable();
+                        break;
+                    default:
+                        break;
+                }
+            } else
+            {
+                Debug.LogWarning("Missing Power up component!");
             }
         }
     }

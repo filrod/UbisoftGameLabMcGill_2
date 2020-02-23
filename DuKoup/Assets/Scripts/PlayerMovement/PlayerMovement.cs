@@ -25,17 +25,17 @@ public class PlayerMovement : MonoBehaviour
     /// Ability to high jump
     /// </summary>
     [SerializeField][Tooltip("Player has ability to high jump. In inspector for testing purposes only.")]
-    private bool canHighJump = false;
+    private bool canDoubleJump = false;
 
-    public bool CanHighJump
+    public bool CanDoubleJump
     {
         get
         {
-            return canHighJump;
+            return canDoubleJump;
         }
         set
         {
-            canHighJump = value;
+            canDoubleJump = value;
         }
     }
 
@@ -64,6 +64,19 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField] [Range(0f, 10f)] [Tooltip("Sets the Jumping Force")]
     private float jumpForce = 6;
+    public float JumpForce
+    {
+        get
+        {
+            return jumpForce;
+        }
+        set
+        {
+            jumpForce = value;
+        }
+    }
+
+
     /// <summary>
     /// Number of current jumps done before hitting the ground (which sets this to zero again)
     /// </summary>
@@ -149,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
     /// <returns> Returns void </returns>
     public void Awake()
     {
-        playerManager = GetComponent<PlayerManager>();
+        playerManager = GetComponentInParent<PlayerManager>();
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
 
@@ -190,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit groundCollisionInfo;
         Physics.Raycast(player.transform.position, -Vector3.up, out groundCollisionInfo, 20f);
         float distToGround = player.transform.position.y - groundCollisionInfo.point.y;
-        Debug.Log("Dist to ground" + distToGround);
+        // Debug.Log("Dist to ground" + distToGround);
         //this.distToGround = groundCollisionInfo;
 
         this.grounded = (distToGround <= playerHeightWaistDown);
@@ -296,7 +309,7 @@ public class PlayerMovement : MonoBehaviour
         {
             nbJumps = 0;
         }
-        if (this.grounded || (nbJumps < maxJumps) && this.canHighJump)
+        if (this.grounded || (nbJumps < maxJumps) && this.canDoubleJump)
         {
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
             player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
@@ -322,10 +335,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void ButtSlam()
     {
+        
         // Check if player has passed peak of jump
         if (Input.GetKeyDown(KeyCode.B) && !this.grounded)
         {
-            //Debug.Log("Butt slam!!!");
+            Debug.Log("Butt slam!!!" + "ground: " + grounded);
             player.AddForce(Vector3.up * Physics.gravity.y * Mathf.Pow(this.buttForce, 2));
         }
     }
@@ -374,7 +388,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void reset()
     {
-        canHighJump = false;
+        canDoubleJump = false;
+        jumpForce = 6.0f;
         gravityMultiplier = 1.3f;
     }
 } 
