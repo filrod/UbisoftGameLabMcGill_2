@@ -150,6 +150,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         restrictObject(confinedArea);
+
+        // Restart game by pressing F4
+        if (Input.GetKeyDown(KeyCode.F4)){
+            Application.LoadLevel(0);
+        }
     }
 
     public bool CheckIfGrounded()
