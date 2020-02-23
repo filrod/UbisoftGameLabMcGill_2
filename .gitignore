@@ -67,4 +67,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 DuKoup/Library/*
-Dukoup/Temp/*
+DuKoup/Temp/*
+DuKoup/obj/Debug/*

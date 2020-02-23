@@ -9,6 +9,8 @@ public class PlayerCollectables : MonoBehaviour
     // Fields
     private int coinInventory = 0;
     [SerializeField][Tooltip("Insert here the UI to display the score of this player")] TextMeshProUGUI coinCountText;
+    [SerializeField][Tooltip("Insert here the UI to display the winning message")] TextMeshProUGUI winningText;
+    private bool canRestart = false;
 
     void OnTriggerEnter(Collider other){
 
@@ -19,6 +21,14 @@ public class PlayerCollectables : MonoBehaviour
             CoinManager.instance.IncreaseCoinTotal();
             SetCountText();
         }
+
+        if (other.gameObject.CompareTag("End"))
+        {
+            winningText.SetText("You Won !");
+            other.gameObject.SetActive(false);
+            canRestart = true;
+            
+        }
     }
     // Display Score
     void SetCountText()
@@ -26,4 +36,9 @@ public class PlayerCollectables : MonoBehaviour
         coinCountText.text = coinInventory.ToString();
     }
 
+    void Update(){
+        if (canRestart && (Input.GetKey(KeyCode.Escape))){
+            Application.LoadLevel(0);
+        }
+    }
 }

@@ -15,6 +15,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Fields 
+    private PlayerManager playerManager;
 
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
@@ -24,7 +25,19 @@ public class PlayerMovement : MonoBehaviour
     /// Ability to high jump
     /// </summary>
     [SerializeField][Tooltip("Player has ability to high jump. In inspector for testing purposes only.")]
-    private bool canHighJump = false;
+    private bool canDoubleJump = false;
+
+    public bool CanDoubleJump
+    {
+        get
+        {
+            return canDoubleJump;
+        }
+        set
+        {
+            canDoubleJump = value;
+        }
+    }
 
     /// <summary> A rigidbody component on the player to control physics (serialized) </summary>
     [Tooltip("A rigidbody component on the player to control physics")]
@@ -51,6 +64,19 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField] [Range(0f, 10f)] [Tooltip("Sets the Jumping Force")]
     private float jumpForce = 6;
+    public float JumpForce
+    {
+        get
+        {
+            return jumpForce;
+        }
+        set
+        {
+            jumpForce = value;
+        }
+    }
+
+
     /// <summary>
     /// Number of current jumps done before hitting the ground (which sets this to zero again)
     /// </summary>
@@ -79,7 +105,20 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> A constant that makes gravity more intense at the peak of one's jump (only for high jumps). </summary>
     [Tooltip("A constant that makes gravity more intense at the peak of one's jump (only for high jumps).")]
-    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 1.3f;
+    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 4f;
+
+    public float GravityMultiplier
+    {
+        get
+        {
+            return gravityMultiplier;
+        }
+        set
+        {
+            gravityMultiplier = value;
+        }
+    }
+
 
     /// <summary> 2D Vector for horizontal and vertical movement respectively </summary>
     private Vector2 movementXY;
@@ -123,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
     /// <returns> Returns void </returns>
     public void Awake()
     {
+        playerManager = GetComponentInParent<PlayerManager>();
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
 
@@ -150,6 +190,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         restrictObject(confinedArea);
+
+        // Restart game by pressing F4
+        if (Input.GetKeyDown(KeyCode.F4)){
+            Application.LoadLevel(0);
+        }
     }
 
     public bool CheckIfGrounded()
@@ -158,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit groundCollisionInfo;
         Physics.Raycast(player.transform.position, -Vector3.up, out groundCollisionInfo, 20f);
         float distToGround = player.transform.position.y - groundCollisionInfo.point.y;
-        //.Log("Dist to ground" + distToGround);
+        // Debug.Log("Dist to ground" + distToGround);
         //this.distToGround = groundCollisionInfo;
 
         this.grounded = (distToGround <= playerHeightWaistDown);
@@ -264,7 +309,7 @@ public class PlayerMovement : MonoBehaviour
         {
             nbJumps = 0;
         }
-        if (this.grounded || (nbJumps < maxJumps) && this.canHighJump)
+        if (this.grounded || (nbJumps < maxJumps) && this.canDoubleJump)
         {
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
             player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
@@ -290,10 +335,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void ButtSlam()
     {
+        
         // Check if player has passed peak of jump
         if (Input.GetKeyDown(KeyCode.B) && !this.grounded)
         {
-            //Debug.Log("Butt slam!!!");
+            Debug.Log("Butt slam!!!" + "ground: " + grounded);
             player.AddForce(Vector3.up * Physics.gravity.y * Mathf.Pow(this.buttForce, 2));
         }
     }
@@ -335,6 +381,16 @@ public class PlayerMovement : MonoBehaviour
         // z remains unchanged
         // apply the clamped position
         transform.position = clampedPosition;
+    }
+
+    /// <summary>
+    /// Reset all the parameter to default
+    /// </summary>
+    public void reset()
+    {
+        canDoubleJump = false;
+        jumpForce = 6.0f;
+        gravityMultiplier = 1.3f;
     }
 } 
 
