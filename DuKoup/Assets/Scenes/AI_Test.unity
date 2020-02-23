@@ -1276,6 +1276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scientistZAtTable: 8
+  navmeshBackZ: 0
   fieldOfView: {fileID: 1916302506}
 --- !u!195 &1952252490
 NavMeshAgent:
@@ -1366,7 +1367,7 @@ MonoBehaviour:
   player: {fileID: 761599049}
   horizontalSpeed: 15
   horizontalSpeedInJump: 7.5
-  jumpForce: 300
+  jumpForce: 6
   buttForce: 5
   m_MovementSmoothing: 0.05
   gravityMultiplier: 2
