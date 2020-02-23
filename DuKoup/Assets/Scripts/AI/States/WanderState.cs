@@ -19,17 +19,33 @@ public class WanderState : BaseState
     {
         this.scientist = scientist;
         agent = scientist.GetComponent<NavMeshAgent>();
-        destination = RandomNavSphere(scientist.transform.position, randomTargetRadius, -1);
+        //destination = generateRandomPointWithinBounds(scientist.transform.position);
+        //destination = RandomNavSphere(scientist.transform.position, randomTargetRadius, -1);
         timer = wanderTimeOut;  
     }
 
-    //public Vector3 generateRandomPointWithinBounds()
-    //{
-    //    float minX = scientist.GetMinX();
-    //    float maxX = scientist.GetMaxX();
 
+    public Vector3 generateRandomPointWithinBounds(Vector3 origin)
+    {
+        Vector2 xBounds = scientist.GetXMovementBounds();
+        Vector2 zBounds = scientist.GetZMovementBounds();
 
-    //}
+        float randX = UnityEngine.Random.Range(xBounds.x, xBounds.y);
+        float randZ = UnityEngine.Random.Range(zBounds.x, zBounds.y);
+
+        Debug.Log(new Vector3(randX, origin.y, randZ));
+
+        return new Vector3(randX, origin.y, randZ);
+        //NavMeshHit navHit;
+
+        //if (NavMesh.SamplePosition(new Vector3(randX, origin.y, randZ), out navHit, 0, 1 << NavMesh.GetAreaFromName("Walkable")))
+        //{
+        //    return navHit.position;
+        //}
+
+        //return origin;
+    }
+
 
     public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
     {
@@ -60,7 +76,8 @@ public class WanderState : BaseState
         if (timer >= wanderTimeOut || agent.remainingDistance <= distAtDestination)
         {
             //Debug.Log("At destination, new destination generated");
-            destination = RandomNavSphere(scientist.transform.position, randomTargetRadius, -1);
+            destination = generateRandomPointWithinBounds(scientist.transform.position);
+            //destination = RandomNavSphere(scientist.transform.position, randomTargetRadius, -1);
             agent.SetDestination(destination);
             timer = 0;
         }

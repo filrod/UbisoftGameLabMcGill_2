@@ -16,12 +16,26 @@ public class Scientist : MonoBehaviour
     public StateMachine stateMachine => GetComponent<StateMachine>();
     private Vector3? targetPosition = null; // ? indicates a nullable type. If it has a value of null that means the ai has no target and should be wandering
     private Vector3? nextTargetPosition;
-    /* Filipe's changes*/
     /// <summary>
     /// Main Camera used to set scientist movement bounds 
     /// </summary>
-    private Camera cam = Camera.current;
+    private Camera cam;
 
+
+    private void Awake()
+    {
+
+        stateMachine.AddState(typeof(WanderState), new WanderState(this));
+        stateMachine.AddState(typeof(AlertState), new AlertState(this));
+        stateMachine.AddState(typeof(InvestigateState), new InvestigateState(this));
+        stateMachine.AddState(typeof(AttackState), new AttackState(this));
+        cam = Camera.main;
+    }
+
+    public Vector2 GetZMovementBounds()
+    {
+        return new Vector2(scientistZAtTable, navmeshBackZ);
+    }
 
     /// <summary>
     /// Gets the left most and right most values for the 
@@ -29,24 +43,23 @@ public class Scientist : MonoBehaviour
     /// 
     ///     https://drive.google.com/open?id=1wyXMa1Pog9VycF9fKIL8blNsXrKeCkqK
     /// </summary>
-    /// <returns></returns>
-    public Vector2 GetMovementBounds()
+    /// <returns> Returns vector (x,y) where x is the left x-bounds and y is the right x-bounds </returns>
+    public Vector2 GetXMovementBounds()
     {
+        if (cam == null)
+        {
+            Debug.Log("camera is null");
+            return Vector2.zero;
+        }
         float zCoordOfScientistCentre = (navmeshBackZ - scientistZAtTable) / 2 + scientistZAtTable;
         float distCamToNAVCentre = zCoordOfScientistCentre - cam.transform.position.z;
 
         float widthOfXSpan = distCamToNAVCentre * Mathf.Tan(cam.focalLength / 2.0f) * cam.aspect;
         return new Vector2(cam.transform.position.x - widthOfXSpan/2, cam.transform.position.x + widthOfXSpan/2);
     }
-    /* End of Filipe's changes*/
 
 
-    private void Awake()
-    {
-        stateMachine.AddState(typeof(AlertState), new AlertState(this));
-        stateMachine.AddState(typeof(InvestigateState), new InvestigateState(this));
-        stateMachine.AddState(typeof(AttackState), new AttackState(this));
-    }
+
 
     // All of this is just to visualize when the scientist is triggered (red face). 
     private void Update()
