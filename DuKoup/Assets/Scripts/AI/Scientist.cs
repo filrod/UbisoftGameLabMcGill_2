@@ -16,10 +16,33 @@ public class Scientist : MonoBehaviour
     public StateMachine stateMachine => GetComponent<StateMachine>();
     private Vector3? targetPosition = null; // ? indicates a nullable type. If it has a value of null that means the ai has no target and should be wandering
     private Vector3? nextTargetPosition;
+    /* Filipe's changes*/
+    /// <summary>
+    /// Main Camera used to set scientist movement bounds 
+    /// </summary>
+    private Camera cam = Camera.current;
+
+
+    /// <summary>
+    /// Gets the left most and right most values for the 
+    /// scientist's movement. Reffer to math from this image:
+    /// 
+    ///     https://drive.google.com/open?id=1wyXMa1Pog9VycF9fKIL8blNsXrKeCkqK
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetMovementBounds()
+    {
+        float zCoordOfScientistCentre = (navmeshBackZ - scientistZAtTable) / 2 + scientistZAtTable;
+        float distCamToNAVCentre = zCoordOfScientistCentre - cam.transform.position.z;
+
+        float widthOfXSpan = distCamToNAVCentre * Mathf.Tan(cam.focalLength / 2.0f) * cam.aspect;
+        return new Vector2(cam.transform.position.x - widthOfXSpan/2, cam.transform.position.x + widthOfXSpan/2);
+    }
+    /* End of Filipe's changes*/
+
 
     private void Awake()
     {
-        stateMachine.AddState(typeof(WanderState), new WanderState(this));
         stateMachine.AddState(typeof(AlertState), new AlertState(this));
         stateMachine.AddState(typeof(InvestigateState), new InvestigateState(this));
         stateMachine.AddState(typeof(AttackState), new AttackState(this));
