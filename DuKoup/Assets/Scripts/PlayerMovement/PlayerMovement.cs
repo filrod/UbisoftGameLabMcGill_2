@@ -127,11 +127,13 @@ public class PlayerMovement : MonoBehaviour
     /// cast from the midle of the game object downward.
     /// </summary>
     [SerializeField][HideInInspector]
-    [Tooltip("The collider height from halfway down. " +
-        "This is what helps check if the player is grunded since the rays " +
-        "to check get cast from the midle of the game object downward."
-        )]
+    [Tooltip("The collider height from halfway down. " +"This is what helps check if the player is grunded since the rays " + "to check get cast from the midle of the game object downward.")]
     private float playerHeightWaistDown = 1.26f;
+
+    // Keep track on where the player is facing
+    private bool m_FacingRight = true;
+
+    [SerializeField] private Collider2D confinedArea;
 
 
     /// <summary>
@@ -168,6 +170,18 @@ public class PlayerMovement : MonoBehaviour
         CheckIfGrounded();
         // Set boolean to true if jump is pressed
         this.jump = Input.GetButtonDown(jumpButton);
+
+        if (jump)
+        {
+            Jump();
+        }
+
+        restrictObject(confinedArea);
+
+        // Restart game by pressing F4
+        if (Input.GetKeyDown(KeyCode.F4)){
+            Application.LoadLevel(0);
+        }
     }
 
     public bool CheckIfGrounded()
@@ -197,8 +211,6 @@ public class PlayerMovement : MonoBehaviour
         // Avoid movement for planking player
         //if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
 
-
-
         if (!this.grounded)
         {
             if (Input.GetKeyDown(KeyCode.B))
@@ -219,15 +231,43 @@ public class PlayerMovement : MonoBehaviour
             movementXY.y = 0;
         }
 
-        if (jump)
-        {
-            Jump();
-        }
-        
+            // Flip the player
+
+                 // If the input is moving the player right and the player is facing left...
+                if (movementXY.x > 0 && !m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+                // Otherwise if the input is moving the player left and the player is facing right...
+                else if (movementXY.x < 0 && m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+
         // Move the character by finding the target velocity
         Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
         // And then smoothing it out and applying it to the character
-        player.velocity = Vector3.SmoothDamp(player.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+        targetVelocity = Vector3.SmoothDamp(player.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+
+        float distance = new Vector3(targetVelocity.x, targetVelocity.y, 0).magnitude * Time.fixedDeltaTime; // Distance from player to where player will be next frame
+        movementXY.Normalize(); // Normalize movementXY since it should be used to indicate direction
+        RaycastHit hit;
+
+        // Check if the player is not on the ground and that the current velocity will result in a collision
+        // if (!grounded && player.SweepTest(movementXY, out hit, distance))
+        // {
+        //     // Stopping the horizontal movement of the player
+        //     player.velocity = new Vector3(0, player.velocity.y, 0);
+        // }
+        // else
+        // {
+            // If not jumping or no collision proceed as normal
+            player.velocity = targetVelocity;
+        // }
+
+
     }
 
     /// <summary>
@@ -265,9 +305,6 @@ public class PlayerMovement : MonoBehaviour
         }
         
         this.jump = false;
-
-        
-        
     }
 
     /// <summary>
@@ -299,9 +336,37 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="colliderAttachedToPlayer"></param>
     private void SetPlayerHeightFromCollider(Collider colliderAttachedToPlayer)
     {
-        float epsillon = 0.5f;
+        float epsillon = 0.05f;
         this.playerHeightWaistDown = colliderAttachedToPlayer.bounds.extents.y + epsillon;
         //debug.Log("Player height: " + this.playerHeightWaistDown);
+    }
+
+
+    /// <summary>
+    /// @Robin
+    /// Flip the player when changing directions.
+    /// </summary>
+        private void Flip()
+    {
+            // Switch the way the player is labelled as facing.
+            m_FacingRight = !m_FacingRight;
+
+            // Multiply the player's x local scale by -1.
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1f;
+            transform.localScale = theScale;
+    }
+
+    private void restrictObject(Collider2D area)
+    {                 
+        // get the current position
+        Vector3 clampedPosition = transform.position;
+        // limit the x and y positions to be between the area's min and max x and y.
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, area.bounds.min.x, area.bounds.max.x);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, area.bounds.min.y, area.bounds.max.y);
+        // z remains unchanged
+        // apply the clamped position
+        transform.position = clampedPosition;
     }
 
     /// <summary>
