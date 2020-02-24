@@ -39,7 +39,7 @@ public abstract class Grabbable : MonoBehaviour
 	private Vector3 offset;
 
     private Rigidbody rb;
-    private bool isGrabbed; 
+    private bool isGrabbed;
     private bool grabbedBy1;
     private bool grabbedBy2;
 
@@ -73,11 +73,13 @@ public abstract class Grabbable : MonoBehaviour
        }
 
        // Ungrab
-       else if (Input.GetButtonDown("Grab1")&& isGrabbed){
+       else if (Input.GetButtonDown("Grab1")&&  grabbedBy1){
            UnGrab(player1, defaultTrans1);
+           grabbedBy1 = false;
        }
-       else if (Input.GetButtonDown("Grab2") && isGrabbed){
+       else if (Input.GetButtonDown("Grab2") && grabbedBy2){
            UnGrab(player2, defaultTrans2);
+           grabbedBy2 = true;
        }
    }
 
@@ -139,7 +141,7 @@ public abstract class Grabbable : MonoBehaviour
            key = "Grab2";
        }
        float distance = Vector3.Distance(player.position, obj.transform.position);
-       return Input.GetButtonDown(key) && (distance <= radiusOfInteraction);
+       return Input.GetButtonDown(key) && (distance <= radiusOfInteraction) ;
    }
 
     /////// UNCOMMENT TO HAVE DRAGGING
