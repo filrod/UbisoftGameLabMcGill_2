@@ -195,9 +195,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F4)){
             Application.LoadLevel(0);
         }
-        if (Input.GetKeyDown(KeyCode.F5)){
-            Application.Quit();
-        }
     }
 
     public bool CheckIfGrounded()
