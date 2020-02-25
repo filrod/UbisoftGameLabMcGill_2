@@ -39,6 +39,7 @@ public class PowerUpSpot : MonoBehaviour
     public void OnCollisionEnter(Collision collision)
     {
         // TODO: refactor the dummy, and unify the tag
+        Debug.Log("Hit Power up spot");
         if (collision.gameObject.CompareTag("Player"))
         {
             enteredPlayer = collision.gameObject;

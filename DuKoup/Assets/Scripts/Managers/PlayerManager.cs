@@ -60,19 +60,30 @@ public class PlayerManager : MonoBehaviourPun
 
     public void Awake()
     {
-            // LocalPlayerInstance = this.gameObject;
+        // TODO: remove dummy
         plankingSupport = GetComponentInChildren<PlankingSupport>();
         pushing = GetComponentInChildren<Pushing>();
         playerMovement = GetComponentInChildren<PlayerMovement>();
+        if (playerMovement == null)
+        {
+            playerMovement = GetComponent<PlayerMovement>();
+        }
         plankingBahaviour = GetComponentInChildren<PlankingBehaviour>();
+        if (plankingBahaviour == null)
+        {
+            plankingBahaviour = GetComponent<PlankingBehaviour>();
+        }
         playerCollision = GetComponentInChildren<PlayersCollision>();
+        if (!playerCollision)
+        {
+            playerCollision = GetComponent<PlayersCollision>();
+        }
 
         // Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
-        playerId = GetComponent<PhotonView>().Owner.ActorNumber;
-        //foreach (Player player in PhotonNetwork.PlayerList)
-        //{
-        //    Debug.Log(player + "" + (player == PhotonNetwork.LocalPlayer));
-        //}
+        if (PhotonNetwork.IsConnected)
+        {
+            playerId = GetComponent<PhotonView>().Owner.ActorNumber;
+        }
     }
 
     public void Start()

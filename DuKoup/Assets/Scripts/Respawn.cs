@@ -23,6 +23,17 @@ public class Respawn : MonoBehaviour
     [Tooltip("A rigidbody component on the player to control physics")]
     [SerializeField] private Rigidbody player;
 
+
+    private void Start()
+    {
+        player = GetComponent<Rigidbody>();
+        if (player == null)
+        {
+            player = GetComponentInChildren<Rigidbody>();
+            // Debug.Log("Missing Rigid Body");
+        }
+    }
+
     /// <summary>
     /// This method moves the player back to the starting position
     /// and resets their movement if they fall below fallHeight
@@ -32,6 +43,11 @@ public class Respawn : MonoBehaviour
     /// <returns> Returns void </returns>
     void Update()
     {
+        if (player == null)
+        {
+            Debug.LogWarning("Missing Rigid Body");
+            return;
+        }
         // Check if the player has fallen 
         if (player.transform.position.y < fallHeight) 
         {
