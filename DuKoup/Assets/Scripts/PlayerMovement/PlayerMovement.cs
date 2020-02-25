@@ -195,6 +195,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F4)){
             Application.LoadLevel(0);
         }
+
+        //if (player.velocity.x != 0 && player.GetComponent<Animation>().isPlaying) {
+        //    player.GetComponent<Animation>().Play(Animation);
+        //}
     }
 
     public bool CheckIfGrounded()
