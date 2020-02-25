@@ -235,12 +235,16 @@ public class PlayerMovement : MonoBehaviour
                 SkewJumpParabola();
             }
 
-            movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeedInJump;
+            //movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeedInJump;
+            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeedInJump * 0.1f * Vector3.right, ForceMode.VelocityChange);
+            movementXY = Vector2.zero;// player.velocity;
             movementXY.y = 0;
         }
         else
         {
-            movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeed;
+            //movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeed;
+            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeed * 0.1f * Vector3.right, ForceMode.VelocityChange);
+            movementXY = Vector2.zero;//player.velocity;
             movementXY.y = 0;
         }
 
