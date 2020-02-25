@@ -11,8 +11,8 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: 
-    cost: 1
+  - name: Investigating
+    cost: 100
   - name: 
     cost: 1
   - name: 
