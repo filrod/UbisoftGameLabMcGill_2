@@ -92,6 +92,7 @@ public abstract class Grabbable : MonoBehaviour
     /// </summary>
    public virtual void Grab(Transform player, Transform defaultTrans)
    {
+       
         // Move object to the leaves
        obj.transform.position = defaultTrans.position;
        obj.transform.SetParent(player);
