@@ -45,14 +45,6 @@ public class PlayersCollision : MonoBehaviour
         playerManager = GetComponentInParent<PlayerManager>();
         instancePlayer = GetComponent<Rigidbody>();
         plankingBehaviour = GetComponent<PlankingBehaviour>();
-        if (playerManager == null)
-        {
-            Debug.LogWarning("Missing player manager");
-        }
-        else
-        {
-            otherPlayer = playerManager.OtherPlayer.GetComponentInChildren<Rigidbody>();
-        }
         if (playerManager.playerId == 1)
         {
             isMainPlayer = true;
@@ -71,6 +63,11 @@ public class PlayersCollision : MonoBehaviour
     void Update()
     {
         // if (plankingBehaviour.PlayerIsPlanking()) return;
+        if (otherPlayer == null)
+        {
+            otherPlayer = playerManager.OtherPlayer.GetComponentInChildren<Rigidbody>();
+        }
+        if (otherPlayer == null || instancePlayer == null) return;
         if (Mathf.RoundToInt(instancePlayer.transform.position.y) != Mathf.RoundToInt(otherPlayer.transform.position.y)) return;
         
         // Create a collision area for otherPlayer

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviourPun
 {
 
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
@@ -12,16 +13,29 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
     public int playerId;
 
+    public static GameObject LocalPlayerInstance;
+
     /// <summary>
     /// A player holds a reference of another player
     /// </summary>
-    [SerializeField]
-    private GameObject otherPlayer;
+    private GameObject otherPlayer = null;
 
     public GameObject OtherPlayer
     {
         get
         {
+            if (otherPlayer == null)
+            {
+                foreach (PlayerManager manager in FindObjectsOfType<PlayerManager>())
+                {
+                    if (manager == this)
+                    {
+                        continue;
+                    }
+                    otherPlayer = manager.gameObject;
+                    return otherPlayer;
+                }
+            }
             return otherPlayer;
         }
 
@@ -42,22 +56,13 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     public PlankingBehaviour plankingBahaviour;
 
-    private void Awake()
+    public void Awake()
     {
-        foreach (PlayerManager manager in FindObjectsOfType<PlayerManager>())
-        {
-            if (manager == this)
-            {
-                continue;
-            }
-            OtherPlayer = manager.gameObject;
-        }
-
+            // LocalPlayerInstance = this.gameObject;
         plankingSupport = GetComponentInChildren<PlankingSupport>();
         pushing = GetComponentInChildren<Pushing>();
         playerMovement = GetComponentInChildren<PlayerMovement>();
         plankingBahaviour = GetComponentInChildren<PlankingBehaviour>();
         playerCollision = GetComponentInChildren<PlayersCollision>();
-        
     }
 }

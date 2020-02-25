@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 /// <summary>
@@ -12,7 +13,7 @@ using UnityEngine;
 /// This class controls player movement
 /// </summary>
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
     // Fields 
     private PlayerManager playerManager;
@@ -180,16 +181,26 @@ public class PlayerMovement : MonoBehaviour
 
     public void Update()
     {
+
         CheckIfGrounded();
         // Set boolean to true if jump is pressed
         this.jump = Input.GetButtonDown(jumpButton);
 
         if (jump)
         {
+            if (!GetComponentInParent<PhotonView>().IsMine) return;
             Jump();
         }
 
-        restrictObject(confinedArea);
+        if (confinedArea != null)
+        {
+            restrictObject(confinedArea);
+        }
+        else
+        {
+            // Debug.LogWarning("Missing confined Area");
+        }
+        
 
         // Restart game by pressing F4
         if (Input.GetKeyDown(KeyCode.F4)){
@@ -223,6 +234,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // Avoid movement for planking player
         //if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
+
+        if (!GetComponentInParent<PhotonView>().IsMine) return;
 
         if (!this.grounded)
         {

@@ -546,9 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 80440593}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 8
 --- !u!4 &81669099 stripped
@@ -818,9 +816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 120343828}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &120343831
@@ -1408,9 +1404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 913893300}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 8
 --- !u!1001 &216168976
@@ -1979,9 +1973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 273584865}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &273584869
@@ -3567,9 +3559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 80440593}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 8
 --- !u!1001 &487848060
@@ -4662,9 +4652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 602575433}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &602575436
@@ -4874,9 +4862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 657713572}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &657713575
@@ -5566,9 +5552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 744577066}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 2.95
 --- !u!54 &744577069
@@ -5926,9 +5910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 790466583}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 2.5
 --- !u!54 &790466586
@@ -7104,9 +7086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 913893300}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 8
 --- !u!54 &913893303
@@ -7820,9 +7800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 1002974208}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &1002974211
@@ -8788,6 +8766,11 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3311695031044669747, guid: ae40e8244fcdb42739c05626756965ad,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6320854440339311560, guid: ae40e8244fcdb42739c05626756965ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8882,6 +8865,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737626820681605988, guid: ae40e8244fcdb42739c05626756965ad,
+        type: 3}
+      propertyPath: viewIdField
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6915082651204707871, guid: ae40e8244fcdb42739c05626756965ad,
         type: 3}
@@ -10458,9 +10446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 1303570011}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 2
 --- !u!54 &1303570014
@@ -11722,9 +11708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 1487508398}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &1487508401
@@ -13803,9 +13787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 1720654867}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &1720654870
@@ -15700,9 +15682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 1946526872}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &1946526875
@@ -15988,9 +15968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 1962126524}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 2
 --- !u!54 &1962126527
@@ -16248,7 +16226,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986664081}
-  m_LocalRotation: {x: 0.05181523, y: -0.028442472, z: 0.0014763027, w: 0.9982505}
+  m_LocalRotation: {x: 0.051808715, y: -0.032554757, z: 0.0016897554, w: 0.9981249}
   m_LocalPosition: {x: -21.553125, y: 3, z: -16.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -16298,9 +16276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 1987005838}
-  player1: {fileID: 640491663}
   defaultTrans1: {fileID: 1339884855}
-  player2: {fileID: 0}
   defaultTrans2: {fileID: 0}
   radiusOfInteraction: 3
 --- !u!54 &1987005841
@@ -18971,7 +18947,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4881291691202834381}
-  m_LocalRotation: {x: 0.05181523, y: -0.028442472, z: 0.0014763027, w: 0.9982505}
+  m_LocalRotation: {x: 0.051808715, y: -0.032554757, z: 0.0016897554, w: 0.9981249}
   m_LocalPosition: {x: -19.786629, y: 3.1370993, z: -16.835773}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -19598,6 +19574,11 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3311695031044669747, guid: ae40e8244fcdb42739c05626756965ad,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6320854440339311568, guid: ae40e8244fcdb42739c05626756965ad,
         type: 3}
       propertyPath: confinedArea
@@ -19687,6 +19668,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737626820681605988, guid: ae40e8244fcdb42739c05626756965ad,
+        type: 3}
+      propertyPath: viewIdField
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6915082651204707871, guid: ae40e8244fcdb42739c05626756965ad,
         type: 3}
