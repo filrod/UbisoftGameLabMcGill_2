@@ -68,11 +68,11 @@ public class PlayerManager : MonoBehaviourPun
         playerCollision = GetComponentInChildren<PlayersCollision>();
 
         // Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
-        // playerId = PhotonNetwork.LocalPlayer.ActorNumber;
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            Debug.Log(player + "" + (player == PhotonNetwork.LocalPlayer));
-        }
+        playerId = GetComponent<PhotonView>().Owner.ActorNumber;
+        //foreach (Player player in PhotonNetwork.PlayerList)
+        //{
+        //    Debug.Log(player + "" + (player == PhotonNetwork.LocalPlayer));
+        //}
     }
 
     public void Start()
@@ -87,12 +87,12 @@ public class PlayerManager : MonoBehaviourPun
             if (playerId == 1)
             {
                 Debug.Log("player 1 setting");
-                cinemachineTargetGroup.m_Targets[0].target = gameObject.transform;
+                cinemachineTargetGroup.m_Targets[0].target = GetComponentInChildren<PlayerMovement>().gameObject.transform;
             }
             else
             {
                 Debug.Log("player 2 setting");
-                cinemachineTargetGroup.m_Targets[1].target = gameObject.transform;
+                cinemachineTargetGroup.m_Targets[1].target = GetComponentInChildren<PlayerMovement>().gameObject.transform;
             }
         }
         

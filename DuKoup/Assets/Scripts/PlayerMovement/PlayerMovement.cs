@@ -167,15 +167,25 @@ public class PlayerMovement : MonoBehaviourPun
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
 
-        if (playerManager.playerId == 1)
+
+        if (PhotonNetwork.IsConnected)
         {
+            // multiplayer
             horizontalAxis = "Horizontal1";
             jumpButton = "Jump1";
         }
-        else if (playerManager.playerId == 2)
+        else
         {
-            horizontalAxis = "Horizontal2";
-            jumpButton = "Jump2";
+            if (playerManager.playerId == 1)
+            {
+                horizontalAxis = "Horizontal1";
+                jumpButton = "Jump1";
+            }
+            else if (playerManager.playerId == 2)
+            {
+                horizontalAxis = "Horizontal2";
+                jumpButton = "Jump2";
+            }
         }
     }
 
@@ -188,7 +198,10 @@ public class PlayerMovement : MonoBehaviourPun
 
         if (jump)
         {
-            if (!GetComponentInParent<PhotonView>().IsMine) return;
+            if (PhotonNetwork.IsConnected)
+            {
+                if (!GetComponentInParent<PhotonView>().IsMine) return;
+            }
             Jump();
         }
 
@@ -235,7 +248,10 @@ public class PlayerMovement : MonoBehaviourPun
         // Avoid movement for planking player
         //if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
 
-        if (!GetComponentInParent<PhotonView>().IsMine) return;
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!GetComponentInParent<PhotonView>().IsMine) return;
+        }
 
         if (!this.grounded)
         {

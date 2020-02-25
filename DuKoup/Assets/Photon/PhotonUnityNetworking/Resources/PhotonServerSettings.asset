@@ -32,7 +32,5 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - RPC_ChangeReadyState
-  - Initialize
-  - RPC_Initialize
   DisableAutoOpenWizard: 1
   ShowSettings: 1
