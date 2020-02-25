@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     // Fields 
     private PlayerManager playerManager;
 
+    [SerializeField] Animator animator;
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
     private int playerId;
@@ -211,6 +212,7 @@ public class PlayerMovement : MonoBehaviour
         //this.distToGround = groundCollisionInfo;
 
         this.grounded = (distToGround <= playerHeightWaistDown);
+        animator.SetBool("isJumping", this.grounded);
         return this.grounded;
     }
 
