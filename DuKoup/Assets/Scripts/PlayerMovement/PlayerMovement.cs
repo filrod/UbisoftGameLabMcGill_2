@@ -15,6 +15,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Fields 
+    private PlayerManager playerManager;
 
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
@@ -24,7 +25,19 @@ public class PlayerMovement : MonoBehaviour
     /// Ability to high jump
     /// </summary>
     [SerializeField][Tooltip("Player has ability to high jump. In inspector for testing purposes only.")]
-    private bool canHighJump = false;
+    private bool canDoubleJump = false;
+
+    public bool CanDoubleJump
+    {
+        get
+        {
+            return canDoubleJump;
+        }
+        set
+        {
+            canDoubleJump = value;
+        }
+    }
 
     /// <summary> A rigidbody component on the player to control physics (serialized) </summary>
     [Tooltip("A rigidbody component on the player to control physics")]
@@ -51,6 +64,19 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField] [Range(0f, 10f)] [Tooltip("Sets the Jumping Force")]
     private float jumpForce = 6;
+    public float JumpForce
+    {
+        get
+        {
+            return jumpForce;
+        }
+        set
+        {
+            jumpForce = value;
+        }
+    }
+
+
     /// <summary>
     /// Number of current jumps done before hitting the ground (which sets this to zero again)
     /// </summary>
@@ -79,7 +105,20 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary> A constant that makes gravity more intense at the peak of one's jump (only for high jumps). </summary>
     [Tooltip("A constant that makes gravity more intense at the peak of one's jump (only for high jumps).")]
-    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 1.3f;
+    [Range(0.0f, 8f)] [SerializeField] private float gravityMultiplier = 4f;
+
+    public float GravityMultiplier
+    {
+        get
+        {
+            return gravityMultiplier;
+        }
+        set
+        {
+            gravityMultiplier = value;
+        }
+    }
+
 
     /// <summary> 2D Vector for horizontal and vertical movement respectively </summary>
     private Vector2 movementXY;
@@ -104,6 +143,11 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The collider height from halfway down. " +"This is what helps check if the player is grunded since the rays " + "to check get cast from the midle of the game object downward.")]
     private float playerHeightWaistDown = 1.26f;
 
+    // Keep track on where the player is facing
+    private bool m_FacingRight = true;
+
+    [SerializeField] private Collider2D confinedArea;
+
 
     /// <summary>
     /// This method distinguishes which objet is using this 
@@ -118,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
     /// <returns> Returns void </returns>
     public void Awake()
     {
+        playerManager = GetComponentInParent<PlayerManager>();
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
 
@@ -143,6 +188,13 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
         }
+
+        restrictObject(confinedArea);
+
+        // Restart game by pressing F4
+        if (Input.GetKeyDown(KeyCode.F4)){
+            Application.LoadLevel(0);
+        }
     }
 
     public bool CheckIfGrounded()
@@ -151,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit groundCollisionInfo;
         Physics.Raycast(player.transform.position, -Vector3.up, out groundCollisionInfo, 20f);
         float distToGround = player.transform.position.y - groundCollisionInfo.point.y;
-        //.Log("Dist to ground" + distToGround);
+        // Debug.Log("Dist to ground" + distToGround);
         //this.distToGround = groundCollisionInfo;
 
         this.grounded = (distToGround <= playerHeightWaistDown);
@@ -192,10 +244,43 @@ public class PlayerMovement : MonoBehaviour
             movementXY.y = 0;
         }
 
+        // Flip the player
+
+        // If the input is moving the player right and the player is facing left...
+        if (movementXY.x > 0 && !m_FacingRight)
+        {
+            // ... flip the player.
+            Flip();
+        }
+        // Otherwise if the input is moving the player left and the player is facing right...
+        else if (movementXY.x < 0 && m_FacingRight)
+        {
+            // ... flip the player.
+            Flip();
+        }
+
         // Move the character by finding the target velocity
         Vector3 targetVelocity = new Vector2(movementXY.x, player.velocity.y);
         // And then smoothing it out and applying it to the character
-        player.velocity = Vector3.SmoothDamp(player.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+        targetVelocity = Vector3.SmoothDamp(player.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+
+        float distance = new Vector3(targetVelocity.x, targetVelocity.y, 0).magnitude * Time.fixedDeltaTime; // Distance from player to where player will be next frame
+        movementXY.Normalize(); // Normalize movementXY since it should be used to indicate direction
+        //RaycastHit hit;
+
+        // Check if the player is not on the ground and that the current velocity will result in a collision
+        // if (!grounded && player.SweepTest(movementXY, out hit, distance))
+        // {
+        //     // Stopping the horizontal movement of the player
+        //     player.velocity = new Vector3(0, player.velocity.y, 0);
+        // }
+        // else
+        // {
+            // If not jumping or no collision proceed as normal
+            player.velocity = targetVelocity;
+        // }
+
+
     }
 
     /// <summary>
@@ -224,7 +309,7 @@ public class PlayerMovement : MonoBehaviour
         {
             nbJumps = 0;
         }
-        if (this.grounded || (nbJumps < maxJumps) && this.canHighJump)
+        if (this.grounded || (nbJumps < maxJumps) && this.canDoubleJump)
         {
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
             player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
@@ -250,10 +335,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void ButtSlam()
     {
+        
         // Check if player has passed peak of jump
         if (Input.GetKeyDown(KeyCode.B) && !this.grounded)
         {
-            //Debug.Log("Butt slam!!!");
+            Debug.Log("Butt slam!!!" + "ground: " + grounded);
             player.AddForce(Vector3.up * Physics.gravity.y * Mathf.Pow(this.buttForce, 2));
         }
     }
@@ -267,6 +353,44 @@ public class PlayerMovement : MonoBehaviour
         float epsillon = 0.05f;
         this.playerHeightWaistDown = colliderAttachedToPlayer.bounds.extents.y + epsillon;
         //debug.Log("Player height: " + this.playerHeightWaistDown);
+    }
+
+
+    /// <summary>
+    /// @Robin
+    /// Flip the player when changing directions.
+    /// </summary>
+    private void Flip()
+    {
+        // Switch the way the player is labelled as facing.
+        m_FacingRight = !m_FacingRight;
+
+        // Multiply the player's x local scale by -1.
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1f;
+        transform.localScale = theScale;
+    }
+
+    private void restrictObject(Collider2D area)
+    {                 
+        // get the current position
+        Vector3 clampedPosition = transform.position;
+        // limit the x and y positions to be between the area's min and max x and y.
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, area.bounds.min.x, area.bounds.max.x);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, area.bounds.min.y, area.bounds.max.y);
+        // z remains unchanged
+        // apply the clamped position
+        transform.position = clampedPosition;
+    }
+
+    /// <summary>
+    /// Reset all the parameter to default
+    /// </summary>
+    public void reset()
+    {
+        canDoubleJump = false;
+        jumpForce = 6.0f;
+        gravityMultiplier = 1.3f;
     }
 } 
 

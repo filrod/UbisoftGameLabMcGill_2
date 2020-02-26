@@ -29,10 +29,10 @@ public class PlankingSupport : PlankingSpaceDetection
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided");
+        //Debug.Log("Collided");
         if (collision.gameObject.CompareTag("Bridge"))
         {
-            Debug.Log("Is on bridge");
+            //Debug.Log("Is on bridge");
             isOnBridge = true;
         }
     }

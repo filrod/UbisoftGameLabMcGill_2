@@ -30,13 +30,13 @@ public class Pushing : MonoBehaviour
     {
         if (collisionInfo.gameObject.CompareTag("Player"))
         { 
-            Debug.Log("Collided with player");
+            //Debug.Log("Collided with player");
             if (transform.position.y < collisionInfo.gameObject.transform.position.y)
             {
-                Debug.Log("Other player is over player");
+                //Debug.Log("Other player is over player");
                 if (collisionInfo.gameObject.transform.position.x > transform.position.x  - 0.5f && collisionInfo.gameObject.transform.position.x < transform.position.x + 0.5f)
                 {
-                    Debug.Log("Player is in correct position");
+                    //Debug.Log("Player is in correct position");
                     playerOnHead = true;
                 }
             }
