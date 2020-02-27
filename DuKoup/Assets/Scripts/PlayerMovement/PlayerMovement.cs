@@ -64,6 +64,11 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField] [Range(0f, 10f)] [Tooltip("Sets the Jumping Force")]
     private float jumpForce = 6;
+
+    [SerializeField]
+    [Range(0f, 1f)]
+    [Tooltip("Sets the Jumping Force")]
+    private float lateralWalkForcce = 0.3f;
     public float JumpForce
     {
         get
@@ -197,16 +202,29 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Public method to check if a player is grounded.
+    /// Returns true if player is grounded
+    /// </summary>
+    /// <returns></returns>
     public bool CheckIfGrounded()
     {
         // Check if grounded 
-        RaycastHit groundCollisionInfo;
-        Physics.Raycast(player.transform.position, -Vector3.up, out groundCollisionInfo, 20f);
-        float distToGround = player.transform.position.y - groundCollisionInfo.point.y;
+        RaycastHit groundCollisionInfo_leftSide;
+        RaycastHit groundCollisionInfo_rightSide;
+
+        Vector3 playerCentreLeftSide = player.transform.position - Vector3.right*player.GetComponent<Collider>().bounds.extents.x;
+        Vector3 playerCentreRightSide = player.transform.position + Vector3.right * player.GetComponent<Collider>().bounds.extents.x;
+        
+        Physics.Raycast(playerCentreLeftSide, -Vector3.up, out groundCollisionInfo_leftSide, 20f);
+        Physics.Raycast(playerCentreRightSide, -Vector3.up, out groundCollisionInfo_rightSide, 20f);
+
+        float distToGroundLeft = player.transform.position.y - groundCollisionInfo_leftSide.point.y;
+        float distToGroundRight = player.transform.position.y - groundCollisionInfo_rightSide.point.y;
         // Debug.Log("Dist to ground" + distToGround);
         //this.distToGround = groundCollisionInfo;
 
-        this.grounded = (distToGround <= playerHeightWaistDown);
+        this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
         return this.grounded;
     }
 
@@ -236,14 +254,14 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeedInJump;
-            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeedInJump * 0.1f * Vector3.right, ForceMode.VelocityChange);
+            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeedInJump * lateralWalkForcce * Vector3.right, ForceMode.VelocityChange);
             movementXY = Vector2.zero;// player.velocity;
             movementXY.y = 0;
         }
         else
         {
             //movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeed;
-            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeed * 0.1f * Vector3.right, ForceMode.VelocityChange);
+            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeed * lateralWalkForcce * Vector3.right, ForceMode.VelocityChange);
             movementXY = Vector2.zero;//player.velocity;
             movementXY.y = 0;
         }
