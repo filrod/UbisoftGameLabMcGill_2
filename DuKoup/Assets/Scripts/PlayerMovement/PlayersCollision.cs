@@ -63,10 +63,15 @@ public class PlayersCollision : MonoBehaviour
     void Update()
     {
         // if (plankingBehaviour.PlayerIsPlanking()) return;
-        if (otherPlayer == null)
-        {
+        if (otherPlayer == null) { 
+        
+            if (playerManager.OtherPlayer == null)
+            {
+                return;
+            }
             otherPlayer = playerManager.OtherPlayer.GetComponentInChildren<Rigidbody>();
         }
+
         if (otherPlayer == null || instancePlayer == null) return;
         if (Mathf.RoundToInt(instancePlayer.transform.position.y) != Mathf.RoundToInt(otherPlayer.transform.position.y)) return;
         

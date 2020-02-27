@@ -6,6 +6,7 @@ public class GrabbableTest : Grabbable
 {
     public override void Grab(Transform player, Transform defaultTrans){
         Debug.Log("grabbed");
+
         base.Grab(player, defaultTrans);
     }
 

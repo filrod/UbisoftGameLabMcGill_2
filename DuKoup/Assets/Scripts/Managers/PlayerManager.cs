@@ -14,9 +14,6 @@ public class PlayerManager : MonoBehaviourPun
     [SerializeField]
     [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
     public int playerId;
-
-    public static GameObject LocalPlayerInstance;
-
     /// <summary>
     /// A player holds a reference of another player
     /// </summary>
@@ -57,6 +54,9 @@ public class PlayerManager : MonoBehaviourPun
     public PlayersCollision playerCollision;
     [SerializeField]
     public PlankingBehaviour plankingBahaviour;
+
+    [SerializeField]
+    public GameObject grab;
 
     public void Awake()
     {

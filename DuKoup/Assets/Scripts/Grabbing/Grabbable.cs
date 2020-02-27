@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 // Robin is the best
@@ -46,19 +47,29 @@ public abstract class Grabbable : MonoBehaviour
     // First method called, get rigidbody of the grabbable object
     public void Start()
     {
+
        rb = GetComponent<Rigidbody>();
         foreach (PlayerManager m in FindObjectsOfType<PlayerManager>())
         {
-            if (m.playerId == 1)
+            if (m.grab == null)
             {
-                player1 = m.transform;
+                Debug.LogWarning("Missing grab position");
             }
-            else if (m.playerId == 2)
+            else
             {
-                player2 = m.transform;
+                if (m.playerId == 1)
+                {
+                    player1 = m.transform;
+                    defaultTrans1 = m.grab.transform;
+
+                }
+                else if (m.playerId == 2)
+                {
+                    player2 = m.transform;
+                    defaultTrans2 = m.grab.transform;
+                }
             }
         }
-        
     }
 
     // At each image, we want to check if the player wants to grab or ungrab the object.
@@ -106,6 +117,11 @@ public abstract class Grabbable : MonoBehaviour
    public virtual void Grab(Transform player, Transform defaultTrans)
    {
         // Move object to the leaves
+        if (defaultTrans == null)
+        {
+            Debug.LogWarning("Missing default position");
+            return;
+        }
        obj.transform.position = defaultTrans.position;
        obj.transform.SetParent(player);
 
@@ -141,20 +157,41 @@ public abstract class Grabbable : MonoBehaviour
    }
 
     // Method to check if the player has hit the correct input and is at the correct location to grab the object.
-   public bool CanInteract(Transform player)
-   {
+    public bool CanInteract(Transform player)
+    {
        string key;
         // if (player.gameObject.GetComponent<PlayerManager>())
+        // if (player)
+        PlayerManager playerManager = player.gameObject.GetComponent<PlayerManager>();
 
-        if (player.name == "dummy1"){
-           key = "Grab1";
-       }
-       else{
-           key = "Grab2";
-       }
-       float distance = Vector3.Distance(player.position, obj.transform.position);
-       return Input.GetButtonDown(key) && (distance <= radiusOfInteraction);
-   }
+        if (playerManager == null)
+        {
+            Debug.LogWarning("Cannot find player manager in grabbable");
+            return false;
+        }
+        else
+        {
+            if (PhotonNetwork.IsConnected)
+            {
+                // multiplayer
+                key = "Grab1";
+            }
+            else
+            {
+                
+                if (playerManager.playerId == 1)
+                {
+                    key = "Grab1";
+                }
+                else
+                {
+                    key = "Grab2";
+                }
+            }
+        }
+        float distance = Vector3.Distance(player.position, obj.transform.position);
+        return Input.GetButtonDown(key) && (distance <= radiusOfInteraction);
+    }
 
     /////// UNCOMMENT TO HAVE DRAGGING
     /*
