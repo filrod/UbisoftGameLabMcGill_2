@@ -144,6 +144,7 @@ public abstract class Grabbable : MonoBehaviour
    public bool CanInteract(Transform player)
    {
        string key;
+        // if (player.gameObject.GetComponent<PlayerManager>())
 
         if (player.name == "dummy1"){
            key = "Grab1";

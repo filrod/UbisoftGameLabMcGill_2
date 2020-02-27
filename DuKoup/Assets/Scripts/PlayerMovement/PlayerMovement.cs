@@ -77,6 +77,11 @@ public class PlayerMovement : MonoBehaviourPun
         }
     }
 
+    [SerializeField]
+    [Range(60f, 210f)]
+    [Tooltip("Set the turning angle(degree)")]
+    private float turningAngle = 120f;
+
 
     /// <summary>
     /// Number of current jumps done before hitting the ground (which sets this to zero again)
@@ -393,11 +398,14 @@ public class PlayerMovement : MonoBehaviourPun
     {
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
+        Vector3 eulerAngle = gameObject.transform.rotation.eulerAngles;
+        eulerAngle.y = m_FacingRight ? 0 : turningAngle;
+        gameObject.transform.rotation = Quaternion.Euler(eulerAngle);
 
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1f;
-        transform.localScale = theScale;
+
+        //Vector3 theScale = transform.localScale;
+        //theScale.x *= -1f;
+        //transform.localScale = theScale;
     }
 
     private void restrictObject(Collider2D area)
