@@ -166,17 +166,7 @@ public abstract class Grabbable : MonoBehaviour
         }
     }
 
-    private void restrictObject(Collider2D area)
-    {                 
-        // get the current position
-        Vector3 clampedPosition = transform.position;
-        // limit the x and y positions to be between the area's min and max x and y.
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, area.bounds.min.x, area.bounds.max.x);
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, area.bounds.min.y, area.bounds.max.y);
-        // z remains unchanged
-        // apply the clamped position
-        transform.position = clampedPosition;
-    }
+
 
     */
 
