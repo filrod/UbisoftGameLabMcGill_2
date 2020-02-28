@@ -199,16 +199,9 @@ public class PlayerMovement : MonoBehaviour
             Application.LoadLevel(0);
         }
 
-
+        // Play walkin animation if player has high enough velocity
         bool isMoving = player.velocity.magnitude > 0.01;
         animator.SetBool("isWalking", isMoving);
-        //Debug.Log(animator.GetBool("isWalking"));
-        Debug.Log(Math.Abs(player.velocity.x));
-        
-
-        //if (player.velocity.x != 0 && player.GetComponent<Animation>().isPlaying) {
-        //    player.GetComponent<Animation>().Play(Animation);
-        //}
     }
 
     public bool CheckIfGrounded()
@@ -224,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!this.grounded && tempGrounded)
         {
-            animator.SetBool("isJumping", false);
+            animator.SetBool("isJumping", false); 
         }
 
         this.grounded = tempGrounded;
@@ -333,7 +326,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (this.grounded || (nbJumps < maxJumps) && this.canDoubleJump)
         {
-            animator.SetBool("isJumping", true);
+            animator.SetBool("isJumping", true); // Play jumping animation
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
             player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             nbJumps += 1;
