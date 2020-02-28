@@ -303,7 +303,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
 
-        //Debug.Log("isGrounded" + this.grounded);
+        Debug.Log("isGrounded" + this.grounded);
         //Debug.Log("Player height: " + this.playerHeightWaistDown);
         if (this.grounded)
         {
