@@ -14,6 +14,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    /// <summary>
+    /// Erase this. Raycast max distance.
+    /// </summary>
+    [SerializeField][HideInInspector]
+    [Tooltip("Raycast max distance to check if grounded. (only here for bug video)")]
+
+    private float max_dist_groundCheck = 1000f;
     // Fields 
     private PlayerManager playerManager;
 
@@ -209,20 +216,62 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     public bool CheckIfGrounded()
     {
-        // Check if grounded 
+        // Set up raycast hits
         RaycastHit groundCollisionInfo_leftSide;
         RaycastHit groundCollisionInfo_rightSide;
 
-        Vector3 playerCentreLeftSide = player.transform.position - Vector3.right*player.GetComponent<Collider>().bounds.extents.x;
-        Vector3 playerCentreRightSide = player.transform.position + Vector3.right * player.GetComponent<Collider>().bounds.extents.x;
-        
-        Physics.Raycast(playerCentreLeftSide, -Vector3.up, out groundCollisionInfo_leftSide, 20f);
-        Physics.Raycast(playerCentreRightSide, -Vector3.up, out groundCollisionInfo_rightSide, 20f);
+        // Get left and right center points around the player's collider
+        Vector3 point_playerCentreLeftSide = player.transform.position 
+            - Vector3.right*player.GetComponent<Collider>().bounds.extents.x;
+        Vector3 point_playerCentreRightSide = player.transform.position 
+            + Vector3.right * player.GetComponent<Collider>().bounds.extents.x;
 
-        float distToGroundLeft = player.transform.position.y - groundCollisionInfo_leftSide.point.y;
-        float distToGroundRight = player.transform.position.y - groundCollisionInfo_rightSide.point.y;
-        // Debug.Log("Dist to ground" + distToGround);
-        //this.distToGround = groundCollisionInfo;
+        // Set the down vector
+        Vector3 down = new Vector3(0, -playerHeightWaistDown, 0);
+        down.Normalize();
+
+        // Perform Raycasts straight down and record hit info in RaycastHit variables 
+        bool rayCastLeftHitSomething = Physics.Raycast(
+            point_playerCentreLeftSide, 
+            down, 
+            out groundCollisionInfo_leftSide, 
+            max_dist_groundCheck
+            );
+        bool rayCastRightHitSomething = Physics.Raycast(
+            point_playerCentreRightSide, 
+            down, 
+            out groundCollisionInfo_rightSide, 
+            max_dist_groundCheck
+            );
+
+        bool rayCast_hit_recorded = rayCastLeftHitSomething || rayCastRightHitSomething;
+
+        // By default we assume player is not grounded (max val is for comparisons later)
+        float distToGroundLeft = float.MaxValue;
+        float distToGroundRight = float.MaxValue;
+
+        // If there were no hits, the player is not grounded
+        if (!rayCast_hit_recorded) { this.grounded = false; return this.grounded; }
+
+        // Set left side distance to ground if there was a hit
+        else if (rayCastLeftHitSomething)
+        {
+            distToGroundLeft = point_playerCentreLeftSide.y - groundCollisionInfo_leftSide.point.y;
+        }
+
+        // Set left side distance to ground if there was a hit
+        else if (rayCastRightHitSomething)
+        {
+            distToGroundRight = point_playerCentreRightSide.y - groundCollisionInfo_rightSide.point.y;
+        }
+
+        //Debug.DrawLine(point_playerCentreLeftSide, point_playerCentreLeftSide+new Vector3(0, -playerHeightWaistDown+0.05f, 0), Color.red, 0.01f, false);
+        //Debug.DrawLine(point_playerCentreRightSide, point_playerCentreRightSide+new Vector3(0, -playerHeightWaistDown+0.05f, 0), Color.red, 0.01f, false);
+        //Debug.DrawLine(point_playerCentreLeftSide + new Vector3(0, -playerHeightWaistDown+0.05f, 0), point_playerCentreRightSide + new Vector3(0, -playerHeightWaistDown + 0.05f, 0), Color.red, 0.01f, false);
+
+        
+        //Debug.DrawLine(point_playerCentreLeftSide, groundCollisionInfo_leftSide.point, Color.blue, 0.1f, true);
+        //Debug.DrawLine(point_playerCentreRightSide, groundCollisionInfo_rightSide.point, Color.blue, 0.1f, true);
 
         this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
         return this.grounded;

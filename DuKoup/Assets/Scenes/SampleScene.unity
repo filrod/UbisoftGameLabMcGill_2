@@ -1967,7 +1967,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232094354}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4e0c2c53f597c9b44a6d571de8d86ad8, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -2080,12 +2080,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  max_dist_groundCheck: 20
   playerId: 2
   canDoubleJump: 0
   player: {fileID: 232094360}
   horizontalSpeed: 8
   horizontalSpeedInJump: 7
   jumpForce: 6
+  lateralWalkForcce: 0.3
   buttForce: 5
   m_MovementSmoothing: 0.05
   gravityMultiplier: 1.3
@@ -2992,11 +2994,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 128347523}
     m_Modifications:
-    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6506199890920368483, guid: 8ebc9a9d59d1b45cf8e0f3e7d57dd971,
         type: 3}
       propertyPath: m_RootOrder
@@ -3086,6 +3083,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 13.617692
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ebc9a9d59d1b45cf8e0f3e7d57dd971, type: 3}
@@ -3554,11 +3556,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199664510}
     m_Modifications:
-    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1233660540019458046, guid: 8ebc9a9d59d1b45cf8e0f3e7d57dd971,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3658,6 +3655,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -40.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758594828806512593, guid: 94f5b8cf992defe4e8826c059b83ef98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ebc9a9d59d1b45cf8e0f3e7d57dd971, type: 3}
@@ -5328,7 +5330,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640491662}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4e0c2c53f597c9b44a6d571de8d86ad8, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -5427,12 +5429,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  max_dist_groundCheck: 20
   playerId: 1
   canDoubleJump: 0
   player: {fileID: 640491664}
   horizontalSpeed: 8
   horizontalSpeedInJump: 7
   jumpForce: 6
+  lateralWalkForcce: 0.3
   buttForce: 5
   m_MovementSmoothing: 0.05
   gravityMultiplier: 1.3
@@ -17145,7 +17149,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986664081}
-  m_LocalRotation: {x: 0.051613554, y: 0.017802875, z: -0.00092027336, w: 0.99850804}
+  m_LocalRotation: {x: 0.051605918, y: 0.024734164, z: -0.0012785563, w: 0.9983604}
   m_LocalPosition: {x: -17.1, y: 3, z: -16.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -17913,6 +17917,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LabTable_02 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380375293214114404, guid: c1a68a48eaa594a9c8fc1c0628469eca,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.7
       objectReference: {fileID: 0}
     - target: {fileID: 8413622467293722558, guid: c1a68a48eaa594a9c8fc1c0628469eca,
         type: 3}
@@ -19868,7 +19877,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4881291691202834381}
-  m_LocalRotation: {x: 0.051613554, y: 0.017802875, z: -0.00092027336, w: 0.99850804}
+  m_LocalRotation: {x: 0.051605918, y: 0.024734164, z: -0.0012785563, w: 0.9983604}
   m_LocalPosition: {x: -17.15529, y: 3.1349688, z: -16.824333}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
