@@ -16,34 +16,20 @@ public class GrabbableTest : Grabbable
         base.Grab(player, defaultTrans);
     }
 
-    public override void UnGrab(Transform player, Transform defaultTrans){
+    public override void UnGrab(Transform player, Transform defaultTrans)
+    {
         Debug.Log("ungrabbed");
         base.UnGrab(player, defaultTrans);
     }
 
-    public void Update()
-    {
-        // if (photonView.IsMine && Input.GetKeyDown(KeyCode.Z))
-        {
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                move();
-                // photonView.RPC("RPC_move", RpcTarget.All);
-            }
-        }
-    }
 
-    public void OnEnable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived += NetworkingClient_EventReceived;
-    }
 
     public void Awake()
     {
         PhotonView photonView = gameObject.AddComponent<PhotonView>();
-        //PhotonTransformView photonTransformationView = gameObject.AddComponent<PhotonTransformView>();
-        //photonView.ObservedComponents = new List<Component>();
-        //photonView.ObservedComponents.Add(photonTransformationView);
+        PhotonTransformView photonTransformationView = gameObject.AddComponent<PhotonTransformView>();
+        photonView.ObservedComponents = new List<Component>();
+        photonView.ObservedComponents.Add(photonTransformationView);
 
         //foreach (PhotonView v in PhotonNetwork.PhotonViews)
         //{
@@ -58,10 +44,7 @@ public class GrabbableTest : Grabbable
 
     }
 
-    private void OnDisable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClient_EventReceived;
-    }
+
 
     public void move()
     {

@@ -18,15 +18,29 @@ using UnityEngine;
 public abstract class Grabbable : MonoBehaviourPun
 {
   
-   [SerializeField] [Tooltip("Object you want the player to grab. Drag the object in the hierarchy in this spot.")] private GameObject obj;
+    [SerializeField]
+    [Tooltip("Object you want the player to grab. Drag the object in the hierarchy in this spot.")]
+    private GameObject obj;
 
-   [Tooltip("Drag dummy1 in this spot")] private Transform player1;
-   [SerializeField] [Tooltip("It is an empty Game Object, child of player 1, that defines the position of the object once grabbed by Player1.")] private Transform defaultTrans1;
+    [Tooltip("Drag dummy1 in this spot")]
+    private Transform player1;
 
-   [Tooltip("Drag dummy2 in this spot")] private Transform player2;
-   [SerializeField] [Tooltip("It is an empty Game Object, child of player 2, that defines the position of the object once grabbed by Player2.")] private Transform defaultTrans2;
+    // TODO: gonna discard
+    [SerializeField]
+    [Tooltip("It is an empty Game Object, child of player 1, that defines the position of the object once grabbed by Player1.")]
+    private Transform defaultTrans1;
 
-   [SerializeField] [Tooltip("Sphere around the object where the player can interact with the object.")] private float radiusOfInteraction = 2f; 
+    [Tooltip("Drag dummy2 in this spot")]
+    private Transform player2;
+
+    // TODO: gonna discard
+    [SerializeField]
+    [Tooltip("It is an empty Game Object, child of player 2, that defines the position of the object once grabbed by Player2.")]
+    private Transform defaultTrans2;
+
+    [SerializeField]
+    [Tooltip("Sphere around the object where the player can interact with the object.")]
+    private float radiusOfInteraction = 2f; 
 
 //    [SerializeField] [Tooltip("Control button for player 1 to grab the object")] private KeyCode grabbingInputPlayer1 = ;
 //    [SerializeField] [Tooltip("Control button for player 2 to grab the object")] private KeyCode grabbingInputPlayer2 = KeyCode.E;
@@ -48,25 +62,17 @@ public abstract class Grabbable : MonoBehaviourPun
     public void Start()
     {
 
-       rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         foreach (PlayerManager m in FindObjectsOfType<PlayerManager>())
         {
-            if (m.grab == null)
-            {
-                Debug.LogWarning("Missing grab position");
-            }
-            else
             {
                 if (m.playerId == 1)
                 {
                     player1 = m.transform;
-                    defaultTrans1 = m.grab.transform;
-
                 }
                 else if (m.playerId == 2)
                 {
                     player2 = m.transform;
-                    defaultTrans2 = m.grab.transform;
                 }
             }
         }
@@ -85,25 +91,28 @@ public abstract class Grabbable : MonoBehaviourPun
     /// </summary>
     public void Update()
     {
-        if (player1 == null || player2 == null) { return; }
+        if (player1 == null || player2 == null) {
+            Debug.LogWarning("Missing player 1, player 2");
+            return;
+        }
         // Grab: for each player that wants and can grab it.
-       if (CanInteract(player1) && !isGrabbed){
+        if (CanInteract(player1) && !isGrabbed){
             Grab(player1, defaultTrans1);
             grabbedBy1 = true;
-       }
-       else if (CanInteract(player2) && !isGrabbed){
+        }
+        else if (CanInteract(player2) && !isGrabbed){
             Grab(player2, defaultTrans2);
             grabbedBy2 = true;
-       }
+        }
 
-       // Ungrab
-       else if (Input.GetButtonDown("Grab1")&& isGrabbed){
-           UnGrab(player1, defaultTrans1);
-       }
-       else if (Input.GetButtonDown("Grab2") && isGrabbed){
-           UnGrab(player2, defaultTrans2);
-       }
-   }
+        // Ungrab
+        else if (Input.GetButtonDown("Grab1")&& isGrabbed){
+            UnGrab(player1, defaultTrans1);
+        }
+        else if (Input.GetButtonDown("Grab2") && isGrabbed){
+            UnGrab(player2, defaultTrans2);
+        }
+    }
 
     /// <summary>
     /// UBISOFT GAMES LAB - McGill Team #2
@@ -114,16 +123,16 @@ public abstract class Grabbable : MonoBehaviourPun
     /// Meant to be overwritten. Set the object as a child of the player, change its position to the default transform position and remove gravity on it.
     ///
     /// </summary>
-   public virtual void Grab(Transform player, Transform defaultTrans)
-   {
+    public virtual void Grab(Transform player, Transform defaultTrans)
+    {
         // Move object to the leaves
-        if (defaultTrans == null)
+        //obj.transform.position = defaultTrans.position;
+        //obj.transform.SetParent(player);
+        PlayerManager m = player.gameObject.GetComponent<PlayerManager>();
+        if (m != null)
         {
-            Debug.LogWarning("Missing default position");
-            return;
+            m.Grab(this);
         }
-       obj.transform.position = defaultTrans.position;
-       obj.transform.SetParent(player);
 
         // Keep track of the object position to drag it 
        //screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
@@ -133,7 +142,7 @@ public abstract class Grabbable : MonoBehaviourPun
         rb.isKinematic = true;
         rb.detectCollisions = false;
         isGrabbed = true;
-   }
+    }
 
     /// <summary>
     /// UBISOFT GAMES LAB - McGill Team #2
@@ -148,7 +157,7 @@ public abstract class Grabbable : MonoBehaviourPun
 
        // We eject it
         obj.transform.parent = null;
-        obj.transform.position  += new Vector3(0, 0.7f, 0);
+        obj.transform.position += new Vector3(0, 0.7f, 0);
 
         // It becomes a traditional rigidbody
         rb.isKinematic = false;
