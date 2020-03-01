@@ -15,7 +15,7 @@ using UnityEngine;
 ///   To add: Controling the object with mouse when it is grabbed
 /// </summary> 
 
-public abstract class Grabbable : MonoBehaviour
+public abstract class Grabbable : MonoBehaviourPun
 {
   
    [SerializeField] [Tooltip("Object you want the player to grab. Drag the object in the hierarchy in this spot.")] private GameObject obj;
