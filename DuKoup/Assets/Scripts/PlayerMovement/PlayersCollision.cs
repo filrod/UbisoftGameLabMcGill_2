@@ -101,4 +101,14 @@ public class PlayersCollision : MonoBehaviour
         Debug.DrawRay(origin, Vector3.down * 1000, Color.white);
         return (Physics.Raycast(origin, Vector3.down, out hit, 1000f, LayerMask.GetMask("Ignore Raycast")) );
     }
+
+    public float GetCollisonRadius()
+    {
+        return this.collisionRadius;
+    }
+
+    public void SetCollisionRadius(float newRadius)
+    {
+        this.collisionRadius = newRadius;
+    }
 }
