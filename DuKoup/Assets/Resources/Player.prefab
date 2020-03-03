@@ -125,6 +125,7 @@ MonoBehaviour:
   maxVelocity_dead: 0.05
   occilationFreq: 20
   lewis: {fileID: 1148292144623621905}
+  playerManager: {fileID: 0}
 --- !u!114 &6320854440714512070
 MonoBehaviour:
   m_ObjectHideFlags: 0

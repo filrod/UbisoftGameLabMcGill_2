@@ -47,6 +47,8 @@ public class Respawn : MonoBehaviour
 
     public PlayerManager playerManager;
 
+    private int countForFollowMethod = 0;
+
     private void Start()
     {
         playerManager = GetComponent<PlayerManager>();
@@ -60,6 +62,14 @@ public class Respawn : MonoBehaviour
             Debug.LogWarning("Missing Rigidbody on player");
         }
         this.playerCollision = GetComponent<PlayersCollision>();
+    }
+
+    /// <summary>
+    /// Increments the count for hovering in the ReSpawnBubbleFollow() method
+    /// </summary>
+    private void FixedUpdate()
+    {
+        countForFollowMethod++;
     }
 
     /// <summary>
@@ -106,7 +116,18 @@ public class Respawn : MonoBehaviour
     /// <param name="willDie"></param>
     public void Kill(bool willDie)
     {
-        
+        // If both dead replace both
+        if (otherPlayer.GetComponent<Respawn>().IsDead() && this.isDead)
+        {
+            Respawn otherPlayerRespawn = otherPlayer.GetComponent<Respawn>();
+            otherPlayerRespawn.Revive();
+            otherPlayer.transform.position = Vector3.zero;
+
+            this.Revive();
+            this.player.transform.position = Vector3.right * 3f;
+            return;
+        }
+
         if (this.isDead)
         {
             foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
@@ -114,8 +135,8 @@ public class Respawn : MonoBehaviour
                 meshRenderer.enabled = false;
             }
             this.GetComponent<MeshRenderer>().enabled = true;
-            // Move the player back to the origin and reset their movement
-            player.transform.position = Vector3.up * 2.4f;
+            // Move the player and reset their movement
+            player.transform.position = Vector3.up * 2.4f + Vector3.right*player.transform.position.x;
             player.useGravity = false;
             player.velocity = Vector3.zero;
 
@@ -148,7 +169,7 @@ public class Respawn : MonoBehaviour
             otherPlayer.transform.position.x,
             maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)
             ))
-            + Vector3.up * (0.7f * Mathf.Sin(Time.frameCount * occilationFreq * maxVelocity_dead / 10f) + 2.1f);
+            + Vector3.up * (0.7f * Mathf.Sin(countForFollowMethod * occilationFreq * maxVelocity_dead / 10f) + 2.1f);
         
     }
 
