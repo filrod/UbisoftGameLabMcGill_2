@@ -1,6 +1,12 @@
 fileFormatVersion: 2
-guid: 4e0c2c53f597c9b44a6d571de8d86ad8
+<<<<<<< HEAD:DuKoup/Assets/Materials/Physics Material Bok Choy.physicMaterial.meta
+guid: e8b85711445c03143a48598d8cbb68ee
 NativeFormatImporter:
+=======
+guid: 748a9da825954d34fb5d04fa5889387f
+folderAsset: yes
+DefaultImporter:
+>>>>>>> master:DuKoup/Assets/Animations.meta
   externalObjects: {}
   mainObjectFileID: 0
   userData: 
