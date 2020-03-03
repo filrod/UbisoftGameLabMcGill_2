@@ -2489,7 +2489,6 @@ GameObject:
   - component: {fileID: 232094365}
   - component: {fileID: 232094363}
   - component: {fileID: 232094364}
-  - component: {fileID: 232094365}
   m_Layer: 0
   m_Name: dummy2
   m_TagString: Player
@@ -2523,7 +2522,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232094354}
-  m_Material: {fileID: 13400000, guid: 4e0c2c53f597c9b44a6d571de8d86ad8, type: 2}
+  m_Material: {fileID: 13400000, guid: e8b85711445c03143a48598d8cbb68ee, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -2636,6 +2635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5773c2138c296cc43969c29faadaa887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  max_dist_groundCheck: 1000
   animator: {fileID: 541214566}
   playerId: 2
   canDoubleJump: 0
@@ -2692,11 +2692,6 @@ MonoBehaviour:
   maxVelocity_dead: 0.05
   occilationFreq: 20
   lewis: {fileID: 343564307}
-  m_Script: {fileID: 11500000, guid: f7fe8cfd69b8c4c9aa0c53a65b300ba5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 541214566}
-  playerId: 2
 --- !u!4 &237129928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1351147834510260900, guid: 13db7a6993e794894804bdc72eaabdb1,
@@ -6301,7 +6296,6 @@ GameObject:
   - component: {fileID: 640491674}
   - component: {fileID: 640491672}
   - component: {fileID: 640491673}
-  - component: {fileID: 640491674}
   m_Layer: 0
   m_Name: dummy1
   m_TagString: Player
@@ -6362,7 +6356,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640491662}
-  m_Material: {fileID: 13400000, guid: 4e0c2c53f597c9b44a6d571de8d86ad8, type: 2}
+  m_Material: {fileID: 13400000, guid: e8b85711445c03143a48598d8cbb68ee, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -6518,11 +6512,6 @@ MonoBehaviour:
   maxVelocity_dead: 0.05
   occilationFreq: 20
   lewis: {fileID: 263512627}
-  m_Script: {fileID: 11500000, guid: f7fe8cfd69b8c4c9aa0c53a65b300ba5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1741993873}
-  playerId: 1
 --- !u!1001 &642241784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18424,7 +18413,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986664081}
-  m_LocalRotation: {x: -0.051605914, y: -0.024734164, z: 0.0012785541, w: -0.9983604}
+  m_LocalRotation: {x: -0.051605914, y: -0.024734164, z: 0.001278554, w: -0.9983604}
   m_LocalPosition: {x: -17.1, y: 3, z: -16.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -20957,7 +20946,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4881291691202834381}
-  m_LocalRotation: {x: -0.051605914, y: -0.024734164, z: 0.0012785541, w: -0.9983604}
+  m_LocalRotation: {x: -0.051605914, y: -0.024734164, z: 0.001278554, w: -0.9983604}
   m_LocalPosition: {x: -17.15529, y: 3.1349688, z: -16.824333}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
