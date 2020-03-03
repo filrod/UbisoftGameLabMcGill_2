@@ -123,8 +123,9 @@ public abstract class Grabbable : MonoBehaviourPun
     /// Meant to be overwritten. Set the object as a child of the player, change its position to the default transform position and remove gravity on it.
     ///
     /// </summary>
-    public virtual void Grab(Transform player, Transform defaultTrans)
-    {
+   public virtual void Grab(Transform player, Transform defaultTrans)
+   {
+       
         // Move object to the leaves
         //obj.transform.position = defaultTrans.position;
         //obj.transform.SetParent(player);

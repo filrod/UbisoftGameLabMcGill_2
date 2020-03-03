@@ -15,8 +15,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviourPun
 {
+    /// <summary>
+    /// Erase this. Raycast max distance.
+    /// </summary>
+    [SerializeField][HideInInspector]
+    [Tooltip("Raycast max distance to check if grounded. (only here for bug video)")]
+
+    private float max_dist_groundCheck = 1000f;
     // Fields 
     private PlayerManager playerManager;
+
+    [SerializeField] Animator animator;
+
 
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
@@ -65,6 +75,11 @@ public class PlayerMovement : MonoBehaviourPun
     /// </summary>
     [SerializeField] [Range(0f, 10f)] [Tooltip("Sets the Jumping Force")]
     private float jumpForce = 6;
+
+    [SerializeField]
+    [Range(0f, 1f)]
+    [Tooltip("Sets the Jumping Force")]
+    private float lateralWalkForcce = 0.3f;
     public float JumpForce
     {
         get
@@ -224,18 +239,78 @@ public class PlayerMovement : MonoBehaviourPun
         if (Input.GetKeyDown(KeyCode.F4)){
             Application.LoadLevel(0);
         }
+
+        // Play walkin animation if player has high enough velocity
+        bool isMoving = player.velocity.magnitude > 0.01;
+        animator.SetBool("isWalking", isMoving);
     }
 
+    /// <summary>
+    /// Public method to check if a player is grounded.
+    /// Returns true if player is grounded
+    /// </summary>
+    /// <returns></returns>
     public bool CheckIfGrounded()
     {
-        // Check if grounded 
-        RaycastHit groundCollisionInfo;
-        Physics.Raycast(player.transform.position, -Vector3.up, out groundCollisionInfo, 20f);
-        float distToGround = player.transform.position.y - groundCollisionInfo.point.y;
-        // Debug.Log("Dist to ground" + distToGround);
-        //this.distToGround = groundCollisionInfo;
+        // Set up raycast hits
+        RaycastHit groundCollisionInfo_leftSide;
+        RaycastHit groundCollisionInfo_rightSide;
 
-        this.grounded = (distToGround <= playerHeightWaistDown);
+        // Get left and right center points around the player's collider
+        Vector3 point_playerCentreLeftSide = player.transform.position 
+            - Vector3.right*player.GetComponent<Collider>().bounds.extents.x;
+        Vector3 point_playerCentreRightSide = player.transform.position 
+            + Vector3.right * player.GetComponent<Collider>().bounds.extents.x;
+
+        // Set the down vector
+        Vector3 down = new Vector3(0, -playerHeightWaistDown, 0);
+        down.Normalize();
+
+        // Perform Raycasts straight down and record hit info in RaycastHit variables 
+        bool rayCastLeftHitSomething = Physics.Raycast(
+            point_playerCentreLeftSide, 
+            down, 
+            out groundCollisionInfo_leftSide, 
+            max_dist_groundCheck
+            );
+        bool rayCastRightHitSomething = Physics.Raycast(
+            point_playerCentreRightSide, 
+            down, 
+            out groundCollisionInfo_rightSide, 
+            max_dist_groundCheck
+            );
+
+        bool rayCast_hit_recorded = rayCastLeftHitSomething || rayCastRightHitSomething;
+
+        // By default we assume player is not grounded (max val is for comparisons later)
+        float distToGroundLeft = float.MaxValue;
+        float distToGroundRight = float.MaxValue;
+
+        // If there were no hits, the player is not grounded
+        if (!rayCast_hit_recorded) { this.grounded = false; return this.grounded; }
+
+        // Set left side distance to ground if there was a hit
+        else if (rayCastLeftHitSomething)
+        {
+            distToGroundLeft = point_playerCentreLeftSide.y - groundCollisionInfo_leftSide.point.y;
+        }
+
+        // Set left side distance to ground if there was a hit
+        else if (rayCastRightHitSomething)
+        {
+            distToGroundRight = point_playerCentreRightSide.y - groundCollisionInfo_rightSide.point.y;
+        }
+
+        //Debug.DrawLine(point_playerCentreLeftSide, point_playerCentreLeftSide+new Vector3(0, -playerHeightWaistDown+0.05f, 0), Color.red, 0.01f, false);
+        //Debug.DrawLine(point_playerCentreRightSide, point_playerCentreRightSide+new Vector3(0, -playerHeightWaistDown+0.05f, 0), Color.red, 0.01f, false);
+        //Debug.DrawLine(point_playerCentreLeftSide + new Vector3(0, -playerHeightWaistDown+0.05f, 0), point_playerCentreRightSide + new Vector3(0, -playerHeightWaistDown + 0.05f, 0), Color.red, 0.01f, false);
+
+        
+        //Debug.DrawLine(point_playerCentreLeftSide, groundCollisionInfo_leftSide.point, Color.blue, 0.1f, true);
+        //Debug.DrawLine(point_playerCentreRightSide, groundCollisionInfo_rightSide.point, Color.blue, 0.1f, true);
+
+        this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
+        animator.SetBool("isJumping", !this.grounded); 
         return this.grounded;
     }
 
@@ -269,12 +344,16 @@ public class PlayerMovement : MonoBehaviourPun
                 SkewJumpParabola();
             }
 
-            movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeedInJump;
+            //movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeedInJump;
+            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeedInJump * lateralWalkForcce * Vector3.right, ForceMode.VelocityChange);
+            movementXY = Vector2.zero;// player.velocity;
             movementXY.y = 0;
         }
         else
         {
-            movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeed;
+            //movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeed;
+            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeed * lateralWalkForcce * Vector3.right, ForceMode.VelocityChange);
+            movementXY = Vector2.zero;//player.velocity;
             movementXY.y = 0;
         }
 
@@ -311,7 +390,8 @@ public class PlayerMovement : MonoBehaviourPun
         // else
         // {
             // If not jumping or no collision proceed as normal
-            player.velocity = targetVelocity;
+        player.velocity = targetVelocity;
+        
         // }
 
 
@@ -345,6 +425,7 @@ public class PlayerMovement : MonoBehaviourPun
         }
         if (this.grounded || (nbJumps < maxJumps) && this.canDoubleJump)
         {
+            animator.SetBool("isJumping", true); // Play jumping animation
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
             player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             nbJumps += 1;
