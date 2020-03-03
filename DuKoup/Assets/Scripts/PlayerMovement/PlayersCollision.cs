@@ -62,7 +62,6 @@ public class PlayersCollision : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (plankingBehaviour.PlayerIsPlanking()) return;
         if (this.collisionRadius == 0f) return;
         // if (plankingBehaviour.PlayerIsPlanking()) return;
         if (otherPlayer == null) { 
