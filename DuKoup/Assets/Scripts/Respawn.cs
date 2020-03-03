@@ -20,7 +20,7 @@ public class Respawn : MonoBehaviour
     [SerializeField] private float fallHeight = -14.0f;
 
     /// <summary> Other player </summary>
-    [Tooltip("The player to follow when you respawn")]
+    [Tooltip("The player to follow when you respawn")][HideInInspector]
     [SerializeField] private GameObject otherPlayer;
 
     /// <summary>
@@ -39,20 +39,27 @@ public class Respawn : MonoBehaviour
     /// <summary> A rigidbody component on the player to control physics (serialized) </summary>
     private Rigidbody player;
     private bool isDead = false;
-    private PlayersCollision playerCollision = new PlayersCollision();
+    private PlayersCollision playerCollision;
     //lewisSkinMesh
     [SerializeField]
     [Tooltip("Lewis prefab GameObject for access to the mesh")]
     private GameObject lewis;
 
+    public PlayerManager playerManager;
+
     private void Start()
     {
+        playerManager = GetComponent<PlayerManager>();
+        if (playerManager != null)
+        {
+            otherPlayer = playerManager.OtherPlayer;
+        }
         player = GetComponent<Rigidbody>();
         if (player == null)
         {
-            player = GetComponentInChildren<Rigidbody>();
-            Debug.Log("Missing Rigid Body");
+            Debug.LogWarning("Missing Rigidbody on player");
         }
+        this.playerCollision = GetComponent<PlayersCollision>();
     }
 
     /// <summary>
@@ -102,7 +109,7 @@ public class Respawn : MonoBehaviour
         
         if (this.isDead)
         {
-            foreach (var meshRenderer in gameObject.GetComponentsInChildren<MeshRenderer>())
+            foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
             {
                 meshRenderer.enabled = false;
             }
@@ -111,7 +118,16 @@ public class Respawn : MonoBehaviour
             player.transform.position = Vector3.up * 2.4f;
             player.useGravity = false;
             player.velocity = Vector3.zero;
+
+            // Turn off beta-alpha plane collisions
             playerCollision.SetCollisionRadius(0f);
+
+            if (otherPlayer == null)
+            {
+                otherPlayer = this.playerManager.OtherPlayer;
+            }
+
+            otherPlayer.GetComponent<PlayersCollision>().SetCollisionRadius(0f);
         }
     }
 
@@ -139,23 +155,46 @@ public class Respawn : MonoBehaviour
     private void Revive()
     {
         this.isDead = false;
-        foreach (var meshRenderer in gameObject.GetComponentsInChildren<MeshRenderer>())
+        foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
         {
             meshRenderer.enabled = true;
         }
         this.GetComponent<MeshRenderer>().enabled = false;
         Debug.Log("Players have collided");
         player.useGravity = true;
+
+        // Turn on beta-alpha plane collisions
         playerCollision.SetCollisionRadius(2f);
+
+        if (otherPlayer == null)
+        {
+            otherPlayer = this.playerManager.OtherPlayer;
+        }
+
+        otherPlayer.GetComponent<PlayersCollision>().SetCollisionRadius(2f);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Collision");
-        if ((player.name == "dummy1" && collision.gameObject.name == "dummy2") || (player.name == "dummy2" && collision.gameObject.name == "dummy1"))
+        if (playerManager == null)
+        {
+            playerManager = GetComponent<PlayerManager>();
+        }
+
+        // If you didn't collide with the co-op player but collided with something else, return out of function
+        PlayerManager otherPlayerManager = collision.gameObject.GetComponent<PlayerManager>();
+        if (otherPlayerManager == null) return;
+
+        // If it was was a player (otherPlayer) then revive the player
+        if (otherPlayerManager.playerId != playerManager.playerId)
         {
             Revive();
-
+            
+        }
+        else
+        {
+            Debug.LogWarning("Not expected: report bug of Self collision!");
         }
     }
 }
