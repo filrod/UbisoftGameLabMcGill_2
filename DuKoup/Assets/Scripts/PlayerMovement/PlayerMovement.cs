@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 /// <summary>
@@ -12,7 +13,7 @@ using UnityEngine;
 /// This class controls player movement
 /// </summary>
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
     /// <summary>
     /// Erase this. Raycast max distance.
@@ -90,6 +91,11 @@ public class PlayerMovement : MonoBehaviour
             jumpForce = value;
         }
     }
+
+    [SerializeField]
+    [Range(60f, 210f)]
+    [Tooltip("Set the turning angle(degree)")]
+    private float turningAngle = 120f;
 
 
     /// <summary>
@@ -181,30 +187,53 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
 
-        if (playerId == 1)
+
+        if (PhotonNetwork.IsConnected)
         {
+            // multiplayer
             horizontalAxis = "Horizontal1";
             jumpButton = "Jump1";
         }
-        else if (playerId == 2)
+        else
         {
-            horizontalAxis = "Horizontal2";
-            jumpButton = "Jump2";
+            if (playerManager.playerId == 1)
+            {
+                horizontalAxis = "Horizontal1";
+                jumpButton = "Jump1";
+            }
+            else if (playerManager.playerId == 2)
+            {
+                horizontalAxis = "Horizontal2";
+                jumpButton = "Jump2";
+            }
         }
     }
 
     public void Update()
     {
+
         CheckIfGrounded();
         // Set boolean to true if jump is pressed
         this.jump = Input.GetButtonDown(jumpButton);
 
         if (jump)
         {
+            if (PhotonNetwork.IsConnected)
+            {
+                if (!GetComponentInParent<PhotonView>().IsMine) return;
+            }
             Jump();
         }
 
-        restrictObject(confinedArea);
+        if (confinedArea != null)
+        {
+            restrictObject(confinedArea);
+        }
+        else
+        {
+            // Debug.LogWarning("Missing confined Area");
+        }
+        
 
         // Restart game by pressing F4
         if (Input.GetKeyDown(KeyCode.F4)){
@@ -299,6 +328,11 @@ public class PlayerMovement : MonoBehaviour
         // Avoid movement for planking player
         //if ( GetPlayerId()==2 && plankingBehaviour.PlayerIsPlanking() ) return;
 
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!GetComponentInParent<PhotonView>().IsMine) return;
+        }
+
         if (!this.grounded)
         {
             if (Input.GetKeyDown(KeyCode.B))
@@ -369,7 +403,7 @@ public class PlayerMovement : MonoBehaviour
     /// <returns> Returns an integer 1 or 2 depending on the player using this class </returns>
     public int GetPlayerId()
     {
-        return this.playerId;
+        return playerManager.playerId;
     }
 
     /// <summary>
@@ -445,11 +479,14 @@ public class PlayerMovement : MonoBehaviour
     {
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
+        Vector3 eulerAngle = gameObject.transform.rotation.eulerAngles;
+        eulerAngle.y = m_FacingRight ? 0 : turningAngle;
+        gameObject.transform.rotation = Quaternion.Euler(eulerAngle);
 
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1f;
-        transform.localScale = theScale;
+
+        //Vector3 theScale = transform.localScale;
+        //theScale.x *= -1f;
+        //transform.localScale = theScale;
     }
 
     private void restrictObject(Collider2D area)

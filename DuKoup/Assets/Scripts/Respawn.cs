@@ -48,8 +48,12 @@ public class Respawn : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Rigidbody>();
+        if (player == null)
+        {
+            player = GetComponentInChildren<Rigidbody>();
+            Debug.Log("Missing Rigid Body");
+        }
     }
-
 
     /// <summary>
     /// This method moves the player back to the starting position
@@ -60,8 +64,13 @@ public class Respawn : MonoBehaviour
     /// <returns> Returns void </returns>
     void Update()
     {
-
-        if (this.isDead)
+        if (player == null)
+        {
+            Debug.LogWarning("Missing Rigid Body");
+            return;
+        }
+        
+         if (this.isDead)
         {
             if (this.playerCollision.isSomethingInBeta() == true) {
                 Revive();

@@ -19,10 +19,10 @@ public abstract class Grabbable : MonoBehaviour
   
    [SerializeField] [Tooltip("Object you want the player to grab. Drag the object in the hierarchy in this spot.")] private GameObject obj;
 
-   [SerializeField] [Tooltip("Drag dummy1 in this spot")] private Transform player1;
+   [Tooltip("Drag dummy1 in this spot")] private Transform player1;
    [SerializeField] [Tooltip("It is an empty Game Object, child of player 1, that defines the position of the object once grabbed by Player1.")] private Transform defaultTrans1;
 
-   [SerializeField] [Tooltip("Drag dummy2 in this spot")] private Transform player2;
+   [Tooltip("Drag dummy2 in this spot")] private Transform player2;
    [SerializeField] [Tooltip("It is an empty Game Object, child of player 2, that defines the position of the object once grabbed by Player2.")] private Transform defaultTrans2;
 
    [SerializeField] [Tooltip("Sphere around the object where the player can interact with the object.")] private float radiusOfInteraction = 2f; 
@@ -47,6 +47,18 @@ public abstract class Grabbable : MonoBehaviour
     public void Start()
     {
        rb = GetComponent<Rigidbody>();
+        foreach (PlayerManager m in FindObjectsOfType<PlayerManager>())
+        {
+            if (m.playerId == 1)
+            {
+                player1 = m.transform;
+            }
+            else if (m.playerId == 2)
+            {
+                player2 = m.transform;
+            }
+        }
+        
     }
 
     // At each image, we want to check if the player wants to grab or ungrab the object.
@@ -62,6 +74,7 @@ public abstract class Grabbable : MonoBehaviour
     /// </summary>
     public void Update()
     {
+        if (player1 == null || player2 == null) { return; }
         // Grab: for each player that wants and can grab it.
        if (CanInteract(player1) && !isGrabbed){
             Grab(player1, defaultTrans1);
@@ -132,6 +145,7 @@ public abstract class Grabbable : MonoBehaviour
    public bool CanInteract(Transform player)
    {
        string key;
+        // if (player.gameObject.GetComponent<PlayerManager>())
 
         if (player.name == "dummy1"){
            key = "Grab1";

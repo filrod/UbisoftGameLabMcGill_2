@@ -39,6 +39,7 @@ public class PowerUpSpot : MonoBehaviour
     public void OnCollisionEnter(Collision collision)
     {
         // TODO: refactor the dummy, and unify the tag
+        Debug.Log("Hit Power up spot");
         if (collision.gameObject.CompareTag("Player"))
         {
             enteredPlayer = collision.gameObject;
@@ -57,6 +58,9 @@ public class PowerUpSpot : MonoBehaviour
                         break;
                     case POWER_TYPE.Grabable:
                         powerUp.GainGrabable();
+                        break;
+                    case POWER_TYPE.High_Jump:
+                        powerUp.GainHighJump();
                         break;
                     default:
                         break;

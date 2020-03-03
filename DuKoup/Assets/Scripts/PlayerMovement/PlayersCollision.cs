@@ -15,6 +15,7 @@ public class PlayersCollision : MonoBehaviour
 {
     // Fields
     [SerializeField] private PlankingBehaviour plankingBehaviour;
+    private PlayerManager playerManager;
 
     // Two players, instancePlayer has the script attached
     [SerializeField] private Rigidbody instancePlayer;
@@ -41,6 +42,13 @@ public class PlayersCollision : MonoBehaviour
 
     void Start()
     {
+        playerManager = GetComponentInParent<PlayerManager>();
+        instancePlayer = GetComponent<Rigidbody>();
+        plankingBehaviour = GetComponent<PlankingBehaviour>();
+        if (playerManager.playerId == 1)
+        {
+            isMainPlayer = true;
+        }
         diffPlane = betaPlane - alphaPlane;
     }
 
@@ -56,6 +64,12 @@ public class PlayersCollision : MonoBehaviour
     {
         if (plankingBehaviour.PlayerIsPlanking()) return;
         if (this.collisionRadius == 0f) return;
+        // if (plankingBehaviour.PlayerIsPlanking()) return;
+        if (otherPlayer == null)
+        {
+            otherPlayer = playerManager.OtherPlayer.GetComponentInChildren<Rigidbody>();
+        }
+        if (otherPlayer == null || instancePlayer == null) return;
         if (Mathf.RoundToInt(instancePlayer.transform.position.y) != Mathf.RoundToInt(otherPlayer.transform.position.y)) return;
         
         // Create a collision area for otherPlayer
