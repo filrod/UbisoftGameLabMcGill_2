@@ -21,6 +21,8 @@ public class Scientist : MonoBehaviour
     /// </summary>
     private Camera cam;
 
+    private Renderer scientistRenderer => transform.GetChild(0).GetComponent<Renderer>();
+
 
     private void Awake()
     {
@@ -30,6 +32,9 @@ public class Scientist : MonoBehaviour
         stateMachine.AddState(typeof(InvestigateState), new InvestigateState(this));
         stateMachine.AddState(typeof(AttackState), new AttackState(this));
         cam = Camera.main;
+
+        Transform eyeTransform = transform.GetChild(1);
+        eyeTransform.position = new Vector3(eyeTransform.position.x, eyeTransform.position.y, transform.position.z + scientistZAtTable);
     }
 
     public Vector2 GetZMovementBounds()
@@ -64,14 +69,7 @@ public class Scientist : MonoBehaviour
     // All of this is just to visualize when the scientist is triggered (red face). 
     private void Update()
     {
-        if (IsTriggered().HasValue)
-        {
-            transform.GetChild(0).GetComponent<Renderer>().material.color = Color.red;
-        }
-        else
-        {
-            transform.GetChild(0).GetComponent<Renderer>().material.color = Color.gray;
-        }
+        scientistRenderer.material.color = stateMachine.stateColor;
     }
 
     // Returns null if the scientist is not triggered
