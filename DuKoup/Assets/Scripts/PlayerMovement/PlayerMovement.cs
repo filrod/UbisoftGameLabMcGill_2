@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     // Fields 
     private PlayerManager playerManager;
 
+    [SerializeField] Animator animator;
+
+
     /// <summary> Player identification for distiction between player 1 and 2 (serialized) </summary>
     [SerializeField] [Tooltip("A number, either 1 or 2, to say which player this is. This is used for player input managment")]
     private int playerId;
@@ -195,6 +198,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F4)){
             Application.LoadLevel(0);
         }
+
+        // Play walkin animation if player has high enough velocity
+        bool isMoving = player.velocity.magnitude > 0.01;
+        animator.SetBool("isWalking", isMoving);
     }
 
     public bool CheckIfGrounded()
@@ -206,7 +213,14 @@ public class PlayerMovement : MonoBehaviour
         // Debug.Log("Dist to ground" + distToGround);
         //this.distToGround = groundCollisionInfo;
 
-        this.grounded = (distToGround <= playerHeightWaistDown);
+        bool tempGrounded = (distToGround <= playerHeightWaistDown);
+
+        if (!this.grounded && tempGrounded)
+        {
+            animator.SetBool("isJumping", false); 
+        }
+
+        this.grounded = tempGrounded;
         return this.grounded;
     }
 
@@ -277,7 +291,8 @@ public class PlayerMovement : MonoBehaviour
         // else
         // {
             // If not jumping or no collision proceed as normal
-            player.velocity = targetVelocity;
+        player.velocity = targetVelocity;
+        
         // }
 
 
@@ -311,6 +326,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (this.grounded || (nbJumps < maxJumps) && this.canDoubleJump)
         {
+            animator.SetBool("isJumping", true); // Play jumping animation
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
             player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             nbJumps += 1;
