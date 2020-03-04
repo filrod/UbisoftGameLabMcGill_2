@@ -33,8 +33,6 @@ public class WanderState : BaseState
         float randX = UnityEngine.Random.Range(xBounds.x, xBounds.y);
         float randZ = UnityEngine.Random.Range(zBounds.x, zBounds.y);
 
-        Debug.Log(new Vector3(randX, origin.y, randZ));
-
         return new Vector3(randX, origin.y, randZ);
         //NavMeshHit navHit;
 
