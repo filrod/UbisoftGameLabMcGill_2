@@ -10,10 +10,13 @@ public class StateMachine : MonoBehaviour
     [Tooltip ("Script attached to the FieldOfView game object")] private FieldOfView fieldOfView;
     [SerializeField]
     [Tooltip ("The game object holding the body of the scientist")]private GameObject scientistBody;
+    [SerializeField]
+    [Tooltip("Arm of the scientist")] private GameObject arm;
 
     private Dictionary<Type, BaseState> allStates = new Dictionary<Type, BaseState>(); // Holding an instance of each state
 
     public BaseState currentState; // Reference to the instance of the state we are in
+    public Color stateColor = Color.gray; 
 
     /// <summary>
     /// Method to add state instances to the dictionary holding all state instances. This is only done by the scientist when it is instantiated
@@ -27,6 +30,7 @@ public class StateMachine : MonoBehaviour
 
     private void Start()
     {
+        arm.SetActive(false);
         if (allStates.ContainsKey(typeof(WanderState)))
         {
             currentState = allStates[typeof(WanderState)];
@@ -57,18 +61,21 @@ public class StateMachine : MonoBehaviour
     {
         // These are the general "settings" (only changed for when scientis is investigating).
         gameObject.GetComponent<NavMeshAgent>().enabled = true;
-        scientistBody.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        SetArmActive(false);
+        //scientistBody.transform.localRotation = Quaternion.Euler(0, 0, 0);
         fieldOfView.Deactivate();
 
         if (newStateType == typeof(WanderState))
         {
             //Debug.Log("Back To Wandering");
+            stateColor = Color.gray;
             currentState = allStates[newStateType];
         }
 
         if (newStateType == typeof(AlertState))
         {
             //Debug.Log("Alert!");
+            stateColor = Color.magenta;
             currentState = allStates[newStateType];
             ((AlertState)currentState).SetTriggerPositionFromScientist();
         }
@@ -76,6 +83,8 @@ public class StateMachine : MonoBehaviour
         if (newStateType == typeof(InvestigateState))
         {
             //Debug.Log("Investigating");
+            stateColor = Color.red;
+            SetArmActive(true);
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             transform.rotation = Quaternion.Euler(0, 180, 0); // Rotate to look at level. Kinda janky, just jumps to correct rotation, but the jump normally is not very big
             fieldOfView.Activate();
@@ -84,7 +93,14 @@ public class StateMachine : MonoBehaviour
 
         if (newStateType == typeof(AttackState))
         {
+            stateColor = Color.black;
             currentState = allStates[newStateType];
         }
     }
+
+    public void SetArmActive(bool active)
+    {
+        arm.SetActive(active);
+    }
+
 }
