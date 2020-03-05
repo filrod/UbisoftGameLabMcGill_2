@@ -4,22 +4,30 @@ using UnityEngine;
 
 public class PlayerTimeOutTriggerAI : MonoBehaviour
 {
-    private Rigidbody rb => transform.GetChild(0).GetComponent<Rigidbody>();
+    private Rigidbody rb => GetComponent<Rigidbody>();
 
-    [SerializeField] private Scientist ai;
+    private Scientist ai;
     [SerializeField] private float timeOut;
     [SerializeField] private float deltaStandStill;
     private float timer = 0;
 
+    private void Start()
+    {
+        ai = FindObjectOfType<Scientist>();
+    }
+
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log("velocity: " + rb.velocity.magnitude);
         if (rb.velocity.magnitude <= deltaStandStill)
         {
+            
             timer += Time.deltaTime;
             if (timer >= timeOut)
             {
-                ai.Trigger(transform.GetChild(0).transform.position, null);
+                Debug.Log("Scientist has been trigger");
+                ai.Trigger(transform.position, null);
                 timer = 0;
             }
         }
