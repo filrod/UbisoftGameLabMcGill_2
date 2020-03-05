@@ -101,7 +101,7 @@ public class Respawn : MonoBehaviour
         }
 
         this.isDead = player.transform.position.y < fallHeight;
-        Debug.Log(this.isDead);
+        // Debug.Log(this.isDead);
         // Check if the player has fallen and will die
         Kill(this.isDead) ;
 
@@ -119,6 +119,11 @@ public class Respawn : MonoBehaviour
     /// <param name="willDie"></param>
     public void Kill(bool willDie)
     {
+        if (otherPlayer == null)
+        {
+            otherPlayer = playerManager.OtherPlayer;
+        }
+
         // If both dead replace both
         if (otherPlayer.GetComponent<Respawn>().IsDead() && this.isDead)
         {

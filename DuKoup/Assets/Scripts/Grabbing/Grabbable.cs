@@ -92,7 +92,7 @@ public abstract class Grabbable : MonoBehaviourPun
     public void Update()
     {
         if (player1 == null || player2 == null) {
-            Debug.LogWarning("Missing player 1, player 2");
+            // Debug.LogWarning("Missing player 1, player 2");
             return;
         }
         // Grab: for each player that wants and can grab it.
