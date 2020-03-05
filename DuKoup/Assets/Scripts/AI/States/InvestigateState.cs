@@ -11,9 +11,10 @@ public class InvestigateState : BaseState
     private Vector3 leftRotation = new Vector3(0, 0, 1);
     private Vector3 rightRotation = new Vector3(0, 0, -1);
     private Vector3 currentRotation;
-    [SerializeField] private float rotationSpeed = 10;
+    [SerializeField] private float rotationSpeed = 15;
 
-    private float rotationTimeOut = 3f;
+    private float rotationHalfTimeOut = 1.5f;
+    private float rotationTimeOut;
     private float rotationTimer = 0;
 
     private float timeOut = 10;
@@ -23,17 +24,21 @@ public class InvestigateState : BaseState
     {
         this.scientist = scientist;
         this.scientistEye = scientist.transform.GetChild(1).gameObject;
+        currentRotation = leftRotation;
+        rotationTimeOut = rotationHalfTimeOut;
     }
 
     public override Type TransitionCheck()
     {
         if (scientist.TargetIsUpdated()) // We have a new trigger position
         {
+            ResetEye();
             return typeof(AlertState);
         }
 
         if (scientist.FieldOfViewHittingPlayer()) // We have detected a player in the field of view
         {
+            ResetEye();
             scientist.ResetTargets(); // Resetting the scientist's target
             return typeof(AttackState);
         }
@@ -63,10 +68,16 @@ public class InvestigateState : BaseState
         return null;
     }
 
-
+    private void ResetEye()
+    {
+        scientistEye.transform.rotation = Quaternion.Euler(0, 0, -50);
+        rotationTimeOut = rotationHalfTimeOut;
+        currentRotation = UnityEngine.Random.Range(0f, 1f) < 0.5f ? rightRotation : leftRotation;
+    }
 
     private void ChangeRotation()
     {
+        rotationTimeOut = rotationTimeOut == rotationHalfTimeOut ? rotationTimeOut * 2 : rotationTimeOut;
         switch (currentRotation.Equals(leftRotation))
         {
             case true:

@@ -10,6 +10,8 @@ public class StateMachine : MonoBehaviour
     [Tooltip ("Script attached to the FieldOfView game object")] private FieldOfView fieldOfView;
     [SerializeField]
     [Tooltip ("The game object holding the body of the scientist")]private GameObject scientistBody;
+    [SerializeField]
+    [Tooltip("Arm of the scientist")] private GameObject arm;
 
     private Dictionary<Type, BaseState> allStates = new Dictionary<Type, BaseState>(); // Holding an instance of each state
 
@@ -28,6 +30,7 @@ public class StateMachine : MonoBehaviour
 
     private void Start()
     {
+        arm.SetActive(false);
         if (allStates.ContainsKey(typeof(WanderState)))
         {
             currentState = allStates[typeof(WanderState)];
@@ -58,7 +61,8 @@ public class StateMachine : MonoBehaviour
     {
         // These are the general "settings" (only changed for when scientis is investigating).
         gameObject.GetComponent<NavMeshAgent>().enabled = true;
-        scientistBody.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        SetArmActive(false);
+        //scientistBody.transform.localRotation = Quaternion.Euler(0, 0, 0);
         fieldOfView.Deactivate();
 
         if (newStateType == typeof(WanderState))
@@ -80,6 +84,7 @@ public class StateMachine : MonoBehaviour
         {
             //Debug.Log("Investigating");
             stateColor = Color.red;
+            SetArmActive(true);
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             transform.rotation = Quaternion.Euler(0, 180, 0); // Rotate to look at level. Kinda janky, just jumps to correct rotation, but the jump normally is not very big
             fieldOfView.Activate();
@@ -92,4 +97,10 @@ public class StateMachine : MonoBehaviour
             currentState = allStates[newStateType];
         }
     }
+
+    public void SetArmActive(bool active)
+    {
+        arm.SetActive(active);
+    }
+
 }

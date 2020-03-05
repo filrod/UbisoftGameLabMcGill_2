@@ -5,7 +5,8 @@ public class FieldOfView : MonoBehaviour
 
     private Mesh mesh;
     //private Vector3 origin;
-    private float fov;
+    [SerializeField]
+    [Tooltip("The angle of the fov")] private float fov = 60f;
     private int rayCount = 50;
     /// <summary>
     /// The starting angle for the looking direction
@@ -49,7 +50,8 @@ public class FieldOfView : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        SetFOV(60f);
+        //SetFOV(60f);
+        startAngle = 270 - fov / 2f;
         angle = startAngle;
         SetPosition(eye.GetComponent<Transform>().position);
         Debug.Log(eye.GetComponent<Transform>().position);
@@ -157,8 +159,8 @@ public class FieldOfView : MonoBehaviour
             Vector3 vertex;
             RaycastHit raycastHit;
             bool intersected = Physics.Raycast(origin, AngleToVec3(angle), out raycastHit, viewDistance);
-            Debug.Log("Raycast: ");
-            Debug.Log(intersected.ToString());
+            //Debug.Log("Raycast: ");
+            //Debug.Log(intersected.ToString());
             if (intersected)
             {
                 // Hit
