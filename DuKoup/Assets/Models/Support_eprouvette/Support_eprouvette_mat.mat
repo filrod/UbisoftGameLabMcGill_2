@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Centrifuge_mat
+  m_Name: Support_eprouvette_mat
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
-  m_LightmapFlags: 1
+  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 261477c6598284f61b916ab0b177e040, type: 3}
+        m_Texture: {fileID: 2800000, guid: 98c4e2809b71c49ebb60149198093d08, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -36,19 +36,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: c8ced219ac6234cf3badb9cf2e3fa077, type: 3}
+        m_Texture: {fileID: 2800000, guid: b6f140b8a6ba84a07a6cc00772ddbf5f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f867059ac5a544424bf7713d377184d3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 541aa02de7ba44172bcf9be5bf41f7d1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 964a2e97bd47a40c198fd9522a488964, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5a24e5cfc430a42e9846756821906db7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 08d5370d983ec45f9ab92e9422f98dd2, type: 3}
+        m_Texture: {fileID: 2800000, guid: b7d3d25523ffb44688cb1c7303e513b8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
