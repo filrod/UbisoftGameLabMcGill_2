@@ -15,6 +15,7 @@ public class PlayersCollision : MonoBehaviour
 {
     // Fields
     [SerializeField] private PlankingBehaviour plankingBehaviour;
+    private PlayerManager playerManager;
 
     // Two players, instancePlayer has the script attached
     [SerializeField] private Rigidbody instancePlayer;
@@ -41,6 +42,13 @@ public class PlayersCollision : MonoBehaviour
 
     void Start()
     {
+        playerManager = GetComponentInParent<PlayerManager>();
+        instancePlayer = GetComponent<Rigidbody>();
+        plankingBehaviour = GetComponent<PlankingBehaviour>();
+        if (playerManager.playerId == 1)
+        {
+            isMainPlayer = true;
+        }
         diffPlane = betaPlane - alphaPlane;
     }
 
@@ -54,7 +62,18 @@ public class PlayersCollision : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (plankingBehaviour.PlayerIsPlanking()) return;
+        if (this.collisionRadius == 0f) return;
+        // if (plankingBehaviour.PlayerIsPlanking()) return;
+        if (otherPlayer == null) { 
+        
+            if (playerManager.OtherPlayer == null)
+            {
+                return;
+            }
+            otherPlayer = playerManager.OtherPlayer.GetComponentInChildren<Rigidbody>();
+        }
+
+        if (otherPlayer == null || instancePlayer == null) return;
         if (Mathf.RoundToInt(instancePlayer.transform.position.y) != Mathf.RoundToInt(otherPlayer.transform.position.y)) return;
         
         // Create a collision area for otherPlayer
@@ -74,10 +93,18 @@ public class PlayersCollision : MonoBehaviour
         // If is in alpha plane, goes faster than other player and in radius: move to beta plane 
         // Be careful that the other player z is not the betaplane !
         if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster && otherPlayer.transform.position.z != betaPlane )
-        {   
+        {
             // If they are at the same speed, Player 2 should move around Player 1
-            if (! (isAtEqualSpeed && isMainPlayer) ){
-                instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
+            if (!(isAtEqualSpeed))
+            {
+                if (Random.Range(0f, 1f) > 0.5f)
+                {
+                    instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
+                }
+                else
+                {
+                    this.otherPlayer.transform.position += new Vector3(0, 0, diffPlane);
+                }
             }
         }
         else if ( currentPlane == betaPlane && (playerPos <= areaPositionMin || playerPos >= areaPositionMax))
@@ -95,10 +122,20 @@ public class PlayersCollision : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, collisionRadius);
     }
 
-    bool isSomethingInBeta(){
+    public bool isSomethingInBeta(){
         RaycastHit hit;
         Vector3 origin = new Vector3 (playerPos, 10f, betaPlane);
         Debug.DrawRay(origin, Vector3.down * 1000, Color.white);
         return (Physics.Raycast(origin, Vector3.down, out hit, 1000f, LayerMask.GetMask("Ignore Raycast")) );
+    }
+
+    public float GetCollisonRadius()
+    {
+        return this.collisionRadius;
+    }
+
+    public void SetCollisionRadius(float newRadius)
+    {
+        this.collisionRadius = newRadius;
     }
 }

@@ -117,7 +117,6 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
         int index = _listings.FindIndex(x => x.Player == newPlayer);
-        Debug.Log("index = " + index);
         if (index != -1)
         {
             Destroy(_listings[index].gameObject);
@@ -160,7 +159,6 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
     private void RPC_ChangeReadyState(Player player, bool ready)
     {
         int index = _listings.FindIndex(x => x.Player == player);
-        Debug.Log("index = " + index);
         if (index != -1)
         {
             _listings[index].Ready = ready;
