@@ -257,11 +257,10 @@ public class PlayerMovement : MonoBehaviourPun
         RaycastHit groundCollisionInfo_rightSide;
 
         // Get left and right center points around the player's collider
-        Vector3 point_playerCentreLeftSide = player.transform.position 
+        Vector3 point_playerCentreLeftSide = player.GetComponent<Collider>().bounds.center
             - Vector3.right*player.GetComponent<Collider>().bounds.extents.x;
-        Vector3 point_playerCentreRightSide = player.transform.position 
+        Vector3 point_playerCentreRightSide = player.GetComponent<Collider>().bounds.center
             + Vector3.right * player.GetComponent<Collider>().bounds.extents.x;
-
         // Set the down vector
         Vector3 down = new Vector3(0, -playerHeightWaistDown, 0);
         down.Normalize();
@@ -300,14 +299,16 @@ public class PlayerMovement : MonoBehaviourPun
         {
             distToGroundRight = point_playerCentreRightSide.y - groundCollisionInfo_rightSide.point.y;
         }
+        Debug.DrawLine(point_playerCentreLeftSide, point_playerCentreRightSide, Color.red, 0.01f, false);
 
-        //Debug.DrawLine(point_playerCentreLeftSide, point_playerCentreLeftSide+new Vector3(0, -playerHeightWaistDown+0.05f, 0), Color.red, 0.01f, false);
-        //Debug.DrawLine(point_playerCentreRightSide, point_playerCentreRightSide+new Vector3(0, -playerHeightWaistDown+0.05f, 0), Color.red, 0.01f, false);
-        //Debug.DrawLine(point_playerCentreLeftSide + new Vector3(0, -playerHeightWaistDown+0.05f, 0), point_playerCentreRightSide + new Vector3(0, -playerHeightWaistDown + 0.05f, 0), Color.red, 0.01f, false);
+
+        Debug.DrawLine(point_playerCentreLeftSide, point_playerCentreRightSide, Color.red, 0.01f, false);
+        Debug.DrawLine(point_playerCentreRightSide, point_playerCentreRightSide+new Vector3(0, -playerHeightWaistDown+0.05f, 0), Color.red, 0.01f, false);
+        Debug.DrawLine(point_playerCentreLeftSide + new Vector3(0, -playerHeightWaistDown+0.05f, 0), point_playerCentreRightSide + new Vector3(0, -playerHeightWaistDown + 0.05f, 0), Color.red, 0.01f, false);
 
         
-        //Debug.DrawLine(point_playerCentreLeftSide, groundCollisionInfo_leftSide.point, Color.blue, 0.1f, true);
-        //Debug.DrawLine(point_playerCentreRightSide, groundCollisionInfo_rightSide.point, Color.blue, 0.1f, true);
+        Debug.DrawLine(point_playerCentreLeftSide, groundCollisionInfo_leftSide.point, Color.blue, 0.1f, true);
+        Debug.DrawLine(point_playerCentreRightSide, groundCollisionInfo_rightSide.point, Color.blue, 0.1f, true);
 
         this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
         animator.SetBool("isJumping", !this.grounded); 
@@ -360,13 +361,13 @@ public class PlayerMovement : MonoBehaviourPun
         // Flip the player
 
         // If the input is moving the player right and the player is facing left...
-        if (movementXY.x > 0 && !m_FacingRight)
+        if (Input.GetAxis(horizontalAxis) > 0 && !m_FacingRight)
         {
             // ... flip the player.
             Flip();
         }
         // Otherwise if the input is moving the player left and the player is facing right...
-        else if (movementXY.x < 0 && m_FacingRight)
+        else if (Input.GetAxis(horizontalAxis) < 0 && m_FacingRight)
         {
             // ... flip the player.
             Flip();
@@ -480,7 +481,7 @@ public class PlayerMovement : MonoBehaviourPun
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
         Vector3 eulerAngle = gameObject.transform.rotation.eulerAngles;
-        eulerAngle.y = m_FacingRight ? 0 : turningAngle;
+        eulerAngle.y = m_FacingRight ? 120f : 120f+ turningAngle; // +20 due to axis difference on import of bok choy model
         gameObject.transform.rotation = Quaternion.Euler(eulerAngle);
 
 
