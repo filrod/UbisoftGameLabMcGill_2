@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerTimeOutTriggerAI : MonoBehaviour
 {
-    private Rigidbody rb => transform.GetChild(0).GetComponent<Rigidbody>();
+    private Rigidbody rb => GetComponent<Rigidbody>();
 
     [SerializeField] private Scientist ai;
     [SerializeField] private float timeOut;
@@ -19,7 +19,7 @@ public class PlayerTimeOutTriggerAI : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= timeOut)
             {
-                ai.Trigger(transform.GetChild(0).transform.position, null);
+                ai.Trigger(transform.position, null);
                 timer = 0;
             }
         }
