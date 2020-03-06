@@ -50,6 +50,7 @@ public class PlayersCollision : MonoBehaviour
             isMainPlayer = true;
         }
         diffPlane = betaPlane - alphaPlane;
+        
     }
 
     /// <summary>
@@ -103,7 +104,16 @@ public class PlayersCollision : MonoBehaviour
 
         // If is in alpha plane, goes faster than other player and in radius: move to beta plane 
         // Be careful that the other player z is not the betaplane !
-        if (currentPlane == alphaPlane && otherPlayer.transform.position.z != betaPlane)
+
+        if (playerManager.playerId == 1)
+        {
+            instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, betaPlane);
+        }
+        else
+        {
+            instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
+        }
+        /*if (currentPlane == alphaPlane && otherPlayer.transform.position.z != betaPlane)
         {
             // If they are at the same speed, Player 2 should move around Player 1
             if (isAtEqualSpeed)
@@ -129,7 +139,7 @@ public class PlayersCollision : MonoBehaviour
         else if (currentPlane == betaPlane)
         {
             instancePlayer.transform.position += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
-        }
+        }*/
     }
 
     void OnDrawGizmosSelected()
