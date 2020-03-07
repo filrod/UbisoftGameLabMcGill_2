@@ -11,6 +11,10 @@ public class PowerUp : MonoBehaviour
     void Start()
     {
         playerManager = GetComponentInParent<PlayerManager>();
+        if (playerManager == null)
+        {
+            GetComponent<PlayerManager>();
+        }
     }
 
     // Update is called once per frame
