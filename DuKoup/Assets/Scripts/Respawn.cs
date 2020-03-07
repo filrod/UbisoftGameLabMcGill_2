@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,11 +47,13 @@ public class Respawn : MonoBehaviour
     private GameObject lewis;
 
     public PlayerManager playerManager;
+    private PhotonView photonView = null;
 
     private int countForFollowMethod = 0;
 
     private void Start()
     {
+        photonView = GetComponent<PhotonView>();
         playerManager = GetComponent<PlayerManager>();
         if (playerManager != null)
         {
@@ -98,7 +101,7 @@ public class Respawn : MonoBehaviour
         }
 
         this.isDead = player.transform.position.y < fallHeight;
-        Debug.Log(this.isDead);
+        // Debug.Log(this.isDead);
         // Check if the player has fallen and will die
         Kill(this.isDead) ;
 
@@ -116,6 +119,11 @@ public class Respawn : MonoBehaviour
     /// <param name="willDie"></param>
     public void Kill(bool willDie)
     {
+        if (otherPlayer == null)
+        {
+            otherPlayer = playerManager.OtherPlayer;
+        }
+
         // If both dead replace both
         if (otherPlayer.GetComponent<Respawn>().IsDead() && this.isDead)
         {
@@ -136,6 +144,11 @@ public class Respawn : MonoBehaviour
             }
             this.GetComponent<MeshRenderer>().enabled = true;
             // Move the player and reset their movement
+
+            if (PhotonNetwork.IsConnected && !photonView.IsMine)
+            {
+                return;
+            }
             player.transform.position = Vector3.up * 2.4f + Vector3.right*player.transform.position.x;
             player.useGravity = false;
             player.velocity = Vector3.zero;
@@ -164,13 +177,17 @@ public class Respawn : MonoBehaviour
         }
 
         // Make player hover slowly towards other player
+        if (PhotonNetwork.IsConnected && !photonView.IsMine)
+        {
+            return;
+        }
         player.transform.position = Vector3.right * Mathf.Lerp(
             player.position.x,
             otherPlayer.transform.position.x,
             maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)
             ))
             + Vector3.up * (0.7f * Mathf.Sin(countForFollowMethod * occilationFreq * maxVelocity_dead / 10f) + 2.1f);
-        
+
     }
 
     private void Revive()
@@ -211,7 +228,6 @@ public class Respawn : MonoBehaviour
         if (otherPlayerManager.playerId != playerManager.playerId)
         {
             Revive();
-            
         }
         else
         {

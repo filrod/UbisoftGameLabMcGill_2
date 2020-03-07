@@ -12,7 +12,7 @@ public class playerInstantiate : MonoBehaviourPun
 
     private void Awake()
     {
-        Vector2 offset = Random.insideUnitCircle * 3f;
+        Vector2 offset = Random.insideUnitCircle * 5f;
         Vector3 position = new Vector3(transform.position.x + offset.x, transform.position.y + offset.y, transform.position.z);
         
         PhotonNetwork.Instantiate("player", position, Quaternion.identity);
