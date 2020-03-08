@@ -33,6 +33,8 @@ public class PlayersCollision : MonoBehaviour
     [SerializeField] private float alphaPlane = 0;
     [SerializeField] private float betaPlane = 2;
 
+    private bool canGoToBeta = true;
+
     private float diffPlane;
     private float currentPlane;
 
@@ -163,5 +165,21 @@ public class PlayersCollision : MonoBehaviour
     public void SetCollisionRadius(float newRadius)
     {
         this.collisionRadius = newRadius;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("NoPassingArea"))
+        {
+            canGoToBeta = false;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("NoPassingArea"))
+        {
+            canGoToBeta = true;
+        }
     }
 }
