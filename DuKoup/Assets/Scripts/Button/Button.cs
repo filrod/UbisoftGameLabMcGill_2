@@ -7,13 +7,15 @@ public class Button : MonoBehaviour
     /// The animator attached to the button
     /// </summary>
     private Animator animator => GetComponent<Animator>();
+    [SerializeField] private IButtonBehaviour buttonBehavior;
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             animator.SetBool("PushingDown", true);
-            ButtonAction();
+            buttonBehavior.ButtonDown();
         }
     }
 
@@ -22,17 +24,7 @@ public class Button : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             animator.SetBool("PushingDown", false);
-            ButtonUnAction();
+            buttonBehavior.ButtonUp();
         }
-    }
-
-    private void ButtonAction()
-    {
-        Debug.Log("Pressed button");
-    }
-
-    private void ButtonUnAction()
-    {
-        Debug.Log("Unpressed button");
     }
 }
