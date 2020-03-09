@@ -7,7 +7,8 @@ public class Button : MonoBehaviour
     /// The animator attached to the button
     /// </summary>
     private Animator animator => GetComponent<Animator>();
-    [SerializeField] private IButtonBehaviour buttonBehavior;
+    [SerializeField]
+    [Tooltip("The implementation of the button behaviour specific to this button")] private IButtonBehaviour buttonBehavior;
 
 
     private void OnTriggerEnter(Collider other)
