@@ -10,7 +10,7 @@ public class Button : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Button"))
+        if (other.CompareTag("Player"))
         {
             animator.SetBool("PushingDown", true);
             ButtonAction();
@@ -19,7 +19,7 @@ public class Button : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Button"))
+        if (other.CompareTag("Player"))
         {
             animator.SetBool("PushingDown", false);
             ButtonUnAction();
