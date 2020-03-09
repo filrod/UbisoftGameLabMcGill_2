@@ -36,6 +36,8 @@ public class PlayersCollision : MonoBehaviour
     private float diffPlane;
     private float currentPlane;
 
+    private bool canGoToBeta = true;
+
     // Only the player with the greatest velocity should change plane
     private bool isFaster;
     private bool isAtEqualSpeed;
@@ -50,6 +52,8 @@ public class PlayersCollision : MonoBehaviour
             isMainPlayer = true;
         }
         diffPlane = betaPlane - alphaPlane;
+
+        canGoToBeta = true;
         
     }
 
@@ -105,7 +109,7 @@ public class PlayersCollision : MonoBehaviour
         // If is in alpha plane, goes faster than other player and in radius: move to beta plane 
         // Be careful that the other player z is not the betaplane !
 
-        if (playerManager.playerId == 1)
+        if (playerManager.playerId == 1 && canGoToBeta)
         {
             instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, betaPlane);
         }
@@ -113,6 +117,7 @@ public class PlayersCollision : MonoBehaviour
         {
             instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
         }
+
         /*if (currentPlane == alphaPlane && otherPlayer.transform.position.z != betaPlane)
         {
             // If they are at the same speed, Player 2 should move around Player 1
@@ -163,5 +168,21 @@ public class PlayersCollision : MonoBehaviour
     public void SetCollisionRadius(float newRadius)
     {
         this.collisionRadius = newRadius;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("NoPassingArea"))
+        {
+            canGoToBeta = false;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("NoPassingArea"))
+        {
+            canGoToBeta = true;
+        }
     }
 }
