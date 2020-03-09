@@ -50,6 +50,7 @@ public class PlayersCollision : MonoBehaviour
             isMainPlayer = true;
         }
         diffPlane = betaPlane - alphaPlane;
+        
     }
 
     /// <summary>
@@ -87,17 +88,37 @@ public class PlayersCollision : MonoBehaviour
         playerPos = instancePlayer.transform.position.x;
         currentPlane = instancePlayer.transform.position.z;
 
+        bool inRange = playerPos >= areaPositionMin && playerPos <= areaPositionMax;
+
+        if (!inRange) {
+
+            if (currentPlane != alphaPlane)
+            {
+                instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
+            }
+            return;
+        }
+
         isFaster = instancePlayer.velocity.magnitude > otherPlayer.velocity.magnitude;
         isAtEqualSpeed = instancePlayer.velocity.magnitude == otherPlayer.velocity.magnitude;
 
         // If is in alpha plane, goes faster than other player and in radius: move to beta plane 
         // Be careful that the other player z is not the betaplane !
-        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster && otherPlayer.transform.position.z != betaPlane )
+
+        if (playerManager.playerId == 1)
+        {
+            instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, betaPlane);
+        }
+        else
+        {
+            instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
+        }
+        /*if (currentPlane == alphaPlane && otherPlayer.transform.position.z != betaPlane)
         {
             // If they are at the same speed, Player 2 should move around Player 1
-            if (!(isAtEqualSpeed))
+            if (isAtEqualSpeed)
             {
-                if (Random.Range(0f, 1f) > 0.5f)
+                if (isMainPlayer)
                 {
                     instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
                 }
@@ -106,14 +127,19 @@ public class PlayersCollision : MonoBehaviour
                     this.otherPlayer.transform.position += new Vector3(0, 0, diffPlane);
                 }
             }
+            else if (isFaster)
+            {
+                instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
+            }
+            else
+            {
+                this.otherPlayer.transform.position += new Vector3(0, 0, diffPlane);
+            }
         }
-        else if ( currentPlane == betaPlane && (playerPos <= areaPositionMin || playerPos >= areaPositionMax))
+        else if (currentPlane == betaPlane)
         {
             instancePlayer.transform.position += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
-        }
-        else if ((playerPos <= areaPositionMin || playerPos >= areaPositionMax) && (currentPlane != alphaPlane)){
-            instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
-        }
+        }*/
     }
 
     void OnDrawGizmosSelected()
