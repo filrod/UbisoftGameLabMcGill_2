@@ -164,6 +164,16 @@ public class PlayerManager : MonoBehaviourPun
         }
     }
 
+
+    public void GrabRope(Rope rope)
+    {
+        Debug.Log("Grab Rope");
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rope.joints[rope.joints.Capacity - 1].connectedBody = rigidbody;
+        rigidbody.isKinematic = false;
+
+    }
+
     public void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += NetworkingClient_EventReceived;
