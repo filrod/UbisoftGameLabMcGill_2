@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2320506999625610855}
   - component: {fileID: 2320506999625610852}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: noPassingArea
   m_TagString: NoPassingArea
   m_Icon: {fileID: 0}
