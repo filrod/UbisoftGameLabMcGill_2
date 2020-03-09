@@ -9,6 +9,7 @@ TagManager:
   - Coin
   - End
   - Button
+  - NoPassingArea
   layers:
   - Default
   - TransparentFX
