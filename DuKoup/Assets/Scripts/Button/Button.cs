@@ -13,6 +13,7 @@ public class Button : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.tag);
         if (other.CompareTag("Player"))
         {
             animator.SetBool("PushingDown", true);
