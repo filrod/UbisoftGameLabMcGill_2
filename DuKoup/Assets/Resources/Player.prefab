@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6320854439654600304
 Transform:
   m_ObjectHideFlags: 0
@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6320854439654600305}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.485, z: -0.18}
+  m_LocalPosition: {x: 0, y: -0.1, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6320854440714512071}
@@ -83,6 +83,7 @@ GameObject:
   - component: {fileID: 6967897831905479122}
   - component: {fileID: 1007651871157958160}
   - component: {fileID: 7403473699009344255}
+  - component: {fileID: 7839036736488921753}
   - component: {fileID: 7163862807410345291}
   m_Layer: 0
   m_Name: Player
@@ -229,7 +230,7 @@ MonoBehaviour:
   horizontalSpeed: 8
   horizontalSpeedInJump: 7
   jumpForce: 6
-  lateralWalkForcce: 0.3
+  lateralWalkForce: 0.3
   turningAngle: 120
   buttForce: 5
   m_MovementSmoothing: 0.05
@@ -351,6 +352,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &7839036736488921753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320854440714511928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1564d248049674149a0ad43603ebb352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultTrans: {fileID: 0}
 --- !u!33 &7163862807410345291
 MeshFilter:
   m_ObjectHideFlags: 0

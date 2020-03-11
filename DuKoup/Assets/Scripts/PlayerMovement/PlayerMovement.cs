@@ -16,12 +16,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviourPun
 {
     /// <summary>
-    /// Erase this. Raycast max distance.
+    /// Distance to cast ray to check for ground
     /// </summary>
     [SerializeField][HideInInspector]
     [Tooltip("Raycast max distance to check if grounded. (only here for bug video)")]
-
     private float max_dist_groundCheck = 1000f;
+
     // Fields 
     private PlayerManager playerManager;
 
@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviourPun
     /// </summary>
     [SerializeField][Tooltip("Player has ability to high jump. In inspector for testing purposes only.")]
     private bool canDoubleJump = false;
-
     public bool CanDoubleJump
     {
         get
@@ -70,16 +69,20 @@ public class PlayerMovement : MonoBehaviourPun
     /// distance
     /// </summary>
     private bool grounded = true;
+
     /// <summary>
     /// Sets the Jumping force
     /// </summary>
     [SerializeField] [Range(0f, 10f)] [Tooltip("Sets the Jumping Force")]
     private float jumpForce = 6;
 
+    /// <summary>
+    /// The latteral force applied to game object when walking
+    /// </summary>
     [SerializeField]
     [Range(0f, 1f)]
-    [Tooltip("Sets the Jumping Force")]
-    private float lateralWalkForcce = 0.3f;
+    [Tooltip("Sets the latteral Force for walking")]
+    private float lateralWalkForce = 0.3f;
     public float JumpForce
     {
         get
@@ -96,7 +99,6 @@ public class PlayerMovement : MonoBehaviourPun
     [Range(60f, 210f)]
     [Tooltip("Set the turning angle(degree)")]
     private float turningAngle = 120f;
-
 
     /// <summary>
     /// Number of current jumps done before hitting the ground (which sets this to zero again)
@@ -346,14 +348,14 @@ public class PlayerMovement : MonoBehaviourPun
             }
 
             //movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeedInJump;
-            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeedInJump * lateralWalkForcce * Vector3.right, ForceMode.VelocityChange);
+            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeedInJump * lateralWalkForce * Vector3.right, ForceMode.VelocityChange);
             movementXY = Vector2.zero;// player.velocity;
             movementXY.y = 0;
         }
         else
         {
             //movementXY.x = Input.GetAxis(horizontalAxis) * horizontalSpeed;
-            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeed * lateralWalkForcce * Vector3.right, ForceMode.VelocityChange);
+            player.AddForce(Input.GetAxis(horizontalAxis)*horizontalSpeed * lateralWalkForce * Vector3.right, ForceMode.VelocityChange);
             movementXY = Vector2.zero;//player.velocity;
             movementXY.y = 0;
         }
@@ -481,7 +483,7 @@ public class PlayerMovement : MonoBehaviourPun
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
         Vector3 eulerAngle = gameObject.transform.rotation.eulerAngles;
-        eulerAngle.y = m_FacingRight ? 120f : 120f+ turningAngle; // +20 due to axis difference on import of bok choy model
+        eulerAngle.y = m_FacingRight ? 120f : 120f+ turningAngle; // +120 due to axis difference on import of bok choy model
         gameObject.transform.rotation = Quaternion.Euler(eulerAngle);
 
 

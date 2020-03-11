@@ -10,6 +10,7 @@ TagManager:
   - End
   - Button
   - NoPassingArea
+  - Grabbable
   layers:
   - Default
   - TransparentFX
