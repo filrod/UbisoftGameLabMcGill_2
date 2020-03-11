@@ -289,13 +289,13 @@ public class PlayerMovement : MonoBehaviourPun
         if (!rayCast_hit_recorded) { this.grounded = false; return this.grounded; }
 
         // Set left side distance to ground if there was a hit
-        else if (rayCastLeftHitSomething)
+        if (rayCastLeftHitSomething)
         {
             distToGroundLeft = point_playerCentreLeftSide.y - groundCollisionInfo_leftSide.point.y;
         }
 
         // Set left side distance to ground if there was a hit
-        else if (rayCastRightHitSomething)
+        if (rayCastRightHitSomething)
         {
             distToGroundRight = point_playerCentreRightSide.y - groundCollisionInfo_rightSide.point.y;
         }

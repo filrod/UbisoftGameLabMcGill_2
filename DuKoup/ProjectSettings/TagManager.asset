@@ -8,6 +8,8 @@ TagManager:
   - Bridge
   - Coin
   - End
+  - Button
+  - NoPassingArea
   layers:
   - Default
   - TransparentFX
