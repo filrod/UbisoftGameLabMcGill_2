@@ -15,6 +15,7 @@ public class PlayersCollision : MonoBehaviour
 {
     // Fields
     [SerializeField] private PlankingBehaviour plankingBehaviour;
+    private PlayerManager playerManager;
 
     // Two players, instancePlayer has the script attached
     [SerializeField] private Rigidbody instancePlayer;
@@ -35,13 +36,25 @@ public class PlayersCollision : MonoBehaviour
     private float diffPlane;
     private float currentPlane;
 
+    private bool canGoToBeta = true;
+
     // Only the player with the greatest velocity should change plane
     private bool isFaster;
     private bool isAtEqualSpeed;
 
     void Start()
     {
+        playerManager = GetComponentInParent<PlayerManager>();
+        instancePlayer = GetComponent<Rigidbody>();
+        plankingBehaviour = GetComponent<PlankingBehaviour>();
+        if (playerManager.playerId == 1)
+        {
+            isMainPlayer = true;
+        }
         diffPlane = betaPlane - alphaPlane;
+
+        canGoToBeta = true;
+        
     }
 
     /// <summary>
@@ -54,7 +67,18 @@ public class PlayersCollision : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (plankingBehaviour.PlayerIsPlanking()) return;
+        if (this.collisionRadius == 0f) return;
+        // if (plankingBehaviour.PlayerIsPlanking()) return;
+        if (otherPlayer == null) { 
+        
+            if (playerManager.OtherPlayer == null)
+            {
+                return;
+            }
+            otherPlayer = playerManager.OtherPlayer.GetComponentInChildren<Rigidbody>();
+        }
+
+        if (otherPlayer == null || instancePlayer == null) return;
         if (Mathf.RoundToInt(instancePlayer.transform.position.y) != Mathf.RoundToInt(otherPlayer.transform.position.y)) return;
         
         // Create a collision area for otherPlayer
@@ -68,25 +92,59 @@ public class PlayersCollision : MonoBehaviour
         playerPos = instancePlayer.transform.position.x;
         currentPlane = instancePlayer.transform.position.z;
 
+        bool inRange = playerPos >= areaPositionMin && playerPos <= areaPositionMax;
+
+        if (!inRange) {
+
+            if (currentPlane != alphaPlane)
+            {
+                instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
+            }
+            return;
+        }
+
         isFaster = instancePlayer.velocity.magnitude > otherPlayer.velocity.magnitude;
         isAtEqualSpeed = instancePlayer.velocity.magnitude == otherPlayer.velocity.magnitude;
 
         // If is in alpha plane, goes faster than other player and in radius: move to beta plane 
         // Be careful that the other player z is not the betaplane !
-        if ( currentPlane == alphaPlane && (playerPos >= areaPositionMin && playerPos <= areaPositionMax) && isFaster && otherPlayer.transform.position.z != betaPlane )
-        {   
-            // If they are at the same speed, Player 2 should move around Player 1
-            if (! (isAtEqualSpeed && isMainPlayer) ){
-                instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
-            }
-        }
-        else if ( currentPlane == betaPlane && (playerPos <= areaPositionMin || playerPos >= areaPositionMax))
+
+        if (playerManager.playerId == 1 && canGoToBeta)
         {
-            instancePlayer.transform.position += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
+            instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, betaPlane);
         }
-        else if ((playerPos <= areaPositionMin || playerPos >= areaPositionMax) && (currentPlane != alphaPlane)){
+        else
+        {
             instancePlayer.transform.position = new Vector3(instancePlayer.transform.position.x, instancePlayer.transform.position.y, alphaPlane);
         }
+
+        /*if (currentPlane == alphaPlane && otherPlayer.transform.position.z != betaPlane)
+        {
+            // If they are at the same speed, Player 2 should move around Player 1
+            if (isAtEqualSpeed)
+            {
+                if (isMainPlayer)
+                {
+                    instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
+                }
+                else
+                {
+                    this.otherPlayer.transform.position += new Vector3(0, 0, diffPlane);
+                }
+            }
+            else if (isFaster)
+            {
+                instancePlayer.transform.position += new Vector3(0, 0, diffPlane); // Move player into beta Plane to avoid collision
+            }
+            else
+            {
+                this.otherPlayer.transform.position += new Vector3(0, 0, diffPlane);
+            }
+        }
+        else if (currentPlane == betaPlane)
+        {
+            instancePlayer.transform.position += new Vector3(0, 0, -diffPlane); // Move player back into the main plane
+        }*/
     }
 
     void OnDrawGizmosSelected()
@@ -95,10 +153,36 @@ public class PlayersCollision : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, collisionRadius);
     }
 
-    bool isSomethingInBeta(){
+    public bool isSomethingInBeta(){
         RaycastHit hit;
         Vector3 origin = new Vector3 (playerPos, 10f, betaPlane);
         Debug.DrawRay(origin, Vector3.down * 1000, Color.white);
         return (Physics.Raycast(origin, Vector3.down, out hit, 1000f, LayerMask.GetMask("Ignore Raycast")) );
+    }
+
+    public float GetCollisonRadius()
+    {
+        return this.collisionRadius;
+    }
+
+    public void SetCollisionRadius(float newRadius)
+    {
+        this.collisionRadius = newRadius;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("NoPassingArea"))
+        {
+            canGoToBeta = false;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("NoPassingArea"))
+        {
+            canGoToBeta = true;
+        }
     }
 }

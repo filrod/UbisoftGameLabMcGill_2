@@ -6,6 +6,11 @@ TagManager:
   tags:
   - PlankingSpace
   - Bridge
+  - Coin
+  - End
+  - Button
+  - NoPassingArea
+  - Grabbable
   layers:
   - Default
   - TransparentFX

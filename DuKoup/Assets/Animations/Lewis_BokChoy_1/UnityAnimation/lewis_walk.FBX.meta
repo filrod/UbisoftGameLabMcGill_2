@@ -1,0 +1,318 @@
+fileFormatVersion: 2
+guid: c63bc8819be681c4fa308b79d3c2a923
+ModelImporter:
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Rig_CD_M
+        weight: 1
+      - path: Rig_CD_M/IK CD_M
+        weight: 1
+      - path: Rig_CD_M001
+        weight: 1
+      - path: Rig_CD_M001/IK CG_m
+        weight: 1
+      - path: rig_face
+        weight: 1
+      - path: rig_face/IK Face
+        weight: 1
+      - path: Sphere001
+        weight: 1
+      - path: Sphere001/IKBras_G
+        weight: 1
+      - path: Sphere002
+        weight: 1
+      - path: Sphere002/IKBras_D
+        weight: 1
+      - path: Sphere003
+        weight: 1
+      - path: Sphere003/IK CG_B
+        weight: 1
+      - path: Sphere004
+        weight: 1
+      - path: Sphere004/IK CD_B
+        weight: 1
+      - path: Torus001
+        weight: 1
+      - path: Torus001/IK Chain001
+        weight: 1
+      - path: Torus002
+        weight: 1
+      - path: Torus002/IK Chain003
+        weight: 1
+      - path: Torus003
+        weight: 1
+      - path: Torus003/IK Chain002
+        weight: 1
+      - path: Torus004
+        weight: 1
+      - path: Torus004/base2
+        weight: 1
+      - path: Torus004/base2/backBone001
+        weight: 1
+      - path: Torus004/base2/backBone001/backBone002
+        weight: 1
+      - path: Torus004/base2/backBone001/backBone002/backBone003
+        weight: 1
+      - path: Torus004/base2/backBone001/backBone002/backBone003/backBone004
+        weight: 1
+      - path: Torus004/base2/backBone001/backBone002/backBone003/backBone004/backBone005
+        weight: 1
+      - path: Torus004/base2/backBone001/backBone002/backBone003/backBone004/backBone005/backBone006
+        weight: 1
+      - path: Torus004/base2/backBone001/backBone002/backBone003/backBone004/backBone005/backBone006/backBone007
+        weight: 1
+      - path: Torus004/base2/base 1
+        weight: 1
+      - path: Torus004/base2/bras_droit_Bone003(mirrored)
+        weight: 1
+      - path: Torus004/base2/bras_droit_Bone003(mirrored)/bras_droit_Bone004(mirrored)
+        weight: 1
+      - path: Torus004/base2/bras_droit_Bone003(mirrored)/bras_droit_Bone004(mirrored)/bras_droit_Bone005(mirrored)
+        weight: 1
+      - path: Torus004/base2/bras_droit_Bone003(mirrored)/bras_droit_Bone004(mirrored)/bras_droit_Bone005(mirrored)/bras_droit_Bone006(mirrored)
+        weight: 1
+      - path: Torus004/base2/bras_droit_Bone003(mirrored)/bras_droit_Bone004(mirrored)/bras_droit_Bone005(mirrored)/bras_droit_Bone006(mirrored)/bras_droit_Bone007(mirrored)
+        weight: 1
+      - path: Torus004/base2/bras_gauche_Bone003
+        weight: 1
+      - path: Torus004/base2/bras_gauche_Bone003/bras_gauche_Bone004
+        weight: 1
+      - path: Torus004/base2/bras_gauche_Bone003/bras_gauche_Bone004/bras_gauche_Bone005
+        weight: 1
+      - path: Torus004/base2/bras_gauche_Bone003/bras_gauche_Bone004/bras_gauche_Bone005/bras_gauche_Bone006
+        weight: 1
+      - path: Torus004/base2/bras_gauche_Bone003/bras_gauche_Bone004/bras_gauche_Bone005/bras_gauche_Bone006/bras_gauche_Bone007
+        weight: 1
+      - path: Torus004/base2/CD_Bone008(mirrored)
+        weight: 1
+      - path: Torus004/base2/CD_Bone008(mirrored)/CD_Bone009(mirrored)
+        weight: 1
+      - path: Torus004/base2/CD_Bone008(mirrored)/CD_Bone009(mirrored)/CD_Bone010(mirrored)
+        weight: 1
+      - path: Torus004/base2/CD_Bone008(mirrored)/CD_Bone009(mirrored)/CD_Bone010(mirrored)/CD_Bone011(mirrored)
+        weight: 1
+      - path: Torus004/base2/CD_Bone008(mirrored)/CD_Bone009(mirrored)/CD_Bone010(mirrored)/CD_Bone011(mirrored)/CD_Bone012(mirrored)
+        weight: 1
+      - path: Torus004/base2/CD_Bone008(mirrored)/CD_Bone009(mirrored)/CD_Bone010(mirrored)/CD_Bone011(mirrored)/CD_Bone012(mirrored)/CD_Bone013(mirrored)
+        weight: 1
+      - path: Torus004/base2/CG_Bone008
+        weight: 1
+      - path: Torus004/base2/CG_Bone008/CG_Bone009
+        weight: 1
+      - path: Torus004/base2/CG_Bone008/CG_Bone009/CG_Bone010
+        weight: 1
+      - path: Torus004/base2/CG_Bone008/CG_Bone009/CG_Bone010/CG_Bone011
+        weight: 1
+      - path: Torus004/base2/CG_Bone008/CG_Bone009/CG_Bone010/CG_Bone011/CG_Bone012
+        weight: 1
+      - path: Torus004/base2/CG_Bone008/CG_Bone009/CG_Bone010/CG_Bone011/CG_Bone012/CG_Bone013
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003/Corps_Bone004
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003/Corps_Bone004/Corps_Bone005
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003/Corps_Bone004/Corps_Bone005/Corps_Bone006
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003/Corps_Bone004/Corps_Bone005/Corps_Bone006/Corps_Bone007
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003/Corps_Bone004/Corps_Bone005/Corps_Bone006/Corps_Bone007/Corps_Bone008
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003/Corps_Bone004/Corps_Bone005/Corps_Bone006/Corps_Bone007/Corps_Bone008/Corps_Bone009
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003/Corps_Bone004/Corps_Bone005/Corps_Bone006/Corps_Bone007/Corps_Bone008/Corps_Bone009/Corps_Bone010
+        weight: 1
+      - path: Torus004/base2/Corps_Bone003/Corps_Bone004/Corps_Bone005/Corps_Bone006/Corps_Bone007/Corps_Bone008/Corps_Bone009/Corps_Bone010/Corps_Bone011
+        weight: 1
+      - path: Torus004/base2/left_legBone001
+        weight: 1
+      - path: Torus004/base2/left_legBone001/left_legBone002
+        weight: 1
+      - path: Torus004/base2/left_legBone001/left_legBone002/left_legBone003
+        weight: 1
+      - path: Torus004/base2/right_legBone001(mirrored)(mirrored)
+        weight: 1
+      - path: Torus004/base2/right_legBone001(mirrored)(mirrored)/right_legBone002(mirrored)(mirrored)
+        weight: 1
+      - path: Torus004/base2/right_legBone001(mirrored)(mirrored)/right_legBone002(mirrored)(mirrored)/right_legBone003(mirrored)(mirrored)
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_LeftBone008
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_LeftBone008/Smoll_BR_LeftBone009
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_LeftBone008/Smoll_BR_LeftBone009/Smoll_BR_LeftBone010
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_LeftBone008/Smoll_BR_LeftBone009/Smoll_BR_LeftBone010/Smoll_BR_LeftBone011
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_LeftBone008/Smoll_BR_LeftBone009/Smoll_BR_LeftBone010/Smoll_BR_LeftBone011/Smoll_BR_LeftBone012
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_LeftBone008/Smoll_BR_LeftBone009/Smoll_BR_LeftBone010/Smoll_BR_LeftBone011/Smoll_BR_LeftBone012/Smoll_BR_LeftBone013
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_Right_Bone008(mirrored)
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_Right_Bone008(mirrored)/Smoll_BR_Right_Bone009(mirrored)
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_Right_Bone008(mirrored)/Smoll_BR_Right_Bone009(mirrored)/Smoll_BR_Right_Bone010(mirrored)
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_Right_Bone008(mirrored)/Smoll_BR_Right_Bone009(mirrored)/Smoll_BR_Right_Bone010(mirrored)/Smoll_BR_Right_Bone011(mirrored)
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_Right_Bone008(mirrored)/Smoll_BR_Right_Bone009(mirrored)/Smoll_BR_Right_Bone010(mirrored)/Smoll_BR_Right_Bone011(mirrored)/Smoll_BR_Right_Bone012(mirrored)
+        weight: 1
+      - path: Torus004/base2/Smoll_BR_Right_Bone008(mirrored)/Smoll_BR_Right_Bone009(mirrored)/Smoll_BR_Right_Bone010(mirrored)/Smoll_BR_Right_Bone011(mirrored)/Smoll_BR_Right_Bone012(mirrored)/Smoll_BR_Right_Bone013(mirrored)
+        weight: 1
+      - path: Torus004/Bras_droit_high2
+        weight: 1
+      - path: Torus004/Bras_gauche_high2
+        weight: 1
+      - path: Torus004/CD_high2
+        weight: 1
+      - path: Torus004/CG_high4
+        weight: 1
+      - path: Torus004/Dos_high2
+        weight: 1
+      - path: Torus004/Face_high4
+        weight: 1
+      - path: Torus004/Face_high4/EYE_L_HIGH1
+        weight: 1
+      - path: Torus004/Face_high4/Eye_r_high1
+        weight: 1
+      - path: Torus004/leg_left
+        weight: 1
+      - path: Torus004/leg_left/Jambe_gauche_low
+        weight: 1
+      - path: Torus004/leg_left/Pants_L_low
+        weight: 1
+      - path: Torus004/legright
+        weight: 1
+      - path: Torus004/legright/Jambe_droite_high1
+        weight: 1
+      - path: Torus004/legright/right_pants
+        weight: 1
+      - path: Torus004/Pelure_high1_1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
