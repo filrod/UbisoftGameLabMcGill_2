@@ -5,6 +5,7 @@ using UnityEngine;
 using Cinemachine;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using System;
 
 public class PlayerManager : MonoBehaviourPun
 {
@@ -64,6 +65,8 @@ public class PlayerManager : MonoBehaviourPun
 
     public GameObject grabObject;
 
+    public bool isGrabRope = false;
+
     public void Awake()
     {
         // TODO: remove dummy
@@ -114,7 +117,19 @@ public class PlayerManager : MonoBehaviourPun
         }
     }
 
-    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            UnGrabRope();
+        }
+    }
+
+    private void UnGrabRope()
+    {
+        Destroy(GetComponent<HingeJoint>());
+        isGrabRope = false;
+    }
 
     public void Grab(Grabbable grabbable)
     {
@@ -167,11 +182,24 @@ public class PlayerManager : MonoBehaviourPun
 
     public void GrabRope(Rope rope)
     {
-        Debug.Log("Grab Rope");
-        Rigidbody rigidbody = GetComponent<Rigidbody>();
-        rope.joints[rope.joints.Capacity - 1].connectedBody = rigidbody;
-        rigidbody.isKinematic = false;
-
+        // if (!isGrabRope)
+        {
+            HingeJoint joint = gameObject.AddComponent<HingeJoint>();
+            if (joint != null)
+            {
+                joint.axis = Vector3.back; /// (0,0,-1)
+                joint.anchor = Vector3.zero;
+                joint.useSpring = true;
+                JointSpring hingeSpring = joint.spring;
+                hingeSpring.damper = 50;
+                // Connect the player to the rope
+                joint.connectedBody = rope.rope[rope.ropePieceNum - 1].GetComponent<Rigidbody>();
+            }
+            else
+            {
+                Debug.LogWarning("Missing hinge component");
+            }
+        }
     }
 
     public void OnEnable()

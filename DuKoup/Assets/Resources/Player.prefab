@@ -146,6 +146,7 @@ MonoBehaviour:
   playerCollision: {fileID: 0}
   plankingBahaviour: {fileID: 0}
   grabObject: {fileID: 0}
+  isGrabRope: 0
   offset: {x: 0, y: 0, z: 0}
 --- !u!114 &3311695031044669747
 MonoBehaviour:
@@ -372,7 +373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2142c088eb17c4e7499c9836bb9e351e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ai: {fileID: 7592483225019891626, guid: 115554f3a2953874ca50e021c7296a1f, type: 3}
   timeOut: 4
   deltaStandStill: 0.1
 --- !u!1001 &6320854440830686626

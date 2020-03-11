@@ -18,8 +18,8 @@ public class MasterManager : SingletonScriptableObject<MasterManager>
     }
 
 
-//    [SerializeField]
-//    private List<NetworkedPrefab> _networkedPrefabs = new List<NetworkedPrefab>();
+    //[SerializeField]
+    //private List<NetworkedPrefab> _networkedPrefabs = new List<NetworkedPrefab>();
 
 //    public static GameObject NetworkInstantiate(GameObject obj, Vector3 position, Quaternion rotation)
 //    {
