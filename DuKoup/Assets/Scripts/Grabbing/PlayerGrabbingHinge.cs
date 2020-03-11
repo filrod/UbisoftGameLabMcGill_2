@@ -6,9 +6,14 @@ public class PlayerGrabbingHinge : MonoBehaviour
     /// The transform of the child component to place grabbed object
     /// </summary>
     [SerializeField][HideInInspector]
-    private Transform defaultTrans;
+    private Vector3 grabbedPosition;
 
-    private GameObject grabPositionObj;
+    /// <summary>
+    /// Current object being grabbed
+    /// </summary>
+    private GameObject grabbable = null;
+
+    //private GameObject grabPositionObj;
     private PlayerManager playerManager;
     private KeyCode key;
     private bool isGrabbing = false;
@@ -23,42 +28,48 @@ public class PlayerGrabbingHinge : MonoBehaviour
         if (playerManager.playerId == 1)
             key = KeyCode.E; 
         else
-            key = KeyCode.RightShift; 
+            key = KeyCode.RightShift;
 
-        foreach (var child in this.GetComponentsInChildren<GameObject>())
-        {
-            if (child.name == "Grabbed position")
-            {
-                defaultTrans = child.GetComponent<Transform>();
-                grabPositionObj = child;
-            }
-        }
-        if (defaultTrans == null)
-        {
-            Debug.LogWarning("Grabbed Position not found! Transform of player with offset will be used.");
-            defaultTrans = this.transform;
-            defaultTrans.position = new Vector3(0f, -0.1f, 2f);
-        }
+        //foreach (var child in this.GetComponentsInChildren<GameObject>())
+        //{
+        //    if (child.name == "Grabbed position")
+        //    {
+        //        defaultTrans = child.GetComponent<Transform>();
+        //        grabPositionObj = child;
+        //        return;
+        //    }
+        //}
+        //if (defaultTrans == null)
+        //{
+            grabbedPosition = this.transform.position + new Vector3(0f, -0.1f, 2f);
+        //}
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (grabPositionObj == null)
+        // If a grabbable has been set, update it's position
+        if (isGrabbing)
+            UpdateGrabbedPosition();
+    }
+
+    private void UpdateGrabbedPosition()
+    {
+        if (isGrabbing)
         {
-            defaultTrans.position = new Vector3(0f, -0.1f, 2f);
+            grabbedPosition = this.transform.position + new Vector3(0f, -0.1f, 2f);
         }
         else
         {
-            defaultTrans = grabPositionObj.transform;
+            // Do nothing
         }
     }
 
-    private void Grab(Transform transform)
+    private void Grab(GameObject grabbable)
     {
         isGrabbing = true;
-        transform.position = defaultTrans.position;
+        grabbable.transform.position = this.transform.position + new Vector3(0f, -0.1f, 2f);
 
         // Add Hinge Joint on the player with correct settings
         HingeJoint joint = gameObject.AddComponent<HingeJoint>();
@@ -66,12 +77,33 @@ public class PlayerGrabbingHinge : MonoBehaviour
         joint.anchor = Vector3.zero;
     }
 
+    public GameObject GetGrabbedObject()
+    {
+        if (isGrabbing)
+        {
+            // Log an error if grabbed object is null but isGrabbing is true
+            if (this.grabbable == null) {
+                Debug.LogError("Object being grabbed is null despite isGrabbing being true. Fix playerGrabbingHinge.cs");
+                return null;
+            }
+            return this.grabbable;
+        }
+        else
+            return null;
+    }
+
+    private void UnGrab()
+    {
+        isGrabbing = false;
+    }
+
     private void OnTriggerStay(Collider other)
     {
 
         if (other.gameObject.CompareTag("Grabbable") && Input.GetKey(key) )
         {
-            Grab(other.transform);
+            Grab(other.gameObject);
         }
     }
+    
 }
