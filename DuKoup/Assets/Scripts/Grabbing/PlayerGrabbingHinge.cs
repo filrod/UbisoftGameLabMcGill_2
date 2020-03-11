@@ -26,7 +26,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
 
         // Get key code
         if (playerManager.playerId == 1)
-            key = KeyCode.E; 
+            key = KeyCode.Z; 
         else
             key = KeyCode.RightShift;
 
@@ -41,7 +41,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
         //}
         //if (defaultTrans == null)
         //{
-            grabbedPosition = this.transform.position + new Vector3(0f, -0.1f, 2f);
+        //    grabbedPosition = this.transform.position + new Vector3(0f, -0.1f, 2f);
         //}
 
     }
@@ -51,30 +51,26 @@ public class PlayerGrabbingHinge : MonoBehaviour
     {
         // If a grabbable has been set, update it's position
         if (isGrabbing)
-            UpdateGrabbedPosition();
-    }
-
-    private void UpdateGrabbedPosition()
-    {
-        if (isGrabbing)
-        {
-            grabbedPosition = this.transform.position + new Vector3(0f, -0.1f, 2f);
-        }
-        else
-        {
-            // Do nothing
-        }
+            grabbable.transform.position = this.transform.position + new Vector3(0f, 3f, 0f);
     }
 
     private void Grab(GameObject grabbable)
     {
+        this.grabbable = grabbable;
+        grabbable.transform.position = this.transform.position + new Vector3(0f, 3f, 0f);
         isGrabbing = true;
-        grabbable.transform.position = this.transform.position + new Vector3(0f, -0.1f, 2f);
-
         // Add Hinge Joint on the player with correct settings
-        HingeJoint joint = gameObject.AddComponent<HingeJoint>();
-        joint.axis = Vector3.back; /// (0,0,-1)
-        joint.anchor = Vector3.zero;
+        //HingeJoint joint = gameObject.AddComponent<HingeJoint>();
+        //joint.axis = Vector3.back; /// (0,0,-1)
+        //joint.anchor = Vector3.zero;  // this.transform.position.y*Vector3.up;
+
+
+        //HingeJoint jointForGrabbable = grabbable.AddComponent<HingeJoint>();
+        //jointForGrabbable.axis = Vector3.back;
+        //jointForGrabbable.anchor = Vector3.zero; // -Vector3.up*5f;
+
+        //joint.connectedBody = grabbable.GetComponent<Rigidbody>();
+        //jointForGrabbable.connectedBody = this.GetComponent<Rigidbody>();
     }
 
     public GameObject GetGrabbedObject()
@@ -92,9 +88,11 @@ public class PlayerGrabbingHinge : MonoBehaviour
             return null;
     }
 
-    private void UnGrab()
+    private void UnGrab(GameObject grabbable)
     {
         isGrabbing = false;
+        Destroy(grabbable.GetComponent<HingeJoint>());
+        Destroy(this.GetComponent<HingeJoint>());
     }
 
     private void OnTriggerStay(Collider other)
