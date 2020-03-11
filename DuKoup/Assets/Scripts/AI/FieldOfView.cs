@@ -200,6 +200,7 @@ public class FieldOfView : MonoBehaviour
     {
         if (maybePlayer.CompareTag("Player"))
         {
+            maybePlayer.GetComponent<Respawn>().Kill(true);
             hittingPlayer = true;
         }
     }

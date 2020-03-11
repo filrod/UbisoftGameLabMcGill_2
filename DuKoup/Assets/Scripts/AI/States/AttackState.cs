@@ -13,6 +13,7 @@ public class AttackState : BaseState
 
     public override Type TransitionCheck()
     {
+        
         //TODO should call some "reset level" script insted of just printing to the console...
         Debug.Log("Player is killed");
         return typeof(WanderState);

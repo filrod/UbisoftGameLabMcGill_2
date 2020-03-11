@@ -119,13 +119,14 @@ public class Respawn : MonoBehaviour
     /// <param name="willDie"></param>
     public void Kill(bool willDie)
     {
+        this.isDead = willDie;
         if (otherPlayer == null)
         {
             otherPlayer = playerManager.OtherPlayer;
         }
 
         // If both dead replace both
-        if (otherPlayer.GetComponent<Respawn>().IsDead() && this.isDead)
+        if (otherPlayer.GetComponent<Respawn>().IsDead() && willDie)
         {
             Respawn otherPlayerRespawn = otherPlayer.GetComponent<Respawn>();
             otherPlayerRespawn.Revive();
@@ -136,7 +137,7 @@ public class Respawn : MonoBehaviour
             return;
         }
 
-        if (this.isDead)
+        if (willDie)
         {
             foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
             {
