@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Rooms.unity
     guid: 5c0d06db29bb0e4419a94ed566271229
   - enabled: 0
@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleSceneWAI.unity
     guid: 9b55b4c4d5ab74e4bad920cf5a2fe6bc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Chicheng Test.unity
     guid: 36b227d1f1199497f869cae4a932b224
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 8a7b325e8e309432eb0a7351580284ae
   m_configObjects: {}

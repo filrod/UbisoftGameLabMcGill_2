@@ -228,8 +228,8 @@ public abstract class Grabbable : MonoBehaviourPun
     }
 
 
-
     */
+    
 
     // Draw interaction  in the inspector. For developpers. 
     void OnDrawGizmosSelected()
@@ -237,4 +237,5 @@ public abstract class Grabbable : MonoBehaviourPun
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(obj.transform.position, radiusOfInteraction);
     }
+    
 }
