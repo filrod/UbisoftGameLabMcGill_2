@@ -20,6 +20,17 @@ public class Respawn : MonoBehaviour
     [Tooltip("The height below the level that the player should reset at if they fall below")]
     [SerializeField] private float fallHeight = -14.0f;
 
+    public float FallHeight{
+        get 
+        {
+            return fallHeight;
+        }
+        set
+        {
+            fallHeight = value;
+        }
+    }
+
     /// <summary> Other player </summary>
     [Tooltip("The player to follow when you respawn")][HideInInspector]
     [SerializeField] private GameObject otherPlayer;
@@ -48,6 +59,7 @@ public class Respawn : MonoBehaviour
 
     public PlayerManager playerManager;
     private PhotonView photonView = null;
+    private string yAxisStr;
 
     private int countForFollowMethod = 0;
 
@@ -65,6 +77,16 @@ public class Respawn : MonoBehaviour
             Debug.LogWarning("Missing Rigidbody on player");
         }
         this.playerCollision = GetComponent<PlayersCollision>();
+
+        // Get player id to move player in death mechanic
+        if (playerManager.playerId == 1)
+        {
+            yAxisStr = "Vertical1";
+        }
+        else if (playerManager.playerId == 2)
+        {
+            yAxisStr = "Vertical2";
+        }
     }
 
     /// <summary>
@@ -170,6 +192,7 @@ public class Respawn : MonoBehaviour
     /// </summary>
     private void ReSpawnBubbleFollow()
     {
+        playerManager.playerMovement.CheckIfGrounded();
         // Clamp the speed to the max allowed for the dead player
         if (player.velocity.x > maxVelocity_dead)
         {
@@ -188,6 +211,7 @@ public class Respawn : MonoBehaviour
             ))
             + Vector3.up * (0.7f * Mathf.Sin(countForFollowMethod * occilationFreq * maxVelocity_dead / 10f) + 2.1f);
 
+        player.transform.position +=  Input.GetAxis(yAxisStr) * Vector3.up ;
     }
 
     private void Revive()
