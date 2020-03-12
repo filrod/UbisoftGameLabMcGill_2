@@ -301,17 +301,17 @@ PrefabInstance:
     - target: {fileID: 2320506999625610855, guid: 21540bedc21d49c469ebeb7bd675420c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 8
+      value: 8.36808
       objectReference: {fileID: 0}
     - target: {fileID: 2320506999625610855, guid: 21540bedc21d49c469ebeb7bd675420c,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 8
+      value: 8.16
       objectReference: {fileID: 0}
     - target: {fileID: 2320506999625610855, guid: 21540bedc21d49c469ebeb7bd675420c,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 47
+      value: 47.94
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21540bedc21d49c469ebeb7bd675420c, type: 3}
