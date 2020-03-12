@@ -218,13 +218,17 @@ public class PlayerMovement : MonoBehaviourPun
         // Set boolean to true if jump is pressed
         this.jump = Input.GetButtonDown(jumpButton);
 
-        if (jump)
+        if (jump && !playerManager.isGrabbing)
         {
             if (PhotonNetwork.IsConnected)
             {
                 if (!GetComponentInParent<PhotonView>().IsMine) return;
             }
             Jump();
+        }
+
+        if (jump && playerManager.isGrabbed){
+            playerManager.isGrabbed = false;
         }
 
         if (confinedArea != null)

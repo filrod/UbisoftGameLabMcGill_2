@@ -64,6 +64,14 @@ public class PlayerManager : MonoBehaviourPun
 
     public GameObject grabObject;
 
+    public bool isGrabbed = false;
+    public bool isGrabbing = false;
+
+    private static bool canThrow = true;
+
+    public bool CanThrow(){ return canThrow;}
+    public void SetThrow() { canThrow = true; }
+
     public void Awake()
     {
         // TODO: remove dummy
