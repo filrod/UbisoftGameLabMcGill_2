@@ -15,7 +15,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
 
     //private GameObject grabPositionObj;
     private PlayerManager playerManager;
-    private KeyCode key;
+    private string key;
     private bool isGrabbing = false;
 
     // Start is called before the first frame update
@@ -27,9 +27,9 @@ public class PlayerGrabbingHinge : MonoBehaviour
 
         // Get key code
         if (playerManager.playerId == 1)
-            key = KeyCode.RightShift; 
+            key = "Grab1"; 
         else
-            key = KeyCode.E;
+            key = "Grab2";
 
         //foreach (var child in this.GetComponentsInChildren<GameObject>())
         //{
@@ -116,7 +116,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if ( !isGrabbing && other.gameObject.CompareTag("Grabbable") && Input.GetKeyDown(key) )
+        if ( !isGrabbing && other.gameObject.CompareTag("Grabbable") && Input.GetButtonDown(key) )
         {
             isGrabbing = true;
             Grab(other.gameObject);
@@ -127,7 +127,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
 
     private bool isHolding()
     {
-        return Input.GetKey(key);
+        return Input.GetButton(key);
     }
     
 }
