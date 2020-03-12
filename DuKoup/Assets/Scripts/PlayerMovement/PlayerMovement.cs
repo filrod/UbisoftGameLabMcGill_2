@@ -301,7 +301,9 @@ public class PlayerMovement : MonoBehaviourPun
         {
             distToGroundRight = point_playerCentreRightSide.y - groundCollisionInfo_rightSide.point.y;
         }
-        Debug.DrawLine(point_playerCentreLeftSide, point_playerCentreRightSide, Color.red, 0.01f, false);
+
+        // All debug drwalines
+        /*Debug.DrawLine(point_playerCentreLeftSide, point_playerCentreRightSide, Color.red, 0.01f, false);
 
 
         Debug.DrawLine(point_playerCentreLeftSide, point_playerCentreRightSide, Color.red, 0.01f, false);
@@ -311,6 +313,7 @@ public class PlayerMovement : MonoBehaviourPun
         
         Debug.DrawLine(point_playerCentreLeftSide, groundCollisionInfo_leftSide.point, Color.blue, 0.1f, true);
         Debug.DrawLine(point_playerCentreRightSide, groundCollisionInfo_rightSide.point, Color.blue, 0.1f, true);
+        */
 
         this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
         animator.SetBool("isJumping", !this.grounded); 
