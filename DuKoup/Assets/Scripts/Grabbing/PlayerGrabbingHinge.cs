@@ -57,6 +57,8 @@ public class PlayerGrabbingHinge : MonoBehaviour
         if (isGrabbing && !isHolding() )
         {
             UnGrab(GetGrabbedObject());
+            GameObject grabbed = this.grabbable;
+            grabbed.transform.position = new Vector3(grabbed.transform.position.x, grabbed.transform.position.y, 0f);
         }
     }
 
@@ -101,13 +103,14 @@ public class PlayerGrabbingHinge : MonoBehaviour
             return null;
     }
 
-    private void UnGrab(GameObject grabbable, float force)
+    private void UnGrab(GameObject grabbable)
     {
         isGrabbing = false;
         Destroy(grabbable.GetComponent<HingeJoint>());
         Destroy(this.GetComponent<HingeJoint>());
+
         grabbable.GetComponent<Rigidbody>().useGravity = true;
-        grabbable.GetComponent<Rigidbody>().AddForce(-force* Physics.gravity * grabbable.GetComponent<Rigidbody>().mass, ForceMode.Impulse);
+        grabbable.GetComponent<Rigidbody>().AddForce(-0.23f * Physics.gravity * grabbable.GetComponent<Rigidbody>().mass, ForceMode.Impulse);
     }
 
     private void OnTriggerStay(Collider other)
@@ -116,12 +119,9 @@ public class PlayerGrabbingHinge : MonoBehaviour
         if ( !isGrabbing && other.gameObject.CompareTag("Grabbable") && Input.GetKeyDown(key) )
         {
             isGrabbing = true;
-            Grab(other.gameObject, 0.3f);
+            Grab(other.gameObject);
         }
-
-        if ()
-
-
+        
         
     }
 
