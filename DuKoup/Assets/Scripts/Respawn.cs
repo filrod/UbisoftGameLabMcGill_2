@@ -118,7 +118,7 @@ public class Respawn : MonoBehaviour
                 Revive();
             }
             ReSpawnBubbleFollow();
-            Debug.Log(player.transform.position.x);
+            //Debug.Log(player.transform.position.x);
             return;
         }
 
@@ -222,7 +222,7 @@ public class Respawn : MonoBehaviour
             meshRenderer.enabled = true;
         }
         this.GetComponent<MeshRenderer>().enabled = false;
-        Debug.Log("Players have collided");
+        //Debug.Log("Players have collided");
         player.useGravity = true;
 
         // Turn on beta-alpha plane collisions

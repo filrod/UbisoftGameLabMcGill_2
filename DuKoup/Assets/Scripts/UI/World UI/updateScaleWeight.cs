@@ -43,6 +43,7 @@ public class updateScaleWeight : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
+        //if (collision == null) return;
         if ((collision.gameObject.name.Split(' ')[0] == "Player") || (collision.gameObject.name.Split(' ')[0] == "bottle_04_wide"))
             mass += collision.gameObject.GetComponent<Rigidbody>().mass;
         else
@@ -54,6 +55,7 @@ public class updateScaleWeight : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionExit(Collision collision)
     {
+        //if (collision == null) return;
         if ( (collision.gameObject.name.Split(' ')[0] == "Player") || (collision.gameObject.name.Split(' ')[0] == "bottle_04_wide") )
             mass -= collision.gameObject.GetComponent<Rigidbody>().mass;
         else
