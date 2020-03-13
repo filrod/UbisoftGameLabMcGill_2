@@ -64,6 +64,14 @@ public class PlayerManager : MonoBehaviourPun
 
     public GameObject grabObject;
 
+    public bool isGrabbed = false;
+    public bool isGrabbing = false;
+
+    private static bool canThrow = true;
+
+    public bool CanThrow(){ return canThrow;}
+    public void SetThrow() { canThrow = true; }
+
     public void Awake()
     {
         // TODO: remove dummy
@@ -130,7 +138,7 @@ public class PlayerManager : MonoBehaviourPun
     private Vector3 offset = new Vector3(0, 0, 0);
     private void LocalGrab(GameObject grabbable)
     {
-        Debug.Log("Grab");
+        //Debug.Log("Grab");
         grabbable.gameObject.transform.parent = gameObject.transform;
         grabbable.gameObject.transform.position += offset;
         grabObject = grabbable;
@@ -156,7 +164,7 @@ public class PlayerManager : MonoBehaviourPun
         switch (obj.Code)
         {
             case (byte)EVENT_CODE.GRAB_EVENT:
-                Debug.Log(gameObject + "Event Receive");
+                //Debug.Log(gameObject + "Event Receive");
                 LocalGrab((GameObject)obj.CustomData);
                 break;
             default:
