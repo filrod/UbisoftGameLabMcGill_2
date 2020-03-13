@@ -29,6 +29,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
     private bool isGrabbing;
     private static bool playerIsGrabbed = false;
     private bool otherIsGrabbed;
+    private bool canReGrab = true;
 
     // Start is called before the first frame update
     void Start()
@@ -62,7 +63,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
             if ( !otherPM.isGrabbed && PM.isGrabbing )
             {
                 UnGrab(GetGrabbedObject());
-                
+                canReGrab = false;
                 playerIsGrabbed = false;
                 PM.isGrabbing = false;
             }
@@ -100,11 +101,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
                 otherPM.isGrabbed = false;
                 PM.isGrabbing = false;
             }
-
         }
-
-        /// Doesn't work
-
     }
 
     private void Grab(GameObject grabbable)
@@ -178,7 +175,7 @@ public class PlayerGrabbingHinge : MonoBehaviour
             Grab(other.gameObject);
         }
 
-        if ( !isGrabbing && !playerIsGrabbed && other.gameObject.CompareTag("Player") && Input.GetButtonDown(key))
+        if ( !isGrabbing && !playerIsGrabbed && other.gameObject.CompareTag("Player") && Input.GetButtonDown(key) && canReGrab)
         {
             playerIsGrabbed = true;
             PM.isGrabbing = true;
@@ -222,16 +219,16 @@ public class PlayerGrabbingHinge : MonoBehaviour
 
     private void Throw(){
 
-        Vector3 dir;
-        //grabbable.transform.position += new Vector3 (0, 0, 0.3f);
+        Vector3 dir = Vector3.up;
+        //grabbable.transform.position += new Vector3 (0, 0, 1f);
         // grabbable.get
 
         // if ( Input.GetAxis(hor) == 0  && Input.GetAxis(hor) == 0)
         //     dir = Vector3.up;
         // else
-            dir = new Vector3(Input.GetAxis(hor) , Input.GetAxis(ver), 0).normalized;
+            //dir = new Vector3(Input.GetAxis(hor) , Input.GetAxis(ver), 0).normalized;
 
-        int force = 15 ;
+        int force = 14 ;
         grabbable.GetComponent<Rigidbody>().AddForce(dir * force, ForceMode.Impulse);
     }
 }

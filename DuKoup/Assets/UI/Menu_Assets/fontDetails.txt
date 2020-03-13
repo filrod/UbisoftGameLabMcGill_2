@@ -1,0 +1,8 @@
+
+
+font: Courier New; Faux Bold; VA = 100; Line Distance: 48 pt
+
+font colour: #1a1a1a, rgb (26, 26, 26), cmyk(73, 67, 65, 78) 
+
+cross out stroke weight: 2.5p
+

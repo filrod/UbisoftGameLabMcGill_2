@@ -228,7 +228,13 @@ public class PlayerMovement : MonoBehaviourPun
         }
 
         if (jump && playerManager.isGrabbed){
+
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.mass = 1;
+
             playerManager.isGrabbed = false;
+            
+            Jump();
         }
 
         if (confinedArea != null)

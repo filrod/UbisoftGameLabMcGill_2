@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 7403473699009344255}
   - component: {fileID: 7839036736488921753}
   - component: {fileID: 7163862807410345291}
+  - component: {fileID: 6813208675217405959}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -146,6 +147,8 @@ MonoBehaviour:
   playerCollision: {fileID: 0}
   plankingBahaviour: {fileID: 0}
   grabObject: {fileID: 0}
+  isGrabbed: 0
+  isGrabbing: 0
   offset: {x: 0, y: 0, z: 0}
 --- !u!114 &3311695031044669747
 MonoBehaviour:
@@ -364,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1564d248049674149a0ad43603ebb352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultTrans: {fileID: 0}
+  grabbedPosition: {x: 0, y: 0, z: 0}
 --- !u!33 &7163862807410345291
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -373,6 +376,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6320854440714511928}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &6813208675217405959
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320854440714511928}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5025021
+  m_Center: {x: -0, y: 0, z: 1.3226467}
 --- !u!1001 &6320854440830686626
 PrefabInstance:
   m_ObjectHideFlags: 0
