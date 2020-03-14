@@ -12,7 +12,7 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
     private RoomsCanvases _roomsCanvases;
 
     string RandomString (){
-        string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        string chars = "abcdefghijklmnopqrstuvwxyz";
         string returnString = "";
 
         for (int i = 0; i<5; i++) {
@@ -41,6 +41,7 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
         // two players
         options.MaxPlayers = 3;
         _roomName = RandomString();
+        Debug.Log("Room name is " + _roomName);
         PhotonNetwork.JoinOrCreateRoom(_roomName, options, TypedLobby.Default);
 
     }
@@ -49,6 +50,7 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
     {
         base.OnConnected();
         Debug.Log("Created Room Successfully");
+        _roomsCanvases.CreateOrJoinRoomCanvas.gameObject.SetActive(false);
         _roomsCanvases.CurrentRoomCanvas.Show();
     }
 

@@ -73,7 +73,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void Online()
     {
-        Debug.Log("Enter creation room scene");
+        SceneManager.LoadScene("Rooms");
     }
 
     private void Update()
