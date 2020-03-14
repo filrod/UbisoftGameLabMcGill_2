@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Chicheng Test.unity
     guid: 36b227d1f1199497f869cae4a932b224
   - enabled: 1
-    path: Assets/Scenes/MainMenu 2.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 8941cb4e1f2e01e41882929333801e80
   - enabled: 1
     path: Assets/Scenes/Level1.unity

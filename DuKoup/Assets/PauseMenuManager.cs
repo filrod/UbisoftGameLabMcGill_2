@@ -20,6 +20,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(currScene);
     }
 
@@ -31,6 +32,7 @@ public class PauseMenuManager : MonoBehaviour
     public void Menu()
     {
         SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1f;
     }
 
     void Update()
@@ -41,10 +43,5 @@ public class PauseMenuManager : MonoBehaviour
             Time.timeScale = 0f;
             isPause = true;
         }
-
-        if (isPause && (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Back")) )
-        {
-            Continue();
-        }  
     }
 }
