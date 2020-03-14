@@ -62,13 +62,9 @@ public class PlayerMovement : MonoBehaviourPun
     [SerializeField] [Range(0f, 20f)] private float horizontalSpeedInJump = 9f;
 
     /// <summary>
-    /// A boolean to check if the player is grounded.
-    /// Gets set in CheckIfGrounded() (called in Update())
-    /// via comparison between a raycast hit distance straight
-    /// down and the player gameobject's collider.bound.extent.y
-    /// distance
+    /// Property to see if player is grounded
     /// </summary>
-    private bool grounded = true;
+    public bool Grounded { get; set; } = true;
 
     /// <summary>
     /// Sets the Jumping force
@@ -292,7 +288,7 @@ public class PlayerMovement : MonoBehaviourPun
         float distToGroundRight = float.MaxValue;
 
         // If there were no hits, the player is not grounded
-        if (!rayCast_hit_recorded) { this.grounded = false; return this.grounded; }
+        if (!rayCast_hit_recorded) { this.Grounded = false; return this.Grounded; }
 
         // Set left side distance to ground if there was a hit
         if (rayCastLeftHitSomething)
@@ -319,9 +315,9 @@ public class PlayerMovement : MonoBehaviourPun
         Debug.DrawLine(point_playerCentreRightSide, groundCollisionInfo_rightSide.point, Color.blue, 0.1f, true);
         */
 
-        this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
-        animator.SetBool("isJumping", !this.grounded); 
-        return this.grounded;
+        this.Grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
+        animator.SetBool("isJumping", !this.Grounded); 
+        return this.Grounded;
     }
 
     /// <summary>
@@ -343,7 +339,7 @@ public class PlayerMovement : MonoBehaviourPun
             if (!GetComponentInParent<PhotonView>().IsMine) return;
         }
 
-        if (!this.grounded)
+        if (!this.Grounded)
         {
             if (Input.GetKeyDown(KeyCode.B))
             {
@@ -429,17 +425,17 @@ public class PlayerMovement : MonoBehaviourPun
 
         //Debug.Log("isGrounded" + this.grounded);
         //Debug.Log("Player height: " + this.playerHeightWaistDown);
-        if (this.grounded)
+        if (this.Grounded)
         {
             nbJumps = 0;
         }
-        if (this.grounded || (nbJumps < maxJumps) && this.canDoubleJump)
+        if (this.Grounded || (nbJumps < maxJumps) && this.canDoubleJump)
         {
             animator.SetBool("isJumping", true); // Play jumping animation
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
             player.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             nbJumps += 1;
-            grounded = false;
+            Grounded = false;
         }
         
         this.jump = false;
@@ -462,9 +458,9 @@ public class PlayerMovement : MonoBehaviourPun
     {
         
         // Check if player has passed peak of jump
-        if (Input.GetKeyDown(KeyCode.B) && !this.grounded)
+        if (Input.GetKeyDown(KeyCode.B) && !this.Grounded)
         {
-            Debug.Log("Butt slam!!!" + "ground: " + grounded);
+            Debug.Log("Butt slam!!!" + "ground: " + Grounded);
             player.AddForce(Vector3.up * Physics.gravity.y * Mathf.Pow(this.buttForce, 2));
         }
     }

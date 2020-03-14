@@ -1,17 +1,13 @@
-﻿using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-/**
- * UBISOFT GAMES LAB - McGill Team #2
- * -----------------------------------
- * 
- * @author Thomas Buffard
- * @Date 2020/02/14
- * 
- * This class respawns the character when they fall
-*/
+/// <summary>
+/// Ubisoft Games Lab McGill
+/// -----------------------------
+/// @authors Filipe, Thomas
+/// </summary>
 
 public class Respawn : MonoBehaviour
 {
@@ -20,8 +16,11 @@ public class Respawn : MonoBehaviour
     [Tooltip("The height below the level that the player should reset at if they fall below")]
     [SerializeField] private float fallHeight = -14.0f;
 
-    public float FallHeight{
-        get 
+    /// <summary>
+    /// Enum to get and set fallHeight
+    /// </summary>
+    public float FallHeight {
+        get
         {
             return fallHeight;
         }
@@ -32,7 +31,7 @@ public class Respawn : MonoBehaviour
     }
 
     /// <summary> Other player </summary>
-    [Tooltip("The player to follow when you respawn")][HideInInspector]
+    [Tooltip("The player to follow when you respawn")] [HideInInspector]
     [SerializeField] private GameObject otherPlayer;
 
     /// <summary>
@@ -42,6 +41,42 @@ public class Respawn : MonoBehaviour
     [Tooltip("Player movenment max velocity when dead")]
     [Range(0f, 0.5f)]
     private float maxVelocity_dead = 0.05f;
+
+    /// <summary>
+    /// Controls upward movement while dead. Helps simulate an analogue stick for digital input.
+    /// </summary>
+    private float playerVerticalBubbleMovement = 0f;
+
+    [SerializeField]
+    [Tooltip("Increase parameter for player's vertical velocity when in the death bubble and pressing up")]
+    [Range(0f, 0.8f)]
+    private float dy = 0.035f;
+
+    /// <summary>
+    /// The value the dead player can move above and bellow the y value of the other live player
+    /// </summary>
+    [SerializeField]
+    [Tooltip("Range of possible vertical movement away from other player who is alive")]
+    [Range(0f, 20f)]
+    private float yRangedeadPlayer = 8f;
+    public float YRangedeadPlayer
+    {
+        get { return yRangedeadPlayer; }
+        set { yRangedeadPlayer = value; }
+    }
+
+    /// <summary>
+    /// The middle of the ossilations in y for the dead player. Measured from other player's y coordinate. Suggested to set this to the other player's top of collider
+    /// </summary>
+    [SerializeField]
+    [Tooltip("The middle of the ossilations in y for the dead player. Measured from other player's y coordinate. Suggested to set this to the other player's top of collider")]
+    [Range(-5.5f, 5.5f)]
+    private float deltaYHoverFromOtherPlayer = 2.1f;
+    public float DeltaYHoverFromOtherPlayer
+    {
+        get { return deltaYHoverFromOtherPlayer; }
+        set { deltaYHoverFromOtherPlayer = value; }
+    }
 
     [SerializeField]
     [Tooltip("Occilation frquency multiplier for Sine bobing of dead enemy")]
@@ -57,11 +92,13 @@ public class Respawn : MonoBehaviour
     [Tooltip("Lewis prefab GameObject for access to the mesh")]
     private GameObject lewis;
 
+    [HideInInspector]
     public PlayerManager playerManager;
     private PhotonView photonView = null;
     private string yAxisStr;
 
     private int countForFollowMethod = 0;
+    
 
     private void Start()
     {
@@ -95,6 +132,8 @@ public class Respawn : MonoBehaviour
     private void FixedUpdate()
     {
         countForFollowMethod++;
+
+        SetBubbleYMovement();
     }
 
     /// <summary>
@@ -114,6 +153,9 @@ public class Respawn : MonoBehaviour
         
          if (this.isDead)
         {
+            
+
+            this.GetComponent<PlayerMovement>().Grounded = false;
             if (this.playerCollision.isSomethingInBeta() == true) {
                 Revive();
             }
@@ -147,19 +189,25 @@ public class Respawn : MonoBehaviour
         }
 
         // If both dead replace both
-        if (otherPlayer.GetComponent<Respawn>().IsDead() && this.isDead)
+        if (otherPlayer.GetComponent<Respawn>().IsDead() && willDie)
         {
-            Respawn otherPlayerRespawn = otherPlayer.GetComponent<Respawn>();
+            /*Respawn otherPlayerRespawn = otherPlayer.GetComponent<Respawn>();
             otherPlayerRespawn.Revive();
             otherPlayer.transform.position = Vector3.zero;
 
             this.Revive();
             this.player.transform.position = Vector3.right * 3f;
+            return;*/
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             return;
         }
 
-        if (this.isDead)
+        if (willDie)
         {
+            foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                skinnedMeshRenderer.enabled = false;
+            }
             foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
             {
                 meshRenderer.enabled = false;
@@ -171,7 +219,7 @@ public class Respawn : MonoBehaviour
             {
                 return;
             }
-            player.transform.position = Vector3.up * 2.4f + Vector3.right*player.transform.position.x;
+            player.transform.position = Vector3.up * (otherPlayer.transform.position.y + this.deltaYHoverFromOtherPlayer) + Vector3.right*player.transform.position.x;
             player.useGravity = false;
             player.velocity = Vector3.zero;
 
@@ -188,11 +236,52 @@ public class Respawn : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets the y range a player can move when dead, 
+    /// sets the playerVerticalBubbleMovement 
+    /// and performs a lerp towards the other player 
+    /// in the y axis when user does nothing
+    /// </summary>
+    private void SetBubbleYMovement()
+    {
+        bool bellowUpperBound = this.player.transform.position.y < this.otherPlayer.transform.position.y + yRangedeadPlayer;
+        bool aboveLowerBound = this.player.transform.position.y > this.otherPlayer.transform.position.y - yRangedeadPlayer;
+        bool inRange = bellowUpperBound && aboveLowerBound;
+
+        if (!bellowUpperBound)
+        {
+            /// Slowly move towards the other player (only in the y component here)
+            this.playerVerticalBubbleMovement = Mathf.Lerp(this.playerVerticalBubbleMovement, otherPlayer.transform.position.y, maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)));
+        }
+        else if (inRange)
+        {
+            /// If user presses to move up increment the player movement for smooth increase to happen in ReSpawnBubbleFollow
+            /// if user presses to move down decrement for the same negative effect
+            /// else, move slowly towards other alive player (only in the y component here)
+            if (Input.GetAxis(yAxisStr) > 0)
+                this.playerVerticalBubbleMovement += dy;
+            else if (Input.GetAxis(yAxisStr) < 0)
+                this.playerVerticalBubbleMovement -= dy;
+            else
+                this.playerVerticalBubbleMovement = Mathf.Lerp(this.playerVerticalBubbleMovement, otherPlayer.transform.position.y, maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)));
+        }
+        else if (!aboveLowerBound)
+        {
+            /// Slowly move towards the other player (only in the y component here)
+            this.playerVerticalBubbleMovement = Mathf.Lerp(this.playerVerticalBubbleMovement, otherPlayer.transform.position.y, maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)));
+        }
+        else
+        {
+            /// Just in case the logic has faults
+            Debug.LogWarning("Look at Respawn.FixedUpdate. Unexpected outcome of if statements.");
+        }
+    }
+
+    /// <summary>
     /// Makes dead player seed follow other player slowly and sinusoidally
     /// </summary>
     private void ReSpawnBubbleFollow()
     {
-        playerManager.playerMovement.CheckIfGrounded();
+        //playerManager.playerMovement.CheckIfGrounded();  // Not sure this is needed since inheriting the code from Thomas
         // Clamp the speed to the max allowed for the dead player
         if (player.velocity.x > maxVelocity_dead)
         {
@@ -204,19 +293,41 @@ public class Respawn : MonoBehaviour
         {
             return;
         }
-        player.transform.position = Vector3.right * Mathf.Lerp(
+        //if (player.transform.position.y <= this.fallHeight)
+        //    player.transform.position = new Vector3(player.transform.position.x, otherPlayer.transform.position.y, player.transform.position.z);
+
+        Vector3 lerpedXposition = Vector3.right * Mathf.Lerp(
             player.position.x,
             otherPlayer.transform.position.x,
-            maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)
-            ))
-            + Vector3.up * (0.7f * Mathf.Sin(countForFollowMethod * occilationFreq * maxVelocity_dead / 10f) + 2.1f);
+            maxVelocity_dead / (  Mathf.Abs( (player.position - otherPlayer.transform.position).magnitude )  )
+            );
+        /// This one is not lerped since lerping happens in SetBubbleYMovement() called in FixedUpdate due to framerate dependancy
+        /// lerping only happens there if the user is not sending any inputs in y as to not fight the lerp and allow more freedom
+        Vector3 sinWaveNonLerpY = Vector3.up * (
+            this.playerVerticalBubbleMovement 
+            + this.deltaYHoverFromOtherPlayer + otherPlayer.transform.position.y 
+            + 0.7f * Mathf.Sin(countForFollowMethod * occilationFreq * maxVelocity_dead / 10f)
+            );
 
-        player.transform.position +=  Input.GetAxis(yAxisStr) * Vector3.up ;
+        /// Do the rayman bubble follow thing
+        player.transform.position = lerpedXposition + sinWaveNonLerpY;
     }
 
+    /// <summary>
+    /// Revives the player. In order:
+    /// - renders all meshes and skinnedMeshes the player has
+    /// - hides the bubble texture
+    /// - makes player use gravity
+    /// - sets player radius for alpha-beta plane collisions to 2f
+    /// 
+    /// </summary>
     private void Revive()
     {
         this.isDead = false;
+        foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            skinnedMeshRenderer.enabled = true;
+        }
         foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
         {
             meshRenderer.enabled = true;
@@ -236,6 +347,10 @@ public class Respawn : MonoBehaviour
         otherPlayer.GetComponent<PlayersCollision>().SetCollisionRadius(2f);
     }
 
+    /// <summary>
+    /// Checks for collisions between players and revives if need be
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Collision");
