@@ -150,15 +150,19 @@ public class Respawn : MonoBehaviour
             Debug.LogWarning("Missing Rigid Body");
             return;
         }
-        
-         if (this.isDead)
-        {
-            
 
-            this.GetComponent<PlayerMovement>().Grounded = false;
-            if (this.playerCollision.isSomethingInBeta() == true) {
-                Revive();
-            }
+        if (this.isDead)
+        {
+            //if (this.playerCollision.isSomethingInBeta() == true)
+            //{
+            //    Revive();
+            //}
+            // ^ that creates a revive bug in no passing zones
+            // the fix:
+            Vector2 dist2D = this.player.transform.position - this.otherPlayer.transform.position;
+            Vector2 extentsOfCollider = this.player.GetComponent<CapsuleCollider>().bounds.extents;
+            if (dist2D.magnitude <= 1.35f*extentsOfCollider.magnitude) Revive();
+
             ReSpawnBubbleFollow();
             //Debug.Log(player.transform.position.x);
             return;
@@ -167,7 +171,7 @@ public class Respawn : MonoBehaviour
         this.isDead = player.transform.position.y < fallHeight;
         // Debug.Log(this.isDead);
         // Check if the player has fallen and will die
-        Kill(this.isDead) ;
+        Kill(this.isDead);
 
     }
 
@@ -361,16 +365,14 @@ public class Respawn : MonoBehaviour
 
         // If you didn't collide with the co-op player but collided with something else, return out of function
         PlayerManager otherPlayerManager = collision.gameObject.GetComponent<PlayerManager>();
-        if (otherPlayerManager == null) return;
-
-        // If it was was a player (otherPlayer) then revive the player
-        if (otherPlayerManager.playerId != playerManager.playerId)
+        bool hitAPlayer = collision.gameObject.CompareTag("Player");
+        if (hitAPlayer)
         {
             Revive();
+            Debug.Log("Revived by" + collision.gameObject.name);
         }
-        else
-        {
-            Debug.LogWarning("Not expected: report bug of Self collision!");
-        }
+        //else
+            // Uncomment to find weird misplaced colliders
+            //Debug.LogWarning("Ignore: "+collision.gameObject.name);
     }
 }
