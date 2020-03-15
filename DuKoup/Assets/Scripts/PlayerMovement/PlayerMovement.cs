@@ -261,12 +261,14 @@ public class PlayerMovement : MonoBehaviourPun
         // Set up raycast hits
         RaycastHit groundCollisionInfo_leftSide;
         RaycastHit groundCollisionInfo_rightSide;
+        RaycastHit groundCollisionInfo_centre;
 
         // Get left and right center points around the player's collider
         Vector3 point_playerCentreLeftSide = player.GetComponent<Collider>().bounds.center
             - Vector3.right*player.GetComponent<Collider>().bounds.extents.x;
         Vector3 point_playerCentreRightSide = player.GetComponent<Collider>().bounds.center
             + Vector3.right * player.GetComponent<Collider>().bounds.extents.x;
+        Vector3 point_playerCentre = player.GetComponent<Collider>().bounds.center;
         // Set the down vector
         Vector3 down = new Vector3(0, -playerHeightWaistDown, 0);
         down.Normalize();
@@ -284,12 +286,19 @@ public class PlayerMovement : MonoBehaviourPun
             out groundCollisionInfo_rightSide, 
             max_dist_groundCheck
             );
+        bool rayCastCentreHitSometing = Physics.Raycast(
+            point_playerCentre,
+            down,
+            out groundCollisionInfo_centre,
+            max_dist_groundCheck
+            );
 
-        bool rayCast_hit_recorded = rayCastLeftHitSomething || rayCastRightHitSomething;
+        bool rayCast_hit_recorded = rayCastLeftHitSomething || rayCastCentreHitSometing || rayCastRightHitSomething;
 
         // By default we assume player is not grounded (max val is for comparisons later)
         float distToGroundLeft = float.MaxValue;
         float distToGroundRight = float.MaxValue;
+        float distToGroundCentre = float.MaxValue;
 
         // If there were no hits, the player is not grounded
         if (!rayCast_hit_recorded) { this.grounded = false; return this.grounded; }
@@ -300,7 +309,13 @@ public class PlayerMovement : MonoBehaviourPun
             distToGroundLeft = point_playerCentreLeftSide.y - groundCollisionInfo_leftSide.point.y;
         }
 
-        // Set left side distance to ground if there was a hit
+        // Set centre distance to ground if there was a hit
+        if (rayCastCentreHitSometing)
+        {
+            distToGroundCentre = point_playerCentre.y - groundCollisionInfo_centre.point.y;
+        }
+
+        // Set right side distance to ground if there was a hit
         if (rayCastRightHitSomething)
         {
             distToGroundRight = point_playerCentreRightSide.y - groundCollisionInfo_rightSide.point.y;
@@ -316,10 +331,11 @@ public class PlayerMovement : MonoBehaviourPun
 
         
         Debug.DrawLine(point_playerCentreLeftSide, groundCollisionInfo_leftSide.point, Color.blue, 0.1f, true);
+        Debug.DrawLine(point_playerCentre, groundCollisionInfo_centre.point, Color.blue, 0.1f, true);
         Debug.DrawLine(point_playerCentreRightSide, groundCollisionInfo_rightSide.point, Color.blue, 0.1f, true);
         */
 
-        this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
+        this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundCentre <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
         animator.SetBool("isJumping", !this.grounded); 
         return this.grounded;
     }
