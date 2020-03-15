@@ -20,5 +20,12 @@ public class LeaveRoomMenu : MonoBehaviour
         _roomCanvas.CreateOrJoinRoomCanvas.gameObject.SetActive(true);
     }
 
+    void Update()
+    {
+        if (Input.GetButtonDown("Back"))
+        {
+            OnClick_LeaveRoom();
+        }
+    }
 
 }
