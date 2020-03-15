@@ -20,8 +20,9 @@ public class Respawn : MonoBehaviour
     [Tooltip("The height below the level that the player should reset at if they fall below")]
     [SerializeField] private float fallHeight = -14.0f;
 
-    public float FallHeight{
-        get 
+    public float FallHeight
+    {
+        get
         {
             return fallHeight;
         }
@@ -32,7 +33,8 @@ public class Respawn : MonoBehaviour
     }
 
     /// <summary> Other player </summary>
-    [Tooltip("The player to follow when you respawn")][HideInInspector]
+    [Tooltip("The player to follow when you respawn")]
+    [HideInInspector]
     [SerializeField] private GameObject otherPlayer;
 
     /// <summary>
@@ -111,12 +113,19 @@ public class Respawn : MonoBehaviour
             Debug.LogWarning("Missing Rigid Body");
             return;
         }
-        
-         if (this.isDead)
+
+        if (this.isDead)
         {
-            if (this.playerCollision.isSomethingInBeta() == true) {
-                Revive();
-            }
+            //if (this.playerCollision.isSomethingInBeta() == true)
+            //{
+            //    Revive();
+            //}
+            // ^ that creates a revive bug in no passing zones
+            // the fix:
+            Vector2 dist2D = this.player.transform.position - this.otherPlayer.transform.position;
+            Vector2 extentsOfCollider = this.player.GetComponent<CapsuleCollider>().bounds.extents;
+            if (dist2D.magnitude <= 1.35f*extentsOfCollider.magnitude) Revive();
+
             ReSpawnBubbleFollow();
             //Debug.Log(player.transform.position.x);
             return;
@@ -125,7 +134,7 @@ public class Respawn : MonoBehaviour
         this.isDead = player.transform.position.y < fallHeight;
         // Debug.Log(this.isDead);
         // Check if the player has fallen and will die
-        Kill(this.isDead) ;
+        Kill(this.isDead);
 
     }
 
@@ -171,7 +180,7 @@ public class Respawn : MonoBehaviour
             {
                 return;
             }
-            player.transform.position = Vector3.up * 2.4f + Vector3.right*player.transform.position.x;
+            player.transform.position = Vector3.up * 2.4f + Vector3.right * player.transform.position.x;
             player.useGravity = false;
             player.velocity = Vector3.zero;
 
@@ -211,7 +220,7 @@ public class Respawn : MonoBehaviour
             ))
             + Vector3.up * (0.7f * Mathf.Sin(countForFollowMethod * occilationFreq * maxVelocity_dead / 10f) + 2.1f);
 
-        player.transform.position +=  Input.GetAxis(yAxisStr) * Vector3.up ;
+        player.transform.position += Input.GetAxis(yAxisStr) * Vector3.up;
     }
 
     private void Revive()
@@ -246,16 +255,14 @@ public class Respawn : MonoBehaviour
 
         // If you didn't collide with the co-op player but collided with something else, return out of function
         PlayerManager otherPlayerManager = collision.gameObject.GetComponent<PlayerManager>();
-        if (otherPlayerManager == null) return;
-
-        // If it was was a player (otherPlayer) then revive the player
-        if (otherPlayerManager.playerId != playerManager.playerId)
+        bool hitAPlayer = collision.gameObject.CompareTag("Player");
+        if (hitAPlayer)
         {
             Revive();
+            Debug.Log("Revived by" + collision.gameObject.name);
         }
-        else
-        {
-            Debug.LogWarning("Not expected: report bug of Self collision!");
-        }
+        //else
+            // Uncomment to find weird misplaced colliders
+            //Debug.LogWarning("Ignore: "+collision.gameObject.name);
     }
 }
