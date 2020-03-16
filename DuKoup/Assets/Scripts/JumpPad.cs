@@ -24,7 +24,7 @@ public class JumpPad : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && activationController.IsActivated())
         {
             animator.SetBool("PlayerOnVortex", true);
-            other.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 3, 0), ForceMode.Impulse);
+            other.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, 0), ForceMode.Impulse);
         }
     }
 

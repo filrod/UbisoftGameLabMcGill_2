@@ -67,7 +67,7 @@ public class PlayerManager : MonoBehaviourPun
     public bool isGrabbed = false;
     public bool isGrabbing = false;
 
-    private static bool canThrow = true;
+    private static bool canThrow = false;
 
     public bool CanThrow(){ return canThrow;}
     public void SetThrow() { canThrow = true; }

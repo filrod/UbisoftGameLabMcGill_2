@@ -1,11 +1,13 @@
-﻿
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TestButton : IButtonBehaviour
 {
     override public void ButtonDown()
     {
-        Debug.Log("Button pushed down");
+       SceneManager.LoadScene("Level2");
     }
 
     override public void ButtonUp()
