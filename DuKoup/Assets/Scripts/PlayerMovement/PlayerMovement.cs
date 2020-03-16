@@ -166,6 +166,7 @@ public class PlayerMovement : MonoBehaviourPun
     private bool m_FacingRight = true;
 
     [SerializeField] private Collider2D confinedArea;
+    [SerializeField] AudioSource audioWalking;
 
 
     /// <summary>
@@ -181,6 +182,7 @@ public class PlayerMovement : MonoBehaviourPun
     /// <returns> Returns void </returns>
     public void Awake()
     {
+        audioWalking = this.GetComponent<AudioSource>();
         playerManager = GetComponentInParent<PlayerManager>();
         SetPlayerHeightFromCollider( player.GetComponent<Collider>() );
         movementXY = new Vector2(0, 0);
@@ -251,6 +253,16 @@ public class PlayerMovement : MonoBehaviourPun
         // Play walkin animation if player has high enough velocity
         bool isMoving = player.velocity.magnitude > 0.01;
         animator.SetBool("isWalking", isMoving);
+        if (isMoving && this.Grounded)
+        {
+            if (!audioWalking.isPlaying)
+                audioWalking.Play();
+        }
+        else
+        {
+            if (audioWalking.isPlaying)
+                audioWalking.Pause();
+        }
     }
 
     /// <summary>
@@ -337,9 +349,9 @@ public class PlayerMovement : MonoBehaviourPun
         Debug.DrawLine(point_playerCentreRightSide, groundCollisionInfo_rightSide.point, Color.blue, 0.1f, true);
         */
 
-        this.grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundCentre <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
-        animator.SetBool("isJumping", !this.grounded); 
-        return this.grounded;
+        this.Grounded = (distToGroundLeft <= playerHeightWaistDown) || (distToGroundCentre <= playerHeightWaistDown) || (distToGroundRight <= playerHeightWaistDown);
+        animator.SetBool("isJumping", !this.Grounded); 
+        return this.Grounded;
     }
 
     /// <summary>
