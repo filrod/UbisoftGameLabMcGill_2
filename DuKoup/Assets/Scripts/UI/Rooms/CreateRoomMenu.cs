@@ -7,17 +7,27 @@ using Photon.Realtime;
 
 public class CreateRoomMenu : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
-    private Text _roomName;
+    private string _roomName;
 
     private RoomsCanvases _roomsCanvases;
+
+    string RandomString (){
+        string chars = "abcdefghijklmnopqrstuvwxyz";
+        string returnString = "";
+
+        for (int i = 0; i<5; i++) {
+
+            returnString += chars[Random.Range(0, chars.Length)];
+        }
+        return returnString;
+    }  
 
     public void FirstInitialize(RoomsCanvases canvases)
     {
         _roomsCanvases = canvases;
     }
 
-    public void OnClick_CreateRoom()
+    public void CreateRoom()
     {
         if (!PhotonNetwork.IsConnected)
         {
@@ -30,7 +40,9 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
         options.BroadcastPropsChangeToAll = true;
         // two players
         options.MaxPlayers = 3;
-        PhotonNetwork.JoinOrCreateRoom(_roomName.text, options, TypedLobby.Default);
+        _roomName = RandomString();
+        Debug.Log("Room name is " + _roomName);
+        PhotonNetwork.JoinOrCreateRoom(_roomName, options, TypedLobby.Default);
 
     }
 
@@ -38,6 +50,7 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
     {
         base.OnConnected();
         Debug.Log("Created Room Successfully");
+        _roomsCanvases.CreateOrJoinRoomCanvas.gameObject.SetActive(false);
         _roomsCanvases.CurrentRoomCanvas.Show();
     }
 
@@ -45,5 +58,13 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
     {
         base.OnCreateRoomFailed(returnCode, message);
         Debug.Log("Created Room failed");
+    }
+
+    public void Update()
+    {
+        if (Input.GetButtonDown("CreateRoom"))
+        {
+            CreateRoom();
+        }
     }
 }

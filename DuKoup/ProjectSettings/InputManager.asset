@@ -236,7 +236,7 @@ InputManager:
     negativeButton: 
     positiveButton: w
     altNegativeButton: 
-    altPositiveButton: 
+    altPositiveButton: w
     gravity: 1000
     dead: 0.0001
     sensitivity: 1000
@@ -282,9 +282,9 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: escape
+    positiveButton: joystick button 9
     altNegativeButton: 
-    altPositiveButton: joystick button 1
+    altPositiveButton: escape
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
