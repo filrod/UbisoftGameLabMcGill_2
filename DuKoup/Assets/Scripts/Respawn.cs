@@ -1,5 +1,4 @@
-﻿using System;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -98,7 +97,10 @@ public class Respawn : MonoBehaviour
     private string yAxisStr;
 
     private int countForFollowMethod = 0;
-    
+
+    [SerializeField] private AudioClip bubblePop1;
+    [SerializeField] private AudioClip bubblePop2;
+    private AudioSource audio;
 
     private void Start()
     {
@@ -124,6 +126,7 @@ public class Respawn : MonoBehaviour
         {
             yAxisStr = "Vertical2";
         }
+        audio = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -285,6 +288,8 @@ public class Respawn : MonoBehaviour
     /// </summary>
     private void ReSpawnBubbleFollow()
     {
+        if (audio.isPlaying)
+            audio.Stop();
         //playerManager.playerMovement.CheckIfGrounded();  // Not sure this is needed since inheriting the code from Thomas
         // Clamp the speed to the max allowed for the dead player
         if (player.velocity.x > maxVelocity_dead)
@@ -327,6 +332,13 @@ public class Respawn : MonoBehaviour
     /// </summary>
     private void Revive()
     {
+        if (this.isDead)
+        {
+            if (audio.isPlaying)
+                audio.Stop();
+            
+            audio.PlayOneShot(bubblePop1, 1);
+        }
         this.isDead = false;
         foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
         {

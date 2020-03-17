@@ -422,7 +422,7 @@ InputManager:
     axis: 0
     joyNum: 2
   - serializedVersion: 3
-    m_Name: nothing
+    m_Name: Back
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -438,13 +438,13 @@ InputManager:
     axis: 0
     joyNum: 2
   - serializedVersion: 3
-    m_Name: nothing2
+    m_Name: CreateRoom
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick 2 button 6
     altNegativeButton: 
-    altPositiveButton: 
+    altPositiveButton: c
     gravity: 1000
     dead: 0.001
     sensitivity: 1000

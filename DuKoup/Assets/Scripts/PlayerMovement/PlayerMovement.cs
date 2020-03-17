@@ -167,6 +167,7 @@ public class PlayerMovement : MonoBehaviourPun
 
     [SerializeField] private Collider2D confinedArea;
     [SerializeField] AudioSource audioWalking;
+    //[SerializeField] AudioSource audioJump;
 
 
     /// <summary>
@@ -263,6 +264,7 @@ public class PlayerMovement : MonoBehaviourPun
             if (audioWalking.isPlaying)
                 audioWalking.Pause();
         }
+        
     }
 
     /// <summary>
