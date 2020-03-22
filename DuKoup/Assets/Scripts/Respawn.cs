@@ -98,9 +98,8 @@ public class Respawn : MonoBehaviour
 
     private int countForFollowMethod = 0;
 
-    [SerializeField] private AudioClip bubblePop1;
-    [SerializeField] private AudioClip bubblePop2;
-    private AudioSource audio;
+    [SerializeField] private AudioSource walkingSound;
+    [SerializeField] private AudioSource bubblePop1;
 
     private void Start()
     {
@@ -126,7 +125,7 @@ public class Respawn : MonoBehaviour
         {
             yAxisStr = "Vertical2";
         }
-        audio = GetComponent<AudioSource>();
+
     }
 
     /// <summary>
@@ -164,7 +163,7 @@ public class Respawn : MonoBehaviour
             // the fix:
             Vector2 dist2D = this.player.transform.position - this.otherPlayer.transform.position;
             Vector2 extentsOfCollider = this.player.GetComponent<CapsuleCollider>().bounds.extents;
-            if (dist2D.magnitude <= 1.35f*extentsOfCollider.magnitude) Revive();
+            if (dist2D.magnitude <= 1.35f * extentsOfCollider.magnitude) { Revive(); }
 
             ReSpawnBubbleFollow();
             //Debug.Log(player.transform.position.x);
@@ -190,6 +189,7 @@ public class Respawn : MonoBehaviour
     /// <param name="willDie"></param>
     public void Kill(bool willDie)
     {
+        walkingSound.enabled = !willDie;
         if (otherPlayer == null)
         {
             otherPlayer = playerManager.OtherPlayer;
@@ -250,31 +250,47 @@ public class Respawn : MonoBehaviour
     /// </summary>
     private void SetBubbleYMovement()
     {
+        bool outOfBounds = Mathf.Abs( this.player.transform.position.y - this.otherPlayer.transform.position.y ) > 1.3f*yRangedeadPlayer;
         bool bellowUpperBound = this.player.transform.position.y < this.otherPlayer.transform.position.y + yRangedeadPlayer;
         bool aboveLowerBound = this.player.transform.position.y > this.otherPlayer.transform.position.y - yRangedeadPlayer;
         bool inRange = bellowUpperBound && aboveLowerBound;
 
-        if (!bellowUpperBound)
+        if (outOfBounds)
+            this.player.position = otherPlayer.transform.position + otherPlayer.GetComponent<Collider>().bounds.extents;
+        else if (!bellowUpperBound)
         {
             /// Slowly move towards the other player (only in the y component here)
             this.playerVerticalBubbleMovement = Mathf.Lerp(this.playerVerticalBubbleMovement, otherPlayer.transform.position.y, maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)));
+            Debug.Log("Bubble above bound. Decending");
         }
         else if (inRange)
         {
+            Debug.Log("Bubble in range. Player has control.");
             /// If user presses to move up increment the player movement for smooth increase to happen in ReSpawnBubbleFollow
             /// if user presses to move down decrement for the same negative effect
             /// else, move slowly towards other alive player (only in the y component here)
             if (Input.GetAxis(yAxisStr) > 0)
+            {
                 this.playerVerticalBubbleMovement += dy;
+                Debug.Log("Player Moving Bubble up");
+            }
             else if (Input.GetAxis(yAxisStr) < 0)
+            {
                 this.playerVerticalBubbleMovement -= dy;
+                Debug.Log("Player Moving Bubble down");
+            }
             else
-                this.playerVerticalBubbleMovement = Mathf.Lerp(this.playerVerticalBubbleMovement, otherPlayer.transform.position.y, maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)));
+            {
+                Debug.Log("Other player position: "+ (otherPlayer.transform.position+ Vector3.up*5f*otherPlayer.GetComponent<Collider>().bounds.extents.y).ToString());
+                this.playerVerticalBubbleMovement = Mathf.Lerp(this.playerVerticalBubbleMovement, otherPlayer.transform.position.y+5f*otherPlayer.GetComponent<Collider>().bounds.extents.y, maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position + Vector3.up* otherPlayer.GetComponent<Collider>().bounds.extents.y).magnitude)));
+                Debug.Log("Bubble Moving towads other player with velocity: "+this.player.velocity.ToString());
+            }
         }
         else if (!aboveLowerBound)
         {
+            Debug.Log("Bubble below bound. Ascending.");
             /// Slowly move towards the other player (only in the y component here)
-            this.playerVerticalBubbleMovement = Mathf.Lerp(this.playerVerticalBubbleMovement, otherPlayer.transform.position.y, maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position).magnitude)));
+            this.playerVerticalBubbleMovement = Mathf.Lerp(this.playerVerticalBubbleMovement, otherPlayer.transform.position.y + 5f*otherPlayer.GetComponent<Collider>().bounds.extents.y, maxVelocity_dead / (Mathf.Abs((player.position - otherPlayer.transform.position + Vector3.up * otherPlayer.GetComponent<Collider>().bounds.extents.y).magnitude)));
         }
         else
         {
@@ -288,8 +304,7 @@ public class Respawn : MonoBehaviour
     /// </summary>
     private void ReSpawnBubbleFollow()
     {
-        if (audio.isPlaying)
-            audio.Stop();
+        
         //playerManager.playerMovement.CheckIfGrounded();  // Not sure this is needed since inheriting the code from Thomas
         // Clamp the speed to the max allowed for the dead player
         if (player.velocity.x > maxVelocity_dead)
@@ -304,7 +319,7 @@ public class Respawn : MonoBehaviour
         }
         //if (player.transform.position.y <= this.fallHeight)
         //    player.transform.position = new Vector3(player.transform.position.x, otherPlayer.transform.position.y, player.transform.position.z);
-
+        
         Vector3 lerpedXposition = Vector3.right * Mathf.Lerp(
             player.position.x,
             otherPlayer.transform.position.x,
@@ -332,14 +347,13 @@ public class Respawn : MonoBehaviour
     /// </summary>
     private void Revive()
     {
-        if (this.isDead)
+        if (this.isDead && !bubblePop1.isPlaying)
         {
-            if (audio.isPlaying)
-                audio.Stop();
-            
-            audio.PlayOneShot(bubblePop1, 1);
+            Debug.Log("Popped");
+            bubblePop1.PlayOneShot(bubblePop1.clip, 5f);
         }
         this.isDead = false;
+
         foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
         {
             skinnedMeshRenderer.enabled = true;
@@ -350,6 +364,7 @@ public class Respawn : MonoBehaviour
         }
         this.GetComponent<MeshRenderer>().enabled = false;
         //Debug.Log("Players have collided");
+        walkingSound.enabled = true;
         player.useGravity = true;
 
         // Turn on beta-alpha plane collisions
