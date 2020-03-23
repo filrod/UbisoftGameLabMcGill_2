@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime;
+using TMPro;
 
 public class CreateRoomMenu : MonoBehaviourPunCallbacks
 {
     private string _roomName;
+    public TextMeshProUGUI roomText;
 
     private RoomsCanvases _roomsCanvases;
 
@@ -52,6 +54,8 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
         Debug.Log("Created Room Successfully");
         _roomsCanvases.CreateOrJoinRoomCanvas.gameObject.SetActive(false);
         _roomsCanvases.CurrentRoomCanvas.Show();
+        roomText.text = _roomName;
+
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

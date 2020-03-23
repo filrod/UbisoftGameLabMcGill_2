@@ -6380,6 +6380,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 144107785}
+    - target: {fileID: 1470122185640065506, guid: abe989cb7f33245b4a8a1d5338649bf8,
+        type: 3}
+      propertyPath: m_IgnoreReversedGraphics
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1470122185640065506, guid: abe989cb7f33245b4a8a1d5338649bf8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1470122185640065507, guid: abe989cb7f33245b4a8a1d5338649bf8,
         type: 3}
       propertyPath: m_Name
