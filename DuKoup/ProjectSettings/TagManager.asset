@@ -11,6 +11,7 @@ TagManager:
   - Button
   - NoPassingArea
   - Grabbable
+  - ThrowingTrigger
   layers:
   - Default
   - TransparentFX

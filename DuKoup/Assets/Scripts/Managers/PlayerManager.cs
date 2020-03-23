@@ -69,6 +69,15 @@ public class PlayerManager : MonoBehaviourPun
 
     private static bool canThrow = false;
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("ThrowingTrigger"))
+        {
+            other.gameObject.SetActive(false);
+            SetThrow();
+        }
+    }
+
     public bool CanThrow(){ return canThrow;}
     public void SetThrow() { canThrow = true; }
 
