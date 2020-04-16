@@ -250,6 +250,7 @@ public class Respawn : MonoBehaviour
     /// </summary>
     private void SetBubbleYMovement()
     {
+        if (!this.isDead) { return; }
         bool outOfBounds = Mathf.Abs( this.player.transform.position.y - this.otherPlayer.transform.position.y ) > 1.3f*yRangedeadPlayer;
         bool bellowUpperBound = this.player.transform.position.y < this.otherPlayer.transform.position.y + yRangedeadPlayer;
         bool aboveLowerBound = this.player.transform.position.y > this.otherPlayer.transform.position.y - yRangedeadPlayer;
