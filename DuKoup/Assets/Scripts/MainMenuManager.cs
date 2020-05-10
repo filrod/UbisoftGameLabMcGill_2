@@ -34,10 +34,16 @@ public class MainMenuManager : MonoBehaviour
     private bool player1Connected = false;
     private bool player2Connected = false;
 
+    public void Start(){
+        eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(startButton);
+    }
+
     public void Play()
     {
         mainMenu.SetActive(false);
         localOnlineMenu.SetActive(true);
+
+        eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(localButton);
 
         isMainMenu = false;
         isLocalOnline = true;
@@ -57,8 +63,6 @@ public class MainMenuManager : MonoBehaviour
     {
         isLocalOnline = false;
         isLocal = true;
-        
-        eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(localButton);
 
         mainMenuCanvas.SetActive(false);
         localOnlineCanvas.SetActive(true);
@@ -91,6 +95,8 @@ public class MainMenuManager : MonoBehaviour
 
                 mainMenu.SetActive(true);
                 localOnlineMenu.SetActive(false);
+
+                eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(startButton);
             }
 
             else if (isLocal)

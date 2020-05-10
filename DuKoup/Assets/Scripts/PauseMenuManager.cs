@@ -8,8 +8,14 @@ public class PauseMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuCanvas;
     [SerializeField] private string currScene;
+    [SerializeField] private GameObject continueButton;
+    [SerializeField] private GameObject eventSystem;
 
     private bool isPause = false;
+
+    public void Start(){
+        eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(continueButton);
+    }
 
     public void Continue()
     {
@@ -40,6 +46,7 @@ public class PauseMenuManager : MonoBehaviour
         if (!isPause && Input.GetButtonDown("Cancel"))
         {
             pauseMenuCanvas.SetActive(true);
+            eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(continueButton);
             Time.timeScale = 0f;
             isPause = true;
         }
