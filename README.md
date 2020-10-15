@@ -1,5 +1,6 @@
 # UbisoftGameLabMcGill_2
 Repository for Team McGill #2 for Ubisoft Game Lab Competition
+Demo video : https://www.youtube.com/watch?v=zZE3vkKtanM
 
 ## Coding Best Practices and Requirements
 We will be following almost all coding conventions from [here](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
