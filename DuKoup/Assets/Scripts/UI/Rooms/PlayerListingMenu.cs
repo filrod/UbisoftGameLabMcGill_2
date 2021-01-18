@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerListingMenu : MonoBehaviourPunCallbacks
 {
@@ -12,7 +13,7 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
     [SerializeField]
     private PlayerListing _playerListing;
     [SerializeField]
-    private Text _readyUpText;
+    private TextMeshProUGUI _readyUpText;
 
     private List<PlayerListing> _listings = new List<PlayerListing>();
     private RoomsCanvases _roomsCanvases;
@@ -162,6 +163,19 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
         if (index != -1)
         {
             _listings[index].Ready = ready;
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Submit"))
+        {
+            OnClick_ReadyUp();
+        }
+
+        if (Input.GetButtonDown("CreateRoom"))
+        {
+            OnClick_StartGame();
         }
     }
 }
